@@ -5,7 +5,6 @@ export interface Staff {
   id: string;
   staff_name: string;
   station_name: string;
-  dept_name: string;
   status: string;
   photo: string;
 }
@@ -24,13 +23,13 @@ const initialState: StaffState = {
 
 export const fetchStaff = createAsyncThunk(
   "staff/fetch",
-  async (payload: { deptName: string; stationName: string }, thunkAPI) => {
+  async (payload: { stationName: string }, thunkAPI) => {
     try {
-      const { deptName, stationName } = payload;
+      const { stationName } = payload;
       const res = await axios.get(
         `${
           import.meta.env.VITE_BACKEND_URL
-        }/staff/get_staffs_by_dept?dept_name=${deptName}&station_name=${stationName}`
+        }/staff/get_staffs_by_dept?station_name=${stationName}`
       );
       return res.data.SUCCESS;
     } catch (error) {

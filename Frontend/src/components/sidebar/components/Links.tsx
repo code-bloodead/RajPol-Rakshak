@@ -16,7 +16,7 @@ export const SidebarLinks = (props: { routes: RoutesType[] }): JSX.Element => {
 
   const createLinks = (routes: RoutesType[]) => {
     return routes.map((route, index) => {
-      if (route.layout === "/dept-admin" || route.layout === "/station-admin") {
+      if (route.layout === "/station-admin" || route.layout === "/super-admin") {
         return (
           <Link key={index} to={route.layout + "/" + route.path}>
             <div className="relative mb-3 flex hover:cursor-pointer">

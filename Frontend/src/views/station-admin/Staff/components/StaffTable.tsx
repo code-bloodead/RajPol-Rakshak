@@ -59,7 +59,6 @@ type RowObj = {
   staff_name: string;
   id: string;
   phone: string;
-  dept_name: string;
   photo: string;
   status: string;
 };
@@ -116,19 +115,6 @@ function StaffTable(props: { tableData: any }) {
       header: () => (
         <p className="mr-1 inline text-sm font-bold text-gray-600 dark:text-white">
           CONTACT NO.
-        </p>
-      ),
-      cell: (info) => (
-        <p className="text-sm font-bold text-navy-700 dark:text-white">
-          {info.getValue()}
-        </p>
-      ),
-    }),
-    columnHelper.accessor("dept_name", {
-      id: "dept_name",
-      header: () => (
-        <p className="mr-1 inline text-sm font-bold text-gray-600 dark:text-white">
-          DEPARTMENT
         </p>
       ),
       cell: (info) => (
@@ -204,7 +190,7 @@ function StaffTable(props: { tableData: any }) {
           </div>
           <button
             onClick={() => {
-              navigate("/dept-admin/staff");
+              navigate("/station-admin/staff");
             }}
             className={` linear mx-1 flex items-center justify-center rounded-lg bg-lightPrimary p-[0.4rem]  font-medium text-brand-500 transition duration-200
            hover:cursor-pointer hover:bg-gray-100 dark:bg-navy-700 dark:text-white dark:hover:bg-white/20 dark:active:bg-white/10`}

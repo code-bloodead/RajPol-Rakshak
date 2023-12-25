@@ -35,21 +35,16 @@ interface IncidentModalProps {
   incident: Incident;
   isIncidentModalOpen: boolean;
   onIncidentModalClose: () => void;
-  onConvertTaskModalOpen: () => void;
   showSource: boolean;
 }
 
 const IncidentModal = ({
   isIncidentModalOpen,
   onIncidentModalClose,
-  onConvertTaskModalOpen,
   showSource,
   incident,
 }: IncidentModalProps) => {
-  const handleAddTask = (incident: Incident) => {
-    onIncidentModalClose();
-    onConvertTaskModalOpen();
-  };
+  
   const dispatch = useAppDispatch();
   const hasImage = incident?.image !== "";
 
@@ -273,13 +268,6 @@ const IncidentModal = ({
               )}
 
               <div className="mt-4 flex justify-center gap-4">
-                <button
-                  onClick={() => handleAddTask(incident)}
-                  className={` flex items-center justify-center rounded-lg bg-navy-50  font-medium text-brand-600 transition duration-200
-           hover:cursor-pointer hover:bg-gray-100 dark:bg-navy-700 dark:text-white dark:hover:bg-white/20 dark:active:bg-white/10 p-3`}
-                >
-                  <MdOutlinePostAdd className="h-5 w-5 mr-2" /> Create Task
-                </button>
                 <button
                   onClick={() => handleDelete(incident)}
                   className={` flex items-center justify-center rounded-lg bg-navy-50   font-medium text-brand-600 transition duration-200

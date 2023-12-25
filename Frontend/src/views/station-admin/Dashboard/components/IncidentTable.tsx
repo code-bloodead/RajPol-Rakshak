@@ -20,7 +20,6 @@ import { useDisclosure } from "@chakra-ui/hooks";
 import { FaRegEye } from "react-icons/fa";
 
 import IncidentModal from "@/components/modal/IncidentModal";
-import ConvertTaskModal from "@/components/modal/ConvertTaskModal";
 
 declare module "@tanstack/table-core" {
   interface FilterFns {
@@ -68,20 +67,9 @@ function IncidentTable(props: { tableData: any }) {
     onClose: onIncidentModalClose,
   } = useDisclosure();
 
-  const {
-    isOpen: isConvertTaskModalOpen,
-    onOpen: onConvertTaskModalOpen,
-    onClose: onConvertTaskModalClose,
-  } = useDisclosure();
-
   const handleView = (rowObj: RowObj) => {
     setSelectedRow(rowObj);
     onIncidentModalOpen();
-  };
-
-  const handleAddTask = (rowObj: RowObj) => {
-    setSelectedRow(rowObj);
-    onConvertTaskModalOpen();
   };
 
   useEffect(() => {
@@ -158,15 +146,6 @@ function IncidentTable(props: { tableData: any }) {
       cell: (info: any) => (
         <div className="flex items-center ml-1 space-x-2">
           <button
-            onClick={() => {
-              handleAddTask(info.row.original);
-            }}
-            className={` flex items-center justify-center rounded-lg bg-lightPrimary p-[0.4rem]  font-medium text-brand-500 transition duration-200
-           hover:cursor-pointer hover:bg-gray-100 dark:bg-navy-700 dark:text-white dark:hover:bg-white/20 dark:active:bg-white/10`}
-          >
-            <MdOutlinePostAdd className="h-4 w-4" />
-          </button>
-          <button
             onClick={() => handleView(info.row.original)}
             className={` flex items-center justify-center rounded-lg bg-lightPrimary p-[0.4rem]  font-medium text-brand-500 transition duration-200
            hover:cursor-pointer hover:bg-gray-100 dark:bg-navy-700 dark:text-white dark:hover:bg-white/20 dark:active:bg-white/10`}
@@ -201,7 +180,7 @@ function IncidentTable(props: { tableData: any }) {
           </div>
           <button
             onClick={() => {
-              navigate("/dept-admin/detected-incidents");
+              navigate("/station-admin/detected-incidents");
             }}
             className={`linear flex items-center justify-center rounded-lg bg-lightPrimary p-2 text-xl font-bold text-brand-500 transition duration-200
            hover:cursor-pointer hover:bg-gray-100 dark:bg-navy-700 dark:text-white dark:hover:bg-white/20 dark:active:bg-white/10`}
@@ -275,13 +254,7 @@ function IncidentTable(props: { tableData: any }) {
             showSource={true}
             onIncidentModalClose={onIncidentModalClose}
             isIncidentModalOpen={isIncidentModalOpen}
-            onConvertTaskModalOpen={onConvertTaskModalOpen}
             incident={selectedRow}
-          />
-          <ConvertTaskModal
-            incident={selectedRow}
-            isConvertTaskModalOpen={isConvertTaskModalOpen}
-            onConvertTaskModalClose={onConvertTaskModalClose}
           />
         </>
       )}

@@ -5,8 +5,6 @@ import ReactApexChart from "react-apexcharts";
 import { useState } from "react";
 import { CrowdData, getAlert } from "./crowdAnalyser";
 import { MdOutlinePostAdd } from "react-icons/md";
-import NewTaskModal from "@/components/modal/NewTaskModal";
-import { useDisclosure } from "@chakra-ui/hooks";
 
 enum Tab {
   Footage = "Footage",
@@ -106,12 +104,6 @@ const Footages = () => {
   const liveSeries = combinedData.map((data) => data.live);
   const historySeries = combinedData.map((data) => data.history);
 
-  const {
-    isOpen: isNewTaskModalOpen,
-    onOpen: onNewTaskModalOpen,
-    onClose: onNewTaskModalClose,
-  } = useDisclosure();
-
   return (
     <div>
       <div className="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
@@ -201,7 +193,6 @@ const Footages = () => {
                   onClick={() => {
                     setTaskTargetPlatform(platformWiseCrowd[idx].name);
                     console.log(platformWiseCrowd[idx].name);
-                    onNewTaskModalOpen();
                   }}
                   className={` flex items-center justify-center rounded-lg bg-lightPrimary p-[0.4rem]  font-medium text-brand-500 transition duration-200 hover:cursor-pointer hover:bg-gray-100 dark:bg-navy-700 dark:text-white dark:hover:bg-white/20 dark:active:bg-white/10 ml-auto me-2 text-sm`}
                 >
@@ -318,11 +309,6 @@ const Footages = () => {
           targetPlatform={taskTargetPlatform}
           onClose={() => setTaskTargetPlatform(null)}
         /> */}
-        <NewTaskModal
-          optionalDescription={`Near ${taskTargetPlatform}`}
-          onNewTaskModalClose={onNewTaskModalClose}
-          isNewTaskModalOpen={isNewTaskModalOpen}
-        />
       </>
     </div>
   );

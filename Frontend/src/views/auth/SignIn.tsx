@@ -68,10 +68,9 @@ export default function SignIn() {
           }
           localStorage.setItem("id", res.data.SUCCESS.id);
           localStorage.setItem("role", res.data.SUCCESS.role);
-          localStorage.setItem("dept", res.data.SUCCESS.dept_name);
           dispatch(setAdmin(res.data.SUCCESS));
-          if (res.data.SUCCESS.role === "DEPT_ADMIN") {
-            navigate("/dept-admin/dashboard");
+          if (res.data.SUCCESS.role === "SUPER_ADMIN") {
+            navigate("/super-admin/dashboard");
           } else {
             navigate("/station-admin/dashboard");
           }

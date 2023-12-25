@@ -9,7 +9,6 @@ import avatar from "@/assets/img/defaultAvatar.jpg";
 import { useAppDispatch, useAppSelector } from "@/app/store";
 import { clearAdmin } from "@/app/features/AdminSlice";
 import { MdReport } from "react-icons/md";
-import { FaTasks } from "react-icons/fa";
 import { TbReport } from "react-icons/tb";
 import { truncateString } from "@/constants/utils";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
@@ -34,12 +33,10 @@ const Navbar = (props: {
     currentRoute === "Dashboard" || currentRoute === "CCTV Footage";
 
   const handleClick = (type: string) => {
-    if (type === "task") {
-      return "/dept-admin/tasks";
-    } else if (type === "incident") {
-      return "/dept-admin/detected-incidents";
+    if (type === "incident") {
+      return "/station-admin/detected-incidents";
     } else if (type === "report") {
-      return "/dept-admin/reported-incidents";
+      return "/station-admin/reported-incidents";
     }
   };
 
@@ -47,7 +44,6 @@ const Navbar = (props: {
     console.log("Read clicked");
     dispatch(
       readNotification({
-        dept_name: admin?.dept_name,
         id: id,
         station_name: admin?.station_name,
       })
@@ -57,7 +53,6 @@ const Navbar = (props: {
   const handleReadAll = () => {
     dispatch(
       readAllNotifications({
-        dept_name: admin?.dept_name,
         station_name: admin?.station_name,
       })
     );
@@ -71,7 +66,7 @@ const Navbar = (props: {
             className="text-sm font-normal text-navy-700 hover:underline dark:text-white dark:hover:text-white"
             href=" "
           >
-            {admin?.dept_name} Dept.
+            {admin?.station_name} Dept.
             <span className="mx-1 text-sm text-navy-700 hover:text-navy-700 dark:text-white">
               {" "}
               /{" "}
@@ -163,10 +158,8 @@ const Navbar = (props: {
                       <div className="flex h-full p-2 bg-blueSecondary items-center justify-center rounded-xl bg-gradient-to-b from-brandLinear to-brand-500  text-2xl text-white">
                         {notification?.type === "incident" ? (
                           <MdReport className="h-6 w-6" />
-                        ) : notification?.type === "report" ? (
-                          <TbReport className="h-6 w-6" />
                         ) : (
-                          <FaTasks className="h-6 w-6" />
+                          <TbReport className="h-6 w-6" />
                         )}
                       </div>
                       <div className="ml-2 flex h-full w-full flex-col justify-center rounded-lg px-1 text-sm">
@@ -250,7 +243,6 @@ const Navbar = (props: {
                   onClick={() => {
                     localStorage.removeItem("id");
                     localStorage.removeItem("role");
-                    localStorage.removeItem("dept");
                     localStorage.removeItem("persist");
                     dispatch(clearAdmin());
                   }}

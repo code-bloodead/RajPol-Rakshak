@@ -7,7 +7,6 @@ export interface Notification {
   description: string;
   type: string;
   station_name: string;
-  dept_name: string;
   created_at: Date;
 }
 
@@ -41,13 +40,13 @@ export const createNotifications = createAsyncThunk(
 
 export const fetchNotifications = createAsyncThunk(
   "notification/fetch",
-  async (payload: { deptName: string; stationName: string }, thunkAPI) => {
+  async (payload: { stationName: string }, thunkAPI) => {
     try {
-      const { deptName, stationName } = payload;
+      const { stationName } = payload;
       const res = await axios.get(
         `${
           import.meta.env.VITE_BACKEND_URL
-        }/notifications/get_notifications?station_name=${stationName}&dept_name=${deptName}`
+        }/notifications/get_notifications?station_name=${stationName}`
       );
       return res.data.SUCCESS;
     } catch (error) {
@@ -60,7 +59,7 @@ export const fetchNotifications = createAsyncThunk(
 export const readNotification = createAsyncThunk(
   "notification/read",
   async (
-    payload: { dept_name: string; station_name: string; id: string },
+    payload: { station_name: string; id: string },
     thunkAPI
   ) => {
     try {
@@ -78,7 +77,7 @@ export const readNotification = createAsyncThunk(
 
 export const readAllNotifications = createAsyncThunk(
   "notification/readAll",
-  async (payload: { dept_name: string; station_name: string }, thunkAPI) => {
+  async (payload: { station_name: string }, thunkAPI) => {
     try {
       const res = await axios.delete(
         `${import.meta.env.VITE_BACKEND_URL}/notifications/mark_all_as_read`,

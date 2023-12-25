@@ -1,5 +1,8 @@
 import { useState } from "react";
 import Card from "@/components/card";
+import avatar from "@/assets/img/defaultAvatar.jpg";
+import { GoDotFill } from "react-icons/go";
+import { ImEnlarge } from "react-icons/im";
 
 import {
   createColumnHelper,
@@ -10,16 +13,9 @@ import {
   SortingState,
   useReactTable,
 } from "@tanstack/react-table";
-import { ImEnlarge } from "react-icons/im";
 import { NavigateFunction, useNavigate } from "react-router-dom";
-import { MdCheckCircle } from "react-icons/md";
-import { BsClockHistory } from "react-icons/bs";
 
-import {
-  RankingInfo,
-  rankItem,
-  compareItems,
-} from "@tanstack/match-sorter-utils";
+import { RankingInfo, rankItem } from "@tanstack/match-sorter-utils";
 
 declare module "@tanstack/table-core" {
   interface FilterFns {
@@ -31,66 +27,45 @@ declare module "@tanstack/table-core" {
 }
 
 const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
-  // Rank the item
   const itemRank = rankItem(row.getValue(columnId), value);
-
-  // Store the itemRank info
   addMeta({
     itemRank,
   });
-
-  // Return if the item should be filtered in/out
   return itemRank.passed;
 };
 
 type RowObj = {
-  id: number;
-  date: string;
-  category: string;
+  staff_name: string;
+  photo: string;
   status: string;
 };
 
-function ReportTable(props: { tableData: any }) {
+function StaffTable(props: { tableData: any }) {
   const columnHelper = createColumnHelper<RowObj>();
   const navigate: NavigateFunction = useNavigate();
   const { tableData } = props;
   const [sorting, setSorting] = useState<SortingState>([]);
   let defaultData = tableData;
   const columns = [
-    columnHelper.accessor("id", {
-      id: "id",
+    columnHelper.accessor("photo", {
+      id: "photo",
       header: () => (
-        <p className="text-sm font-bold text-gray-600 dark:text-white">
-          REPORT ID
-        </p>
+        <p className="text-sm font-bold text-gray-600 dark:text-white"></p>
       ),
       cell: (info: any) => (
-        <p className="text-sm font-bold text-navy-700 dark:text-white">
-          {info.getValue()}
-        </p>
+        <div className="h-[30px] w-[30px] rounded-full">
+          <img src={avatar} className="h-full w-full rounded-full" alt="" />
+        </div>
       ),
     }),
-    columnHelper.accessor("date", {
-      id: "date",
+    columnHelper.accessor("staff_name", {
+      id: "staff_name",
       header: () => (
-        <p className="text-sm font-bold text-gray-600 dark:text-white">DATE</p>
+        <p className="text-sm font-bold text-gray-600 dark:text-white">NAME</p>
       ),
       cell: (info) => (
         <p className="text-sm font-bold text-navy-700 dark:text-white">
-          {info.getValue()}
-        </p>
-      ),
-    }),
-    columnHelper.accessor("category", {
-      id: "category",
-      header: () => (
-        <p className="text-sm font-bold text-gray-600 dark:text-white">
-          CATEGORY
-        </p>
-      ),
-      cell: (info) => (
-        <p className="text-sm font-bold text-navy-700 dark:text-white">
-          {info.getValue()}
+          @{info.getValue()}
         </p>
       ),
     }),
@@ -102,20 +77,22 @@ function ReportTable(props: { tableData: any }) {
         </p>
       ),
       cell: (info) => (
-        <div className="flex items-center">
-          {info.getValue() === "Resolved" ? (
-            <MdCheckCircle className="me-1 text-green-500 dark:text-green-300" />
-          ) : info.getValue() === "Pending" ? (
-            <BsClockHistory className="me-1 text-amber-500 dark:text-amber-300" />
-          ) : null}
-          <p className="text-sm font-bold text-navy-700 dark:text-white">
+        <div className="flex items-center justify-start">
+          <GoDotFill
+            className={`me-1 ${
+              info.getValue() === "Available"
+                ? "text-green-500 dark:text-green-300"
+                : "text-amber-500 dark:text-amber-300"
+            } `}
+          />
+          <p className="text-md font-medium text-gray-600 dark:text-white">
             {info.getValue()}
           </p>
         </div>
       ),
     }),
   ]; // eslint-disable-next-line
-  const [data, setData] = useState(() => [...defaultData]);
+  const [data, setData] = useState<any>(() => [...defaultData]);
   const table = useReactTable({
     data,
     columns,
@@ -134,14 +111,14 @@ function ReportTable(props: { tableData: any }) {
     <Card extra={"w-full h-full sm:overflow-auto px-6"}>
       <header className="relative flex items-center justify-between pt-4">
         <div className="text-xl font-bold text-navy-700 dark:text-white">
-          Reported Incidents
+          Staff Table
         </div>
 
         <button
           onClick={() => {
-            navigate("/dept-admin/reported-incidents");
+            navigate("/station-admin/staff");
           }}
-          className={`linear mx-1 flex items-center justify-center rounded-lg bg-lightPrimary p-2 text-xl font-bold text-brand-500 transition duration-200
+          className={`linear flex items-center justify-center rounded-lg bg-lightPrimary p-2 text-xl font-bold text-brand-500 transition duration-200
            hover:cursor-pointer hover:bg-gray-100 dark:bg-navy-700 dark:text-white dark:hover:bg-white/20 dark:active:bg-white/10`}
         >
           <ImEnlarge className="h-4 w-4" />
@@ -180,13 +157,20 @@ function ReportTable(props: { tableData: any }) {
           <tbody>
             {table
               .getRowModel()
-              .rows.slice(0, 6)
+              .rows.slice(0, 5)
               .map((row) => {
                 return (
                   <tr key={row.id}>
                     {row.getVisibleCells().map((cell) => {
                       return (
-                        <td key={cell.id} className="border-white/0 py-3  pr-4">
+                        <td
+                          key={cell.id}
+                          className={`${
+                            cell.column.id === "photo"
+                              ? "min-w-20px"
+                              : "min-w-[130px]"
+                          }  border-white/0 py-3 pr-1`}
+                        >
                           {flexRender(
                             cell.column.columnDef.cell,
                             cell.getContext()
@@ -204,4 +188,4 @@ function ReportTable(props: { tableData: any }) {
   );
 }
 
-export default ReportTable;
+export default StaffTable;

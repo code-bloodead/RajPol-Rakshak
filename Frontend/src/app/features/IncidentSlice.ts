@@ -28,13 +28,13 @@ const initialState: IncidentState = {
 
 export const fetchIncidents = createAsyncThunk(
   "incident/fetch",
-  async (payload: { deptName: string; stationName: string }, thunkAPI) => {
+  async (payload: { stationName: string }, thunkAPI) => {
     try {
-      const { deptName, stationName } = payload;
+      const { stationName } = payload;
       const res = await axios.get(
         `${
           import.meta.env.VITE_BACKEND_URL
-        }/incidents/get_incidents_by_dept_and_station?dept_name=${deptName}&station_name=${stationName}`
+        }/incidents/get_incidents_by_dept_and_station?station_name=${stationName}`
       );
       return res.data;
     } catch (error) {

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Card from "@/components/card";
 
 import {
@@ -7,27 +7,22 @@ import {
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
-  getPaginationRowModel,
   getSortedRowModel,
   SortingState,
   useReactTable,
 } from "@tanstack/react-table";
-import { useDisclosure } from "@chakra-ui/hooks";
-import { AiOutlinePlus } from "react-icons/ai";
-import { MdCheckCircle } from "react-icons/md";
+import { MdCheckCircle, MdOutlinePostAdd } from "react-icons/md";
 import { BsClockHistory } from "react-icons/bs";
-import { TbEdit } from "react-icons/tb";
 
 import { RankingInfo, rankItem } from "@tanstack/match-sorter-utils";
 import { FiSearch } from "react-icons/fi";
 import Pagination from "@/components/pagination/Pagination";
-import { FaRegEye, FaTrash, FaUserClock } from "react-icons/fa";
-import { getDate } from "@/constants/utils";
-import { useAppDispatch, useAppSelector } from "@/app/store";
-import ViewTaskModal from "@/components/modal/ViewTaskModal";
-import { deleteTask } from "@/app/features/TaskSlice";
-import NewTaskModal from "@/components/modal/NewTaskModal";
-import { set } from "video.js/dist/types/tech/middleware";
+import { FaRegEye, FaTrash } from "react-icons/fa";
+import { getDate, truncateString } from "@/constants/utils";
+import { useDisclosure } from "@chakra-ui/hooks";
+import IncidentModal from "@/components/modal/IncidentModal";
+import { useAppDispatch } from "@/app/store";
+import { deleteIncident } from "@/app/features/IncidentSlice";
 
 declare module "@tanstack/table-core" {
   interface FilterFns {
@@ -47,62 +42,36 @@ const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
 };
 
 type RowObj = {
-  id?: string;
+  id: string;
   title: string;
   description: string;
-  assigned_to: string[];
   image: string;
-  created_at?: Date;
-  deadline: string;
-  status?: string;
-  assc_incident: string;
-  dept_name: string;
+  type: string;
   station_name: string;
-  actions?: string | undefined;
+  location: string;
+  source: string;
+  status: string;
+  created_at: Date;
+  actions: string | undefined;
 };
 
-function TaskTable(props: { tableData: any }) {
+function ReportTable(props: { tableData: any }) {
   const columnHelper = createColumnHelper<RowObj>();
   const { tableData } = props;
   const [sorting, setSorting] = useState<SortingState>([]);
-  const [selectedRow, setSelectedRow] = useState<RowObj | null>(null);
-  const staff = useAppSelector((state) => state.staff.data);
-  const [editTask, setEditTask] = useState<boolean>(false);
-  // eslint-disable-next-line
-  const [data, setData] = useState(() => [...tableData]);
   const dispatch = useAppDispatch();
 
-  const {
-    isOpen: isViewTaskModalOpen,
-    onOpen: onViewTaskModalOpen,
-    onClose: onViewTaskModalClose,
-  } = useDisclosure();
+  const [selectedRow, setSelectedRow] = useState<RowObj | null>(null);
 
   const {
-    isOpen: isNewTaskModalOpen,
-    onOpen: onNewTaskModalOpen,
-    onClose: onNewTaskModalClose,
+    isOpen: isIncidentModalOpen,
+    onOpen: onIncidentModalOpen,
+    onClose: onIncidentModalClose,
   } = useDisclosure();
 
   const handleView = (rowObj: RowObj) => {
     setSelectedRow(rowObj);
-    setEditTask(false);
-    onViewTaskModalOpen();
-  };
-
-  const handleEdit = (rowObj: RowObj) => {
-    setSelectedRow(rowObj);
-    setEditTask(true);
-    onViewTaskModalOpen();
-  };
-
-  const handleNewTask = () => {
-    onNewTaskModalOpen();
-  };
-
-  const handleDelete = (rowObj: RowObj) => {
-    dispatch(deleteTask({ id: rowObj.id }));
-    setData(data.filter((item) => item.id !== rowObj.id));
+    onIncidentModalOpen();
   };
 
   const columns = [
@@ -110,7 +79,7 @@ function TaskTable(props: { tableData: any }) {
       id: "id",
       header: () => (
         <p className="mr-1 inline text-sm font-bold text-gray-600 dark:text-white">
-          TASK ID
+          REPORT ID
         </p>
       ),
       cell: (info: any) => (
@@ -122,18 +91,22 @@ function TaskTable(props: { tableData: any }) {
     columnHelper.accessor("title", {
       id: "title",
       header: () => (
-        <p className="text-sm font-bold text-gray-600 dark:text-white">TITLE</p>
+        <p className="mr-1 inline text-sm font-bold text-gray-600 dark:text-white">
+          TITLE
+        </p>
       ),
       cell: (info: any) => (
         <p className="text-sm font-bold text-navy-700 dark:text-white">
-          {info.getValue()}
+          {truncateString(info.getValue(), 18)}
         </p>
       ),
     }),
     columnHelper.accessor("created_at", {
       id: "date",
       header: () => (
-        <p className="text-sm font-bold text-gray-600 dark:text-white">DATE</p>
+        <p className="mr-1 inline text-sm font-bold text-gray-600 dark:text-white">
+          DATE
+        </p>
       ),
       cell: (info) => (
         <p className="text-sm font-bold text-navy-700 dark:text-white">
@@ -141,41 +114,33 @@ function TaskTable(props: { tableData: any }) {
         </p>
       ),
     }),
-    columnHelper.accessor("assigned_to", {
-      id: "assigned",
+    columnHelper.accessor("type", {
+      id: "type",
       header: () => (
-        <p className="text-sm font-bold text-gray-600 dark:text-white">
-          ASSIGNED
+        <p className="mr-1 inline text-sm font-bold text-gray-600 dark:text-white">
+          CATEGORY
         </p>
       ),
       cell: (info) => (
         <p className="text-sm font-bold text-navy-700 dark:text-white">
-          {info
-            .getValue()
-            .map((id) => {
-              const staffObj = staff.find((staffItem) => staffItem.id === id);
-              return staffObj ? staffObj.staff_name : null;
-            })
-            .join(", ") || "-"}
+          {info.getValue()}
         </p>
       ),
     }),
     columnHelper.accessor("status", {
       id: "status",
       header: () => (
-        <p className="text-sm font-bold text-gray-600 dark:text-white">
+        <p className="mr-1 inline text-sm font-bold text-gray-600 dark:text-white">
           STATUS
         </p>
       ),
       cell: (info) => (
         <div className="flex items-center">
-          {info.getValue() === "Completed" ? (
-            <MdCheckCircle className="me-2 text-green-500 dark:text-green-300" />
-          ) : info.getValue() === "Assigned" ? (
-            <FaUserClock className="me-2 text-teal-500 dark:text-teal-300" />
-          ) : (
-            <BsClockHistory className="me-2 text-amber-500 dark:text-amber-300" />
-          )}
+          {info.getValue() === "Resolved" ? (
+            <MdCheckCircle className="me-1 text-green-500 dark:text-green-300" />
+          ) : info.getValue() === "Pending" ? (
+            <BsClockHistory className="me-1 text-amber-500 dark:text-amber-300" />
+          ) : null}
           <p className="text-sm font-bold text-navy-700 dark:text-white">
             {info.getValue()}
           </p>
@@ -190,7 +155,9 @@ function TaskTable(props: { tableData: any }) {
         </p>
       ),
       cell: (info: any) => (
-        <div className="flex items-center ml-1 space-x-2">
+        <div className="flex items-center space-x-2">
+          
+
           <button
             onClick={() => handleView(info.row.original)}
             className={` flex items-center justify-center rounded-lg bg-lightPrimary p-[0.4rem]  font-medium text-brand-500 transition duration-200
@@ -199,14 +166,10 @@ function TaskTable(props: { tableData: any }) {
             <FaRegEye className="h-4 w-4" />
           </button>
           <button
-            onClick={() => handleEdit(info.row.original)}
-            className={` flex items-center justify-center rounded-lg bg-lightPrimary p-[0.4rem]  font-medium text-brand-500 transition duration-200
-           hover:cursor-pointer hover:bg-gray-100 dark:bg-navy-700 dark:text-white dark:hover:bg-white/20 dark:active:bg-white/10`}
-          >
-            <TbEdit className="h-4 w-4" />
-          </button>
-          <button
-            onClick={() => handleDelete(info.row.original)}
+            onClick={() => {
+              dispatch(deleteIncident({ id: info.row.original.id }));
+              setData(data.filter((item) => item.id !== info.row.original.id));
+            }}
             className={` flex items-center justify-center rounded-lg bg-lightPrimary p-[0.4rem]  font-medium text-brand-500 transition duration-200
            hover:cursor-pointer hover:bg-gray-100 dark:bg-navy-700 dark:text-white dark:hover:bg-white/20 dark:active:bg-white/10`}
           >
@@ -216,11 +179,7 @@ function TaskTable(props: { tableData: any }) {
       ),
     }),
   ]; // eslint-disable-next-line
-
-  useEffect(() => {
-    setData(tableData);
-  }, [tableData]);
-
+  const [data, setData] = useState(() => [...tableData]);
   const [globalFilter, setGlobalFilter] = useState<string>("");
   const table = useReactTable({
     data,
@@ -235,7 +194,6 @@ function TaskTable(props: { tableData: any }) {
     globalFilterFn: fuzzyFilter,
     onGlobalFilterChange: setGlobalFilter,
     getFilteredRowModel: getFilteredRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -246,7 +204,7 @@ function TaskTable(props: { tableData: any }) {
       <Card extra={"w-full h-full sm:overflow-auto px-6"}>
         <header className="relative flex items-center justify-between pt-4">
           <div className="text-xl font-bold text-navy-700 dark:text-white">
-            Tasks Table
+            Reported Incidents
           </div>
           <div className="flex items-center justify-between">
             <div className="flex h-full min-h-[32px] items-center rounded-lg bg-lightPrimary text-navy-700 dark:bg-navy-900 dark:text-white xl:w-[225px]">
@@ -261,13 +219,6 @@ function TaskTable(props: { tableData: any }) {
                 className="block h-full min-h-[32px] w-full rounded-full bg-lightPrimary text-sm font-medium text-navy-700 outline-none placeholder:!text-gray-400 dark:bg-navy-900 dark:text-white dark:placeholder:!text-white sm:w-fit"
               />
             </div>
-            <button
-              onClick={() => handleNewTask()}
-              className={` linear mx-1 flex items-center justify-center rounded-lg bg-lightPrimary p-[0.4rem]  font-medium text-brand-500 transition duration-200
-           hover:cursor-pointer hover:bg-gray-100 dark:bg-navy-700 dark:text-white dark:hover:bg-white/20 dark:active:bg-white/10`}
-            >
-              <AiOutlinePlus className="h-5 w-5" />
-            </button>
           </div>
         </header>
 
@@ -314,7 +265,7 @@ function TaskTable(props: { tableData: any }) {
                         return (
                           <td
                             key={cell.id}
-                            className="min-w-[150px] border-white/0 py-3  pr-4"
+                            className="border-white/0 py-3  pr-4"
                           >
                             {flexRender(
                               cell.column.columnDef.cell,
@@ -333,20 +284,16 @@ function TaskTable(props: { tableData: any }) {
       </Card>
       {selectedRow && (
         <>
-          <ViewTaskModal
-            onViewTaskModalClose={onViewTaskModalClose}
-            isViewTaskModalOpen={isViewTaskModalOpen}
-            task={selectedRow}
-            edit={editTask}
+          <IncidentModal
+            showSource={false}
+            isIncidentModalOpen={isIncidentModalOpen}
+            onIncidentModalClose={onIncidentModalClose}
+            incident={selectedRow}
           />
         </>
       )}
-      <NewTaskModal
-        onNewTaskModalClose={onNewTaskModalClose}
-        isNewTaskModalOpen={isNewTaskModalOpen}
-      />
     </>
   );
 }
 
-export default TaskTable;
+export default ReportTable;

@@ -6,7 +6,6 @@ export interface Admin {
   admin_name: string;
   station_name: string;
   role: string;
-  dept_name: string;
   photo: string;
 }
 
@@ -22,7 +21,6 @@ const initialState: AdminState = {
     admin_name: "",
     station_name: "",
     role: "",
-    dept_name: "",
     photo: "",
   },
   loading: false,
@@ -58,7 +56,6 @@ export const AdminSlice = createSlice({
         admin_name: "",
         station_name: "",
         role: "",
-        dept_name: "",
         photo: "",
       };
       state.error = null;

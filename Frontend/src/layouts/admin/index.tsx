@@ -8,7 +8,6 @@ import { fetchAdmin } from "@/app/features/AdminSlice";
 import { useAppDispatch, useAppSelector } from "@/app/store";
 import { fetchStaff } from "@/app/features/StaffSlice";
 import { fetchIncidents } from "@/app/features/IncidentSlice";
-import { fetchTasks } from "@/app/features/TaskSlice";
 import { fetchNotifications } from "@/app/features/NotificationSlice";
 
 export default function Admin(props: { [x: string]: any }) {
@@ -37,31 +36,22 @@ export default function Admin(props: { [x: string]: any }) {
 
   useEffect(() => {
     const fetchData = () => {
-      if (!admin || admin.dept_name === "" || admin.station_name === "") {
+      if (!admin || admin.station_name === "") {
         fetchAdmin(localStorage.getItem("id") as string);
         return;
       }
       dispatch(
         fetchIncidents({
-          deptName: admin.dept_name,
           stationName: admin.station_name,
         })
       );
       dispatch(
         fetchStaff({
-          deptName: admin.dept_name,
-          stationName: admin.station_name,
-        })
-      );
-      dispatch(
-        fetchTasks({
-          deptName: admin.dept_name,
           stationName: admin.station_name,
         })
       );
       dispatch(
         fetchNotifications({
-          deptName: admin.dept_name,
           stationName: admin.station_name,
         })
       );
@@ -102,10 +92,10 @@ export default function Admin(props: { [x: string]: any }) {
   const getRoutes = (routes: RoutesType[]): any => {
     return routes.map((prop, key) => {
       var layout;
-      if (location.pathname.includes("dept-admin")) {
-        layout = "/dept-admin";
-      } else if (location.pathname.includes("station-admin")) {
+      if (location.pathname.includes("station-admin")) {
         layout = "/station-admin";
+      } else if (location.pathname.includes("super-admin")) {
+        layout = "/super-admin";
       }
       if (prop.layout === layout) {
         return (

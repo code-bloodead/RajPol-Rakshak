@@ -24,7 +24,6 @@ import { FiSearch } from "react-icons/fi";
 import { useDisclosure } from "@chakra-ui/hooks";
 import { getDate, truncateString } from "@/constants/utils";
 import IncidentModal from "@/components/modal/IncidentModal";
-import ConvertTaskModal from "@/components/modal/ConvertTaskModal";
 import { useAppDispatch } from "@/app/store";
 
 declare module "@tanstack/table-core" {
@@ -73,20 +72,9 @@ function IncidentTable(props: { tableData: any }) {
     onClose: onIncidentModalClose,
   } = useDisclosure();
 
-  const {
-    isOpen: isConvertTaskModalOpen,
-    onOpen: onConvertTaskModalOpen,
-    onClose: onConvertTaskModalClose,
-  } = useDisclosure();
-
   const handleView = (rowObj: RowObj) => {
     setSelectedRow(rowObj);
     onIncidentModalOpen();
-  };
-
-  const handleAddTask = (rowObj: RowObj) => {
-    setSelectedRow(rowObj);
-    onConvertTaskModalOpen();
   };
 
   const handleDelete = (rowObj: RowObj) => {
@@ -176,14 +164,6 @@ function IncidentTable(props: { tableData: any }) {
       ),
       cell: (info: any) => (
         <div className="flex items-center space-x-2">
-          <button
-            onClick={() => handleAddTask(info.row.original)}
-            className={` flex items-center justify-center rounded-lg bg-lightPrimary p-[0.4rem]  font-medium text-brand-500 transition duration-200
-           hover:cursor-pointer hover:bg-gray-100 dark:bg-navy-700 dark:text-white dark:hover:bg-white/20 dark:active:bg-white/10`}
-          >
-            <MdOutlinePostAdd className="h-4 w-4" />
-          </button>
-
           <button
             onClick={() => handleView(info.row.original)}
             className={` flex items-center justify-center rounded-lg bg-lightPrimary p-[0.4rem]  font-medium text-brand-500 transition duration-200
@@ -303,13 +283,7 @@ function IncidentTable(props: { tableData: any }) {
           <IncidentModal
             showSource={false}
             isIncidentModalOpen={isIncidentModalOpen}
-            onConvertTaskModalOpen={onConvertTaskModalOpen}
             onIncidentModalClose={onIncidentModalClose}
-            incident={selectedRow}
-          />
-          <ConvertTaskModal
-            isConvertTaskModalOpen={isConvertTaskModalOpen}
-            onConvertTaskModalClose={onConvertTaskModalClose}
             incident={selectedRow}
           />
         </>
