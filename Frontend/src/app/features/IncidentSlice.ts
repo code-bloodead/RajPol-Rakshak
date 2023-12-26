@@ -34,7 +34,7 @@ export const fetchIncidents = createAsyncThunk(
       const res = await axios.get(
         `${
           import.meta.env.VITE_BACKEND_URL
-        }/incidents/get_incidents_by_dept_and_station?station_name=${stationName}`
+        }/incidents/get_incidents_by_station?station_name=${stationName}`
       );
       return res.data;
     } catch (error) {

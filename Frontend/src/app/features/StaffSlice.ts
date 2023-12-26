@@ -29,7 +29,7 @@ export const fetchStaff = createAsyncThunk(
       const res = await axios.get(
         `${
           import.meta.env.VITE_BACKEND_URL
-        }/staff/get_staffs_by_dept?station_name=${stationName}`
+        }/staff/get_staffs_by_station?station_name=${stationName}`
       );
       return res.data.SUCCESS;
     } catch (error) {

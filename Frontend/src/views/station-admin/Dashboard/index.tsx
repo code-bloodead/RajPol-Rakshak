@@ -15,10 +15,13 @@ const Dashboard = () => {
   const incidents = useAppSelector((state) => state.incidents.data);
   const detectedIncidents = incidents.filter(
     (obj) => obj.source === "CCTV"
-  ).length;
+  );
   const reportedIncidents = incidents.filter(
     (obj) => obj.source === "User Report"
-  ).length;
+  );
+  const resolvedIncidents = incidents.filter(
+    (obj) => obj.status === "Resolved"
+  );
 
   return (
     <div>
@@ -28,17 +31,17 @@ const Dashboard = () => {
         <Widget
           icon={<TbReport className="h-7 w-7" />}
           title={"Reported Incidents"}
-          subtitle={reportedIncidents.toString()}
-        />
-        <Widget
-          icon={<FaTasks className="h-6 w-6" />}
-          title={"Completed Tasks"}
-          subtitle={"0"}
+          subtitle={reportedIncidents.length.toString()}
         />
         <Widget
           icon={<MdReport className="h-7 w-7" />}
           title={"Detected Incidents"}
-          subtitle={detectedIncidents.toString()}
+          subtitle={detectedIncidents.length.toString()}
+        />
+        <Widget
+          icon={<FaTasks className="h-6 w-6" />}
+          title={"Resolved Incidents"}
+          subtitle={resolvedIncidents.length.toString()}
         />
       </div>
 
@@ -47,8 +50,8 @@ const Dashboard = () => {
       <div className="mt-5 grid grid-cols-1 gap-5 md:grid-cols-5">
         <WeeklyIncidents />
 
-        {incidents?.length > 0 ? (
-          <IncidentTable tableData={incidents} />
+        {detectedIncidents?.length > 0 ? (
+          <IncidentTable title="Detected Incidents" tableData={detectedIncidents} />
         ) : (
           <TableSkeleton type="recentIncident" />
         )}
@@ -57,14 +60,15 @@ const Dashboard = () => {
       {/* Tables & Charts */}
 
       <div className="col-span-2 mt-5 grid grid-cols-2 gap-5 md:grid-cols-3 ">
-        {/* Check Table */}
-        {/* <div className="col-span-2">
-          {tasks?.length > 0 ? (
-            <TaskTable tableData={tasks} />
-          ) : (
-            <TableSkeleton type="taskTable" />
-          )}
-        </div> */}
+        {/* Reported Incidents */}
+        <div className="col-span-2">
+        {reportedIncidents?.length > 0 ? (
+          <IncidentTable title="Reported Incidents" tableData={reportedIncidents} />
+        ) : (
+          <TableSkeleton type="recentIncident" />
+        )}
+        </div>
+
         {staff?.length > 0 ? (
           <div className="grid grid-cols-1 col-span-2 md:col-span-1 rounded-[20px]">
             <StaffTable tableData={staff} />

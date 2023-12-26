@@ -52,7 +52,7 @@ type RowObj = {
   actions: string | undefined;
 };
 
-function IncidentTable(props: { tableData: any }) {
+function IncidentTable(props: { tableData: any, title:string }) {
   const columnHelper = createColumnHelper<RowObj>();
   const navigate: NavigateFunction = useNavigate();
 
@@ -176,7 +176,7 @@ function IncidentTable(props: { tableData: any }) {
       <Card extra={"w-full h-full sm:overflow-auto px-6 col-span-3"}>
         <header className="relative flex items-center justify-between pt-4">
           <div className="text-xl font-bold text-navy-700 dark:text-white">
-            Recent Incidents
+            {props.title}
           </div>
           <button
             onClick={() => {
