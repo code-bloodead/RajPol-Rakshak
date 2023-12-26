@@ -4,6 +4,7 @@ import Reports from "@/views/station-admin/Reports";
 import Incidents from "@/views/station-admin/Incidents";
 import Footages from "@/views/station-admin/Footages";
 import Staff from "@/views/station-admin/Staff";
+import PublicCCTvs from "@/views/station-admin/PublicCCTVs";
 
 // Auth Imports
 import SignIn from "@/views/auth/SignIn";
@@ -42,6 +43,13 @@ const routes = [
     path: "cctv-footage",
     icon: <BiCctv className="h-6 w-6" />,
     component: <Footages />,
+  },
+  {
+    name: "Public CCTVs",
+    layout: "/station-admin",
+    path: "public-cctvs",
+    icon: <BiCctv className="h-6 w-6" />,
+    component: <PublicCCTvs />,
   },
   {
     name: "Staff",

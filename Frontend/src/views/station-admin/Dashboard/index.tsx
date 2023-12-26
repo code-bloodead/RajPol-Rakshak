@@ -6,7 +6,6 @@ import StaffTable from "./components/StaffTable";
 import WeeklyIncidents from "./components/WeeklyIncidents";
 import { useAppSelector } from "@/app/store";
 import TableSkeleton from "./components/TableSkeleton";
-import WeeklyIncidentSkeleton from "./components/WeeklyIncidentSkeleton";
 import IncidentTable from "./components/IncidentTable";
 import { FaTasks } from "react-icons/fa";
 
