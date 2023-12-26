@@ -7,4 +7,4 @@ client = MongoClient(f"mongodb+srv://{USERNAME}:{PASSWORD}@{DB_URL}/?retryWrites
 #local connection
 # client =  MongoClient("mongodb://localhost:27017/")
 
-database = client.RailRakshak
+database = client.Rakshak
