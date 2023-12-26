@@ -49,13 +49,6 @@ const routes = [
     layout: "/station-admin",
     path: "public-surveillance",
     icon: <BiCctv className="h-6 w-6" />,
-    component: <Footages />,
-  },
-  {
-    name: "Public CCTVs",
-    layout: "/station-admin",
-    path: "public-cctvs",
-    icon: <BiCctv className="h-6 w-6" />,
     component: <PublicCCTvs />,
   },
   {
