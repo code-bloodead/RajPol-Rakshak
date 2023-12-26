@@ -1,13 +1,18 @@
 from fastapi import  APIRouter, Response, status
 from src.models.admin_model import Admin, AdminLogin
+from src.models.staff_model import Staff, StaffLogin
 from src.database.auth_db import (validate_admin, 
                                   create_admin,
                                   create_user,
+                                  validate_staff,
+                                  create_staff,
                                   check_user,
                                   update_otp,
                                   make_user_valid,
                                   update_user_token
                                   )
+from src.database.staff_db import update_staff_token
+
 from src.models.user_model import User, UserLogin
 import math, random, requests
 from src.config import API_KEY, SMS_WEBHOOK
@@ -45,6 +50,28 @@ def add_admin(admin: Admin):
         return {"ERROR":"MISSING PARAMETERS"}
     
     result = create_admin(admin)
+    return result
+
+
+#login staff
+@router.post("/staff", description="Login Staff")
+def login_staff(staff: StaffLogin, response: Response):
+    if staff.id == "" or staff.password == "":
+        response.status_code = status.HTTP_400_BAD_REQUEST
+        return {"ERROR":"MISSING PARAMETERS"}
+    
+    result = validate_staff(staff)
+    if "ERROR" in result.keys():
+        response.status_code = status.HTTP_401_UNAUTHORIZED
+    return result
+
+# #create station admin
+@router.post("/create_staff", description="Create staff")
+def add_staff(staff: Staff):
+    if staff.password == "" or staff.station_name == "" or staff.dept_name == "" or staff.staff_name == "" or staff.phone == "":
+        return {"ERROR":"MISSING PARAMETERS"}
+    
+    result = create_staff(staff)
     return result
 
 #### USER AUTHENTICATION ####

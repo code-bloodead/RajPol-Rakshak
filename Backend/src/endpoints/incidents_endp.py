@@ -96,7 +96,7 @@ def get_all_incidents():
     return fetch_all_incidents()
     
 ## get incident by dept name and station name
-@router.get("/get_incidents_by_and_station")
+@router.get("/get_incidents_by_station")
 def get_incidents_by_station(station_name: str):
     return fetch_incidents_by_station(station_name)
 

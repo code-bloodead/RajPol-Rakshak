@@ -2,6 +2,8 @@ from pymongo import ASCENDING
 from src.models.admin_model import Admin, AdminLogin
 from src.models.user_model import User, UserLogin
 from src.establish_db_connection import database
+from src.models.staff_model import Staff, StaffLogin
+
 from passlib.context import CryptContext
 import random
 
@@ -11,6 +13,9 @@ admins.create_index([("id", ASCENDING)], unique=True)
 users = database.Users
 users.create_index([("mobile", ASCENDING)], unique=True)
 pwd_context = CryptContext(schemes=["bcrypt"],deprecated="auto")
+
+staffs = database.Staffs
+staffs.create_index([("id", ASCENDING)], unique=True)
 
 def generateID():
     # 8 characters long alphanumeric id in uppercase
@@ -59,7 +64,47 @@ def create_admin(admin: Admin):
     except Exception as e:
         print(e)
         return {"ERROR":"SOME ERROR OCCURRED"}
+
+     
+def validate_staff(staff: StaffLogin):
+    try:
+        document = staffs.find_one({"id": staff.id})
+        if document == None:
+            return {"ERROR":"INVALID CREDENTIALS"}
+        if pwd_context.verify(staff.password, document['password']):
+            del document['_id']
+            del document['password']
+            return {"SUCCESS": document}
+        else:
+            return {"ERROR":"INVALID CREDENTIALS"}
+    except Exception as e:
+        print(e)
+        return {"ERROR":"SOME ERROR OCCURRED"}
     
+def create_staff(staff: Staff):
+    try:
+        document = staff.dict()
+        document['password'] = pwd_context.hash(staff.password)
+        id = generateID()
+        distincts = staffs.distinct("id")
+
+        #until we have a unique id
+        while id in distincts:
+            id = generateID()
+
+        document['id'] = id
+        
+        staffs.insert_one(document)
+        #checking if 
+        del document['password']
+        del document['_id']
+
+        return {"SUCCESS": document}
+    except Exception as e:
+        print(e)
+        return {"ERROR":"SOME ERROR OCCURRED"}
+
+
 ### NORMAL USER LOGIC
 
 def create_user(user: User):
