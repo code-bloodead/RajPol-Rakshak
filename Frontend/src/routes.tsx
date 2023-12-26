@@ -9,7 +9,7 @@ import Staff from "@/views/station-admin/Staff";
 import SignIn from "@/views/auth/SignIn";
 
 // Icon Imports
-import { MdHome, MdLock, MdReport } from "react-icons/md";
+import { MdHome, MdLock, MdReport, MdOutlineLocalPolice } from "react-icons/md";
 import { TbReport } from "react-icons/tb";
 import { BiCctv } from "react-icons/bi";
 import { BsFillPeopleFill } from "react-icons/bs";
@@ -37,9 +37,16 @@ const routes = [
     component: <Incidents />,
   },
   {
-    name: "CCTV Footage",
+    name: "Station Surveillance",
     layout: "/station-admin",
-    path: "cctv-footage",
+    path: "station-surveillance",
+    icon: <MdOutlineLocalPolice className="h-6 w-6" />,
+    component: <Footages />,
+  },
+  {
+    name: "Public Surveillance",
+    layout: "/station-admin",
+    path: "public-surveillance",
     icon: <BiCctv className="h-6 w-6" />,
     component: <Footages />,
   },

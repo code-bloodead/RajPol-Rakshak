@@ -189,16 +189,7 @@ const Footages = () => {
                     Average crowd
                   </span>
                 )}
-                <button
-                  onClick={() => {
-                    setTaskTargetPlatform(platformWiseCrowd[idx].name);
-                    console.log(platformWiseCrowd[idx].name);
-                  }}
-                  className={` flex items-center justify-center rounded-lg bg-lightPrimary p-[0.4rem]  font-medium text-brand-500 transition duration-200 hover:cursor-pointer hover:bg-gray-100 dark:bg-navy-700 dark:text-white dark:hover:bg-white/20 dark:active:bg-white/10 ml-auto me-2 text-sm`}
-                >
-                  <span> Create Task </span>
-                  <MdOutlinePostAdd className="ml-1 h-4 w-4" />
-                </button>
+                
               </div>
               <div className=" p-2 mt-1">
                 <VideoPlayer url={stream.streamUrl} />
