@@ -57,7 +57,7 @@ export default function SignIn() {
       };
 
       try {
-        let res = await axios.post(
+        const res = await axios.post(
           `${import.meta.env.VITE_BACKEND_URL}/auth/admin`,
           formData
         );

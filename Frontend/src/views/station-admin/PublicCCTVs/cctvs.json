@@ -1,0 +1,55 @@
+{
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Versova Beach",
+        "description": "A continuation of Juhu Beach towards the Andheri suburbs",
+        "kind": "beach",
+        "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1703605906/samples/beach.mp4"
+      },
+      "geometry": { "coordinates": [72.814, 19.125], "type": "Point" }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Lokhandwala Market",
+        "description": "A bustling local market in western Mumbai, near Andheri",
+        "kind": "default",
+        "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1703605915/samples/market.mp4"
+      },
+      "geometry": { "coordinates": [72.829, 19.138], "type": "Point" }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Chota Kashmir",
+        "description": "Bollywood’s rendition of a tiny Kashmir, located near Goregaon",
+        "kind": "boat",
+        "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1703605906/samples/beach.mp4"
+      },
+      "geometry": { "coordinates": [72.857, 19.155], "type": "Point" }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Mahakali Caves",
+        "description": "Centuries-old rock-cut monuments in western Mumbai",
+        "kind": "default",
+        "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1703605915/samples/market.mp4"
+      },
+      "geometry": { "coordinates": [72.867, 19.13], "type": "Point" }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Juhu Beach",
+        "description": "The longest beach in Mumbai, popular among tourists",
+        "kind": "beach",
+        "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1703605906/samples/beach.mp4"
+      },
+      "geometry": { "coordinates": [72.826, 19.107], "type": "Point" }
+    }
+  ],
+  "type": "FeatureCollection"
+}
