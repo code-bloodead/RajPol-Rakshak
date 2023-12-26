@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Navbar from "@/components/navbar";
 import Sidebar from "@/components/sidebar";
@@ -10,7 +10,7 @@ import { fetchStaff } from "@/app/features/StaffSlice";
 import { fetchIncidents } from "@/app/features/IncidentSlice";
 import { fetchNotifications } from "@/app/features/NotificationSlice";
 
-export default function Admin(props: { [x: string]: any }) {
+export default function Admin(props: Record<string, unknown>) {
   const { ...rest } = props;
   const location = useLocation();
   const dispatch = useAppDispatch();
@@ -79,7 +79,7 @@ export default function Admin(props: { [x: string]: any }) {
     }
   };
   const getActiveNavbar = (routes: RoutesType[]): string | boolean => {
-    let activeNavbar = false;
+    const activeNavbar = false;
     for (let i = 0; i < routes.length; i++) {
       if (
         window.location.href.indexOf(routes[i].layout + routes[i].path) !== -1
@@ -89,9 +89,9 @@ export default function Admin(props: { [x: string]: any }) {
     }
     return activeNavbar;
   };
-  const getRoutes = (routes: RoutesType[]): any => {
+  const getRoutes = (routes: RoutesType[]): ReactElement[] => {
     return routes.map((prop, key) => {
-      var layout;
+      let layout;
       if (location.pathname.includes("station-admin")) {
         layout = "/station-admin";
       } else if (location.pathname.includes("super-admin")) {
@@ -126,7 +126,7 @@ export default function Admin(props: { [x: string]: any }) {
               secondary={getActiveNavbar(routes)}
               {...rest}
             />
-            <div className="pt-5s mx-auto mb-auto h-full min-h-[84vh] p-2 md:pr-2">
+            <div className="pt-5s mx-auto mb-auto h-full min-h-[77vh] p-2 md:pr-2">
               <Routes>
                 {getRoutes(routes)}
 
