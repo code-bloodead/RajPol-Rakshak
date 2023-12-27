@@ -48,6 +48,27 @@ for i in range(10):
     create_incident(incident1)
     create_incident(incident2)
 
+
+for i in range(10):
+    incident1 = Incidents(
+        title="IncidentA"+str(i),
+        description="Incident"+str(i),
+        type=type[i%5],
+        station_name="Andheri",
+        location="Chakala street",
+        source="User Report"
+    )
+    incident2 = Incidents(
+        title="IncidentB"+str(i),
+        description="Incident"+str(i),
+        type=type[i%5],
+        station_name="CSMT",
+        location="Regis Hotel",
+        source="User Report"
+    )
+    create_incident(incident1)
+    create_incident(incident2)
+
 ### Creating 5 staff for each station
 from src.models.staff_model import Staff
 from src.database.auth_db import create_staff
