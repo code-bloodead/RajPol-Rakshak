@@ -15,14 +15,14 @@ const Footages = () => {
       title: "Prison cell - 1A",
       // streamUrl: "http://localhost:8888/mystream/index.m3u8",  // Local stream
       streamUrl:
-        "https://res.cloudinary.com/dp0ayty6p/video/upload/v1696664485/samples/sample-video.mp4",
+        "https://res.cloudinary.com/dp0ayty6p/video/upload/v1703653583/samples/prisonv105.mp4",
       socketUrl: "ws://localhost:5005/ws",
     },
     {
       title: "Prison cell - 3B",
       // streamUrl: "http://20.193.136.79/mystream/index.m3u8", // Azure URL
       streamUrl:
-        "https://res.cloudinary.com/dp0ayty6p/video/upload/v1696665710/samples/FOOTAGEtrasj_fight.mp4",
+        "https://res.cloudinary.com/dp0ayty6p/video/upload/v1703653583/samples/prisonv105.mp4",
       socketUrl: "ws://localhost:5006/ws",
     },
     // {
@@ -73,8 +73,8 @@ const Footages = () => {
                   {stream.title}
                 </h1>
                 <div className="grow"></div>
-                <div className="flex justify-end mx-2 my-2 mt-4 me-4">
-                  <div className="mr-2 rounded px-2.5 py-0.5 text-xs font-medium bg-red-100 border border-red-400 text-red-700">
+                <div className="flex justify-end items-end mx-2 my-2 mt-4 me-4">
+                  <div className=" whitespace-pre mr-2 rounded px-2.5 py-0.5 text-xs font-medium bg-red-100 border border-red-400 text-red-700">
                     Fight alert
                   </div>
                   <label htmlFor="underline_select" className="sr-only">

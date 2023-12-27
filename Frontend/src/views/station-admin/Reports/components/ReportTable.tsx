@@ -22,7 +22,7 @@ import { getDate, truncateString } from "@/constants/utils";
 import { useDisclosure } from "@chakra-ui/hooks";
 import IncidentModal from "@/components/modal/IncidentModal";
 import { useAppDispatch } from "@/app/store";
-import { deleteIncident } from "@/app/features/IncidentSlice";
+import { deleteIncident, resolveIncident } from "@/app/features/IncidentSlice";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 
 declare module "@tanstack/table-core" {
@@ -81,8 +81,15 @@ function ReportTable(props: { tableData: any }) {
   };
 
   const handleResolve = (rowObj: RowObj) => {
-    // dispatch(deleteIncident({ id: rowObj.id }));
-    // setData(data.filter((item) => item.id !== rowObj.id));
+    dispatch(resolveIncident({ id: rowObj.id, status: "Resolved" }));
+    setData(
+      data.map((item) => {
+        if (item.id === rowObj.id) {
+          return { ...item, status: "Resolved" };
+        }
+        return item;
+      })
+    );
   };
 
   const columns = [
@@ -270,7 +277,7 @@ function ReportTable(props: { tableData: any }) {
             <tbody>
               {table
                 .getRowModel()
-                .rows.slice(0, 6)
+                .rows
                 .map((row) => {
                   return (
                     <tr key={row.id}>

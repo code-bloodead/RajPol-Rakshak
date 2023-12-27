@@ -12,12 +12,15 @@ import { FaTasks } from "react-icons/fa";
 const Dashboard = () => {
   const staff = useAppSelector((state) => state.staff.data);
   const incidents = useAppSelector((state) => state.incidents.data);
+  
   const detectedIncidents = incidents.filter(
     (obj) => obj.source === "CCTV"
-  );
+  ).sort((a, b) => (a.status > b.status) ? 1 : -1);
+  
   const reportedIncidents = incidents.filter(
-    (obj) => obj.source === "User Report"
-  );
+    (obj) => obj.source === "User Report" 
+  ).sort((a, b) => (a.status > b.status) ? 1 : -1);
+
   const resolvedIncidents = incidents.filter(
     (obj) => obj.status === "Resolved"
   );
@@ -30,12 +33,12 @@ const Dashboard = () => {
         <Widget
           icon={<TbReport className="h-7 w-7" />}
           title={"Reported Incidents"}
-          subtitle={reportedIncidents.length.toString()}
+          subtitle={reportedIncidents.filter((obj) => obj.status === "Pending").length.toString()}
         />
         <Widget
           icon={<MdReport className="h-7 w-7" />}
           title={"Detected Incidents"}
-          subtitle={detectedIncidents.length.toString()}
+          subtitle={detectedIncidents.filter((obj) => obj.status === "Pending").length.toString()}
         />
         <Widget
           icon={<FaTasks className="h-6 w-6" />}
@@ -58,9 +61,9 @@ const Dashboard = () => {
 
       {/* Tables & Charts */}
 
-      <div className="col-span-2 mt-5 grid grid-cols-2 gap-5 md:grid-cols-3 ">
+      <div className="col-span-2 mt-5 grid grid-cols-2 gap-5 md:grid-cols-5 ">
         {/* Reported Incidents */}
-        <div className="col-span-2">
+        <div className="col-span-2 md:col-span-3">
         {reportedIncidents?.length > 0 ? (
           <IncidentTable title="Reported Incidents" tableData={reportedIncidents} />
         ) : (
@@ -69,7 +72,7 @@ const Dashboard = () => {
         </div>
 
         {staff?.length > 0 ? (
-          <div className="grid grid-cols-1 col-span-2 md:col-span-1 rounded-[20px]">
+          <div className="col-span-2 rounded-[20px]">
             <StaffTable tableData={staff} />
           </div>
         ) : (

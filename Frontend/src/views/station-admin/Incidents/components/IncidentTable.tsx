@@ -4,7 +4,7 @@ import Pagination from "@/components/pagination/Pagination";
 import { FaRegEye } from "react-icons/fa";
 import { FaTrash } from "react-icons/fa6";
 import { MdOutlinePostAdd } from "react-icons/md";
-import { deleteIncident } from "@/app/features/IncidentSlice";
+import { deleteIncident, resolveIncident } from "@/app/features/IncidentSlice";
 
 import {
   createColumnHelper,
@@ -84,8 +84,15 @@ function IncidentTable(props: { tableData: any }) {
   };
 
   const handleResolve = (rowObj: RowObj) => {
-    // dispatch(deleteIncident({ id: rowObj.id }));
-    // setData(data.filter((item) => item.id !== rowObj.id));
+    dispatch(resolveIncident({ id: rowObj.id, status: "Resolved" }));
+    setData(
+      data.map((item) => {
+        if (item.id === rowObj.id) {
+          return { ...item, status: "Resolved" };
+        }
+        return item;
+      })
+    );
   };
 
   const columns = [
@@ -269,7 +276,7 @@ function IncidentTable(props: { tableData: any }) {
           <tbody>
             {table
               .getRowModel()
-              .rows.slice(0, 6)
+              .rows
               .map((row) => {
                 return (
                   <tr key={row.id}>

@@ -57,7 +57,7 @@ const SearchDialog = (props: SearchDialogProps) => {
             </svg>
           </div>
           <h3 className="mt-2 text-sm">Suggestions:</h3>
-          <ul className="bg-white border border-gray-100 w-full mt-2 ">
+          <ul className="bg-white border border-gray-100 w-full mt-2 rounded-md p-1">
             {suggestions.map((suggestion) => {
               const LocationIcon = getLocationIcon(suggestion.type);
               return (

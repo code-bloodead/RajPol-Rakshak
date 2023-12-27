@@ -23,7 +23,7 @@ import { useAppDispatch } from "@/app/store";
 
 import IncidentModal from "@/components/modal/IncidentModal";
 import { FaTrash } from "react-icons/fa6";
-import { deleteIncident } from "@/app/features/IncidentSlice";
+import { deleteIncident, resolveIncident } from "@/app/features/IncidentSlice";
 
 declare module "@tanstack/table-core" {
   interface FilterFns {
@@ -83,8 +83,15 @@ function IncidentTable(props: { tableData: any, title:string }) {
   };
 
   const handleResolve = (rowObj: RowObj) => {
-    // dispatch(deleteIncident({ id: rowObj.id }));
-    // setData(data.filter((item) => item.id !== rowObj.id));
+    dispatch(resolveIncident({ id: rowObj.id, status: "Resolved" }));
+    setData(
+      data.map((item) => {
+        if (item.id === rowObj.id) {
+          return { ...item, status: "Resolved" };
+        }
+        return item;
+      })
+    );
   };
 
   useEffect(() => {
@@ -261,7 +268,7 @@ function IncidentTable(props: { tableData: any, title:string }) {
                         return (
                           <td
                             key={cell.id}
-                            className="border-white/0 py-3  pr-4"
+                            className="border-white/0 py-3 "
                           >
                             {flexRender(
                               cell.column.columnDef.cell,

@@ -9,7 +9,7 @@ const TableSkeleton = ({ type }: TableSkeletonProps) => {
     <>
       <Card
         extra={`w-full overflow-hidden sm:overflow-auto px-6 p-4 space-y-4 border border-gray-200 divide-y bg-white rounded shadow animate-pulse dark:divide-gray-700 md:p-6 dark:border-gray-700 ${
-          type === "recentIncident" ? "col-span-3" : ""
+          type === "recentIncident" ? "col-span-3" : "col-span-2"
         }`}
       >
         {Array.from({ length: 5 }).map((_, index) => (

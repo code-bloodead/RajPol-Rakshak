@@ -60,6 +60,22 @@ export const deleteIncident = createAsyncThunk(
   }
 );
 
+export const resolveIncident = createAsyncThunk(
+  "incident/resolve",
+  async (payload: { id: string, status:string }, thunkAPI) => {
+    try {
+      const { id,status } = payload;
+      const res = await axios.put(
+        `${import.meta.env.VITE_BACKEND_URL}/incidents/update_incident_status?id=${id}&status=${status}`
+      );
+      return id;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+);
+
 export const IncidentSlice = createSlice({
   name: "incidents",
   initialState,
@@ -99,6 +115,21 @@ export const IncidentSlice = createSlice({
       state.error = null;
     });
     builder.addCase(deleteIncident.rejected, (state, action) => {
+      state.error = action.error.message || "An error occurred";
+      state.loading = false;
+    });
+    builder.addCase(resolveIncident.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(resolveIncident.fulfilled, (state, action) => {
+      state.data = state.data.filter(
+        (incident) => incident.id !== action.payload
+      );
+      state.loading = false;
+      state.error = null;
+    });
+    builder.addCase(resolveIncident.rejected, (state, action) => {
       state.error = action.error.message || "An error occurred";
       state.loading = false;
     });
