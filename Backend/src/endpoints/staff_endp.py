@@ -1,5 +1,5 @@
 from fastapi import  APIRouter
-from src.database.staff_db import get_staffs_by_dept, update_staff_status
+from src.database.staff_db import get_staffs_by_station, update_staff_status
 # from src.database.task_db import get_tasks_for_staff, update_task_status
 
 router = APIRouter(
@@ -12,7 +12,7 @@ router = APIRouter(
 def get_by_station(station_name: str):
     if station_name == "":
         return {"ERROR":"MISSING PARAMETERS"}
-    return get_staffs_by_dept(station_name)
+    return get_staffs_by_station(station_name)
 
 # @router.get("/get_assigned_tasks")
 # def get_assigned_tasks(id: str):
