@@ -25,6 +25,7 @@ import { useDisclosure } from "@chakra-ui/hooks";
 import { getDate, truncateString } from "@/constants/utils";
 import IncidentModal from "@/components/modal/IncidentModal";
 import { useAppDispatch } from "@/app/store";
+import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 
 declare module "@tanstack/table-core" {
   interface FilterFns {
@@ -80,6 +81,11 @@ function IncidentTable(props: { tableData: any }) {
   const handleDelete = (rowObj: RowObj) => {
     dispatch(deleteIncident({ id: rowObj.id }));
     setData(data.filter((item) => item.id !== rowObj.id));
+  };
+
+  const handleResolve = (rowObj: RowObj) => {
+    // dispatch(deleteIncident({ id: rowObj.id }));
+    // setData(data.filter((item) => item.id !== rowObj.id));
   };
 
   const columns = [
@@ -170,6 +176,13 @@ function IncidentTable(props: { tableData: any }) {
            hover:cursor-pointer hover:bg-gray-100 dark:bg-navy-700 dark:text-white dark:hover:bg-white/20 dark:active:bg-white/10`}
           >
             <FaRegEye className="h-4 w-4" />
+          </button>
+          <button
+            onClick={() => handleResolve(info.row.original)}
+            className={` flex items-center justify-center rounded-lg bg-lightPrimary p-[0.4rem]  font-medium text-brand-500 transition duration-200
+           hover:cursor-pointer hover:bg-gray-100 dark:bg-navy-700 dark:text-white dark:hover:bg-white/20 dark:active:bg-white/10`}
+          >
+            <IoMdCheckmarkCircleOutline className="h-4 w-4" />
           </button>
           <button
             onClick={() => handleDelete(info.row.original)}

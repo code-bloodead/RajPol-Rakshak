@@ -23,6 +23,7 @@ import { useDisclosure } from "@chakra-ui/hooks";
 import IncidentModal from "@/components/modal/IncidentModal";
 import { useAppDispatch } from "@/app/store";
 import { deleteIncident } from "@/app/features/IncidentSlice";
+import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 
 declare module "@tanstack/table-core" {
   interface FilterFns {
@@ -72,6 +73,16 @@ function ReportTable(props: { tableData: any }) {
   const handleView = (rowObj: RowObj) => {
     setSelectedRow(rowObj);
     onIncidentModalOpen();
+  };
+
+  const handleDelete = (rowObj: RowObj) => {
+    dispatch(deleteIncident({ id: rowObj.id }));
+    setData(data.filter((item) => item.id !== rowObj.id));
+  };
+
+  const handleResolve = (rowObj: RowObj) => {
+    // dispatch(deleteIncident({ id: rowObj.id }));
+    // setData(data.filter((item) => item.id !== rowObj.id));
   };
 
   const columns = [
@@ -156,8 +167,6 @@ function ReportTable(props: { tableData: any }) {
       ),
       cell: (info: any) => (
         <div className="flex items-center space-x-2">
-          
-
           <button
             onClick={() => handleView(info.row.original)}
             className={` flex items-center justify-center rounded-lg bg-lightPrimary p-[0.4rem]  font-medium text-brand-500 transition duration-200
@@ -166,10 +175,14 @@ function ReportTable(props: { tableData: any }) {
             <FaRegEye className="h-4 w-4" />
           </button>
           <button
-            onClick={() => {
-              dispatch(deleteIncident({ id: info.row.original.id }));
-              setData(data.filter((item) => item.id !== info.row.original.id));
-            }}
+            onClick={() => handleResolve(info.row.original)}
+            className={` flex items-center justify-center rounded-lg bg-lightPrimary p-[0.4rem]  font-medium text-brand-500 transition duration-200
+           hover:cursor-pointer hover:bg-gray-100 dark:bg-navy-700 dark:text-white dark:hover:bg-white/20 dark:active:bg-white/10`}
+          >
+            <IoMdCheckmarkCircleOutline className="h-4 w-4" />
+          </button>
+          <button
+            onClick={() => handleDelete(info.row.original)}
             className={` flex items-center justify-center rounded-lg bg-lightPrimary p-[0.4rem]  font-medium text-brand-500 transition duration-200
            hover:cursor-pointer hover:bg-gray-100 dark:bg-navy-700 dark:text-white dark:hover:bg-white/20 dark:active:bg-white/10`}
           >
