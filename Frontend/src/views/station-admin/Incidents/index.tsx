@@ -18,6 +18,7 @@ const Incidents = () => {
     <div>
       <div className="mx-3 my-3 grid grid-cols-1">
         {filteredIncidents.length > 0 ? (
+          console.log(filteredIncidents),
           <IncidentTable tableData={filteredIncidents} />
         ) : (
           <TableSkeleton />

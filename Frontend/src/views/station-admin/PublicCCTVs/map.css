@@ -1,6 +1,7 @@
 .public-cctvs-map-container,
 .public-cctvs-map-container .mapboxgl-map {
   min-height: inherit;
+  border-radius: 0.8rem;
 }
 
 .cctv-marker-popup .mapboxgl-popup-close-button {

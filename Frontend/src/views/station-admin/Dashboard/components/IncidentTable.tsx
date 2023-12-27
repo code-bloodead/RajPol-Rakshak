@@ -10,7 +10,8 @@ import {
   SortingState,
   useReactTable,
 } from "@tanstack/react-table";
-import { MdCheckCircle, MdOutlinePostAdd } from "react-icons/md";
+import { MdCheckCircle } from "react-icons/md";
+import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import { BsClockHistory } from "react-icons/bs";
 
 import { RankingInfo, rankItem } from "@tanstack/match-sorter-utils";
@@ -18,8 +19,11 @@ import { NavigateFunction, useNavigate } from "react-router-dom";
 import { ImEnlarge } from "react-icons/im";
 import { useDisclosure } from "@chakra-ui/hooks";
 import { FaRegEye } from "react-icons/fa";
+import { useAppDispatch } from "@/app/store";
 
 import IncidentModal from "@/components/modal/IncidentModal";
+import { FaTrash } from "react-icons/fa6";
+import { deleteIncident, resolveIncident } from "@/app/features/IncidentSlice";
 
 declare module "@tanstack/table-core" {
   interface FilterFns {
@@ -60,6 +64,7 @@ function IncidentTable(props: { tableData: any, title:string }) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [data, setData] = useState(() => [...tableData]);
   const [selectedRow, setSelectedRow] = useState<RowObj | null>(null);
+  const dispatch = useAppDispatch();
 
   const {
     isOpen: isIncidentModalOpen,
@@ -70,6 +75,23 @@ function IncidentTable(props: { tableData: any, title:string }) {
   const handleView = (rowObj: RowObj) => {
     setSelectedRow(rowObj);
     onIncidentModalOpen();
+  };
+
+  const handleDelete = (rowObj: RowObj) => {
+    dispatch(deleteIncident({ id: rowObj.id }));
+    setData(data.filter((item) => item.id !== rowObj.id));
+  };
+
+  const handleResolve = (rowObj: RowObj) => {
+    dispatch(resolveIncident({ id: rowObj.id, status: "Resolved" }));
+    setData(
+      data.map((item) => {
+        if (item.id === rowObj.id) {
+          return { ...item, status: "Resolved" };
+        }
+        return item;
+      })
+    );
   };
 
   useEffect(() => {
@@ -103,19 +125,19 @@ function IncidentTable(props: { tableData: any, title:string }) {
         </p>
       ),
     }),
-    columnHelper.accessor("source", {
-      id: "source",
-      header: () => (
-        <p className="text-sm font-bold text-gray-600 dark:text-white">
-          SOURCE
-        </p>
-      ),
-      cell: (info) => (
-        <p className="text-sm font-bold text-navy-700 dark:text-white">
-          {info.getValue()}
-        </p>
-      ),
-    }),
+    // columnHelper.accessor("source", {
+    //   id: "source",
+    //   header: () => (
+    //     <p className="text-sm font-bold text-gray-600 dark:text-white">
+    //       SOURCE
+    //     </p>
+    //   ),
+    //   cell: (info) => (
+    //     <p className="text-sm font-bold text-navy-700 dark:text-white">
+    //       {info.getValue()}
+    //     </p>
+    //   ),
+    // }),
     columnHelper.accessor("status", {
       id: "status",
       header: () => (
@@ -151,6 +173,20 @@ function IncidentTable(props: { tableData: any, title:string }) {
            hover:cursor-pointer hover:bg-gray-100 dark:bg-navy-700 dark:text-white dark:hover:bg-white/20 dark:active:bg-white/10`}
           >
             <FaRegEye className="h-4 w-4" />
+          </button>
+          <button
+            onClick={() => handleResolve(info.row.original)}
+            className={` flex items-center justify-center rounded-lg bg-lightPrimary p-[0.4rem]  font-medium text-brand-500 transition duration-200
+           hover:cursor-pointer hover:bg-gray-100 dark:bg-navy-700 dark:text-white dark:hover:bg-white/20 dark:active:bg-white/10`}
+          >
+            <IoMdCheckmarkCircleOutline className="h-4 w-4" />
+          </button>
+          <button
+            onClick={() => handleDelete(info.row.original)}
+            className={` flex items-center justify-center rounded-lg bg-lightPrimary p-[0.4rem]  font-medium text-brand-500 transition duration-200
+           hover:cursor-pointer hover:bg-gray-100 dark:bg-navy-700 dark:text-white dark:hover:bg-white/20 dark:active:bg-white/10`}
+          >
+            <FaTrash className="h-4 w-4" />
           </button>
         </div>
       ),
@@ -232,7 +268,7 @@ function IncidentTable(props: { tableData: any, title:string }) {
                         return (
                           <td
                             key={cell.id}
-                            className="border-white/0 py-3  pr-4"
+                            className="border-white/0 py-3 "
                           >
                             {flexRender(
                               cell.column.columnDef.cell,

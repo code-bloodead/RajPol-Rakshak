@@ -4,7 +4,7 @@ import Pagination from "@/components/pagination/Pagination";
 import { FaRegEye } from "react-icons/fa";
 import { FaTrash } from "react-icons/fa6";
 import { MdOutlinePostAdd } from "react-icons/md";
-import { deleteIncident } from "@/app/features/IncidentSlice";
+import { deleteIncident, resolveIncident } from "@/app/features/IncidentSlice";
 
 import {
   createColumnHelper,
@@ -25,6 +25,7 @@ import { useDisclosure } from "@chakra-ui/hooks";
 import { getDate, truncateString } from "@/constants/utils";
 import IncidentModal from "@/components/modal/IncidentModal";
 import { useAppDispatch } from "@/app/store";
+import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 
 declare module "@tanstack/table-core" {
   interface FilterFns {
@@ -80,6 +81,18 @@ function IncidentTable(props: { tableData: any }) {
   const handleDelete = (rowObj: RowObj) => {
     dispatch(deleteIncident({ id: rowObj.id }));
     setData(data.filter((item) => item.id !== rowObj.id));
+  };
+
+  const handleResolve = (rowObj: RowObj) => {
+    dispatch(resolveIncident({ id: rowObj.id, status: "Resolved" }));
+    setData(
+      data.map((item) => {
+        if (item.id === rowObj.id) {
+          return { ...item, status: "Resolved" };
+        }
+        return item;
+      })
+    );
   };
 
   const columns = [
@@ -172,6 +185,13 @@ function IncidentTable(props: { tableData: any }) {
             <FaRegEye className="h-4 w-4" />
           </button>
           <button
+            onClick={() => handleResolve(info.row.original)}
+            className={` flex items-center justify-center rounded-lg bg-lightPrimary p-[0.4rem]  font-medium text-brand-500 transition duration-200
+           hover:cursor-pointer hover:bg-gray-100 dark:bg-navy-700 dark:text-white dark:hover:bg-white/20 dark:active:bg-white/10`}
+          >
+            <IoMdCheckmarkCircleOutline className="h-4 w-4" />
+          </button>
+          <button
             onClick={() => handleDelete(info.row.original)}
             className={` flex items-center justify-center rounded-lg bg-lightPrimary p-[0.4rem]  font-medium text-brand-500 transition duration-200
            hover:cursor-pointer hover:bg-gray-100 dark:bg-navy-700 dark:text-white dark:hover:bg-white/20 dark:active:bg-white/10`}
@@ -256,7 +276,7 @@ function IncidentTable(props: { tableData: any }) {
           <tbody>
             {table
               .getRowModel()
-              .rows.slice(0, 6)
+              .rows
               .map((row) => {
                 return (
                   <tr key={row.id}>
