@@ -3,8 +3,10 @@ import { CctvDetails } from "./cctvs.types";
 import Card from "@/components/card";
 import ReactApexChart from "react-apexcharts";
 import { useState } from "react";
-import { MdOutlineConnectedTv, MdOutlinePostAdd } from "react-icons/md";
+import { MdOutlineConnectedTv } from "react-icons/md";
 import VideoPlayer from "../Footages/Stream/VideoPlayer";
+import useCrowdCounter from "../Footages/Stream/useCrowdCounter";
+import { CrowdData, getAlert } from "../Footages/crowdAnalyser";
 
 enum Tab {
   Footage = "Footage",
@@ -19,6 +21,43 @@ interface PublicCctvFootagesProps {
 const PublicCctvFootages = (props: PublicCctvFootagesProps) => {
   const { cctvs, onToggleMapDrawer } = props;
   const [activeTab, setActiveTab] = useState<Tab>(Tab.Footage);
+
+  const { livePeopleCount: liveCount1, peopleCountHistory: history1 } =
+    useCrowdCounter(cctvs[0]?.streamUrl);
+  const { livePeopleCount: liveCount2, peopleCountHistory: history2 } =
+    useCrowdCounter(cctvs[0]?.streamUrl);
+  const { livePeopleCount: liveCount3, peopleCountHistory: history3 } =
+    useCrowdCounter(cctvs[0]?.streamUrl);
+  const { livePeopleCount: liveCount4, peopleCountHistory: history4 } =
+    useCrowdCounter(cctvs[0]?.streamUrl);
+
+  const liveCounts = [liveCount1, liveCount2, liveCount3, liveCount4];
+  const histories = [history1, history2, history3, history4];
+
+  const cctvWiseCrowd: CrowdData[] = cctvs.map((cctv, idx) => ({
+    livePeopleCount: liveCounts[idx % 4],
+    peopleCountHistory: histories[idx % 4],
+    name: cctv.name,
+    key: cctv.id,
+    alert: getAlert(history1),
+  }));
+
+  // Aggregate live and historical data for all platforms
+  const combinedData = cctvWiseCrowd.map((cctvCrowdData) => ({
+    label: cctvCrowdData.name,
+    live: cctvCrowdData.livePeopleCount,
+    history: cctvCrowdData.peopleCountHistory.reduce(
+      (sum, count) => sum + count,
+      0
+    ),
+  }));
+
+  const platformWiseSeries = cctvWiseCrowd.map((platformData) => ({
+    name: platformData.name,
+    data: platformData.peopleCountHistory,
+  }));
+  const liveSeries = combinedData.map((data) => data.live);
+  const historySeries = combinedData.map((data) => data.history);
 
   return (
     <div>
@@ -72,16 +111,16 @@ const PublicCctvFootages = (props: PublicCctvFootagesProps) => {
               </div>
               <div className="p-2 flex flex-row items-center justify-between">
                 <span className="mx-2">{cctv.description}</span>
-                {/* <span className="mr-2 rounded px-2.5 py-0.5 text-xs font-medium bg-red-100 border border-red-400 text-red-700">
+                <span className="mr-2 rounded px-2.5 py-0.5 text-xs font-medium bg-red-100 border border-red-400 text-red-700">
                   Overcrowded
-                </span> */}
-                <button
+                </span>
+                {/* <button
                   onClick={() => {}}
                   className={` flex items-center justify-center rounded-lg bg-lightPrimary p-[0.4rem]  font-medium text-brand-500 transition duration-200 hover:cursor-pointer hover:bg-gray-100 dark:bg-navy-700 dark:text-white dark:hover:bg-white/20 dark:active:bg-white/10 ml-auto me-2 text-sm`}
                 >
                   <span> Create Task </span>
                   <MdOutlinePostAdd className="ml-1 h-4 w-4" />
-                </button>
+                </button> */}
               </div>
               <div className=" p-2 mt-1">
                 <VideoPlayer url={cctv.streamUrl} />
@@ -113,9 +152,9 @@ const PublicCctvFootages = (props: PublicCctvFootagesProps) => {
                     text: "Live Crowd distribution",
                     align: "left",
                   },
-                  labels: [],
+                  labels: combinedData.map((data) => data.label),
                 }}
-                series={[]}
+                series={liveSeries}
                 type="pie"
                 width={380}
               />
@@ -131,9 +170,9 @@ const PublicCctvFootages = (props: PublicCctvFootagesProps) => {
                     text: "Overall Crowd distribution",
                     align: "left",
                   },
-                  labels: [],
+                  labels: combinedData.map((data) => data.label),
                 }}
-                series={[]}
+                series={historySeries}
                 type="pie"
                 width={380}
               />
@@ -142,7 +181,7 @@ const PublicCctvFootages = (props: PublicCctvFootagesProps) => {
           <Card>
             <div className="p-3">
               <ReactApexChart
-                series={[]}
+                series={platformWiseSeries}
                 options={{
                   chart: {
                     height: 900,

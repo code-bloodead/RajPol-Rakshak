@@ -15,52 +15,13 @@ admin1 = Admin(
 
 admin2 = Admin(
     password=PASSWORD,
-    station_name="Bandra",
+    station_name="CSMT",
     role="STATION_ADMIN",
     admin_name="kishore"
 )
 
 create_admin(admin1)
 create_admin(admin2)
-
-#### Creating 2 Dept admins for 2 different departments (Maintenance and Security) for each station
-
-dept1 = Admin(
-    password=PASSWORD,
-    station_name="Andheri",
-    role="DEPT_ADMIN",
-    dept_name="Maintenance",
-    admin_name="Sameer"
-)
-
-dept2 = Admin(
-    password=PASSWORD,
-    station_name="Andheri",
-    role="DEPT_ADMIN",
-    dept_name="Security",
-    admin_name="Saurabh"
-)
-
-dept3 = Admin(
-    password=PASSWORD,
-    station_name="Bandra",
-    role="DEPT_ADMIN",
-    dept_name="Maintenance",
-    admin_name="Rajesh"
-)
-
-dept4 = Admin(
-    password=PASSWORD,
-    station_name="Bandra",
-    role="DEPT_ADMIN",
-    dept_name="Security",
-    admin_name="Brigesh"
-)
-
-create_admin(dept1)
-create_admin(dept2)
-create_admin(dept3)
-create_admin(dept4)
 
 #### Creating 10 incidents for each station
 
@@ -73,18 +34,37 @@ for i in range(10):
         description="Incident"+str(i),
         type=type[i%5],
         station_name="Andheri",
-        location="Platform no. 1",
+        location="Chakala street",
         source="CCTV"
     )
     incident2 = Incidents(
         title="IncidentB"+str(i),
         description="Incident"+str(i),
         type=type[i%5],
-        station_name="Bandra",
-        location="Platform no. 1",
+        station_name="CSMT",
+        location="Regis Hotel",
         source="CCTV"
     )
     create_incident(incident1)
     create_incident(incident2)
 
+### Creating 5 staff for each station
+from src.models.staff_model import Staff
+from src.database.auth_db import create_staff
+
+for i in range(5):
+    staff1 = Staff(
+        password=PASSWORD,
+        station_name="Andheri",
+        staff_name="StaffA"+str(i),
+        phone="987654321"+str(i)
+    )
+    staff2 = Staff(
+        password=PASSWORD,
+        station_name="CSMT",
+        staff_name="StaffB"+str(i),
+        phone="987654322"+str(i)
+    )
+    create_staff(staff1)
+    create_staff(staff2)
 

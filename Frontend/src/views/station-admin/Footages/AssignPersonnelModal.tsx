@@ -13,16 +13,16 @@ import React, { useState } from "react";
 
 interface AssignPersonnelModalProps {
   onClose: () => void;
-  targetPlatform: string | null;
+  targetLocation: string | null;
 }
 
 const AssignPersonnelModal = (props: AssignPersonnelModalProps) => {
   const [personnelName, setPersonnelName] = useState("Staff2");
   const [description, setDescription] = useState(
-    "Handle crowd on Platform no. 1"
+    "Handle crowd on Location 1"
   );
   const [isLoading, setIsLoading] = useState(false);
-  const platformValue = props.targetPlatform || "";
+  const platformValue = props.targetLocation || "";
   const toast = useToast();
 
   const handlePersonnelNameChange = (
@@ -53,13 +53,13 @@ const AssignPersonnelModal = (props: AssignPersonnelModalProps) => {
 
       console.log("Personnel Name:", personnelName);
       console.log("Description:", description);
-      console.log("Platform Number:", platformValue);
+      console.log("Location Number:", platformValue);
     }, 2000);
   };
 
   return (
     <Modal
-      isOpen={props.targetPlatform !== null && props.targetPlatform.length > 0}
+      isOpen={props.targetLocation !== null && props.targetLocation.length > 0}
       onClose={props.onClose}
       size="md"
       isCentered
@@ -94,7 +94,7 @@ const AssignPersonnelModal = (props: AssignPersonnelModalProps) => {
                 htmlFor="platform"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
-                Platform Number
+                Location no.
               </label>
               <Select id="platform" value={platformValue} isDisabled>
                 <option value={platformValue}>{platformValue}</option>
