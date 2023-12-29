@@ -123,12 +123,12 @@ def create_user(user: User):
 def check_user(user: UserLogin, otp=None):
     try:
         document = users.find_one({"mobile":user.mobile})
+        if otp != None:
+            if otp == document['otp'] and document['otp']!="EXPIRED":
+                return document
+            else:
+                return {"ERROR":"INVALID OTP"}
         if pwd_context.verify(user.password,document['password']):
-            if otp != None:
-                if otp == document['otp'] and document['otp']!="EXPIRED":
-                    return document
-                else:
-                    return {"ERROR":"INVALID OTP"}
             if document['is_verified']:
                 return document
             return {"ERROR":"USER NOT VERIFIED"}
