@@ -3,7 +3,7 @@ from fastapi import UploadFile, Form
 from src.models.incidents_model import Incidents
 from src.models.notifications_model import Notifications
 from src.database.notifications_db import create_notification
-from src.database.incident_db import (create_incident, fetch_all_incidents, fetch_incidents_by_station, delete_incident_by_id, update_incident_status)
+from src.database.incident_db import (create_incident, fetch_all_incidents, fetch_incidents_by_station, delete_incident_by_id, update_incident_status, fetch_incidents_by_userid)
 from src.config import AWS_KEY, SECRET_KEY_AWS, S3_BUCKET_NAME
 import boto3
 import random
@@ -107,3 +107,7 @@ def delete_incident(id: str):
 @router.put("/update_incident_status")
 def update_status(id: str, status: str):
     return update_incident_status(id, status)
+
+@router.get("/get_incidents_by_userid")
+def get_incidents_by_userid(id: str):
+    return fetch_incidents_by_userid(id)
