@@ -22,7 +22,7 @@ const Footages = () => {
       title: "Prison cell - 3B",
       // streamUrl: "http://20.193.136.79/mystream/index.m3u8", // Azure URL
       streamUrl:
-        "https://res.cloudinary.com/dp0ayty6p/video/upload/v1703653583/samples/prisonv105.mp4",
+        "https://res.cloudinary.com/dp0ayty6p/video/upload/v1696709085/samples/only_footage.mp4",
       socketUrl: "ws://localhost:5006/ws",
     },
     // {
