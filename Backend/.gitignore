@@ -6,3 +6,5 @@ cred.json
 
 # virtual environment
 venv
+
+models/weights/**

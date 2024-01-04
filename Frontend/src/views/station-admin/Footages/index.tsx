@@ -42,7 +42,7 @@ const Footages = () => {
       <div className="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
         <ul className="flex flex-wrap -mb-px">
           {Object.values(Tab).map((currentTab) => (
-            <li className="mr-2">
+            <li className="mr-2" key={currentTab}>
               <a
                 href="#"
                 onClick={() => setActiveTab(currentTab)}
@@ -66,8 +66,8 @@ const Footages = () => {
             display: activeTab === Tab.Footage ? "grid" : "none",
           }}
         >
-          {streams.map((stream) => (
-            <Card extra="min-h-[40vh] ">
+          {streams.map((stream, idx) => (
+            <Card extra="min-h-[40vh] " key={stream.title+idx}>
               <div className="flex items-center justify-start">
                 <h1 className="ml-3 mt-3 text-xl font-bold text-navy-700 dark:text-white">
                   {stream.title}

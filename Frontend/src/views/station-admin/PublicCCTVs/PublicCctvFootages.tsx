@@ -4,9 +4,9 @@ import Card from "@/components/card";
 import ReactApexChart from "react-apexcharts";
 import { useState } from "react";
 import { MdOutlineConnectedTv } from "react-icons/md";
-import VideoPlayer from "../Footages/Stream/VideoPlayer";
 import useCrowdCounter from "../Footages/Stream/useCrowdCounter";
 import { CrowdData, getAlert } from "../Footages/crowdAnalyser";
+import CCTVStream from "./CCTVStream";
 
 enum Tab {
   Footage = "Footage",
@@ -66,7 +66,7 @@ const PublicCctvFootages = (props: PublicCctvFootagesProps) => {
           <div className="">
             <ul className="flex flex-wrap -mb-px">
               {Object.values(Tab).map((currentTab) => (
-                <li className="mr-2">
+                <li className="mr-2" key={currentTab}>
                   <a
                     href="#"
                     onClick={() => setActiveTab(currentTab)}
@@ -102,31 +102,7 @@ const PublicCctvFootages = (props: PublicCctvFootagesProps) => {
           }}
         >
           {cctvs.map((cctv) => (
-            <Card extra="min-h-[40vh] ">
-              <div className="flex items-center justify-start">
-                <h1 className="ml-3 mt-3 text-xl font-bold text-navy-700 dark:text-white">
-                  {cctv.name}
-                </h1>
-                <div className="grow"></div>
-              </div>
-              <div className="p-2 flex flex-row items-center justify-between">
-                <span className="mx-2">{cctv.description}</span>
-                <span className="mr-2 rounded px-2.5 py-0.5 text-xs font-medium bg-red-100 border border-red-400 text-red-700">
-                  Overcrowded
-                </span>
-                {/* <button
-                  onClick={() => {}}
-                  className={` flex items-center justify-center rounded-lg bg-lightPrimary p-[0.4rem]  font-medium text-brand-500 transition duration-200 hover:cursor-pointer hover:bg-gray-100 dark:bg-navy-700 dark:text-white dark:hover:bg-white/20 dark:active:bg-white/10 ml-auto me-2 text-sm`}
-                >
-                  <span> Create Task </span>
-                  <MdOutlinePostAdd className="ml-1 h-4 w-4" />
-                </button> */}
-              </div>
-              <div className=" p-2 mt-1">
-                <VideoPlayer url={cctv.streamUrl} />
-              </div>
-              {/* <CrowdAlert alertLevel={platformWiseCrowd[idx].alert} /> */}
-            </Card>
+            <CCTVStream cctv={cctv} key={cctv.id} />
           ))}
         </div>
       </>
