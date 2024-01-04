@@ -31,10 +31,11 @@ const PublicCCTVs = () => {
     setShowMapDrawer((alreadyShown) => !alreadyShown);
   const closeMapDrawer = () => setShowMapDrawer(false);
 
-  // // Dev mode
-  // useEffect(() => {
-  //   getCctvs().then((cctvs) => setShownCctvs(cctvs.slice(0, 2)));
-  // }, []);
+  // Dev mode
+  const NO_OF_DEFAULT_CCTVS = 1
+  useEffect(() => {
+    getCctvs().then((cctvs) => setShownCctvs(cctvs.slice(0, NO_OF_DEFAULT_CCTVS)));
+  }, []);
 
   return (
     <div className="pt-3 public-cctvs-container">

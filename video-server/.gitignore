@@ -1,0 +1,12 @@
+env
+*.pyc
+.env
+.vercel
+cred.json
+
+__pycache__/**
+
+# virtual environment
+venv
+
+weights/*
