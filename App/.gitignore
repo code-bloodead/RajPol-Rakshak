@@ -7,10 +7,8 @@
 /.flutter-plugins-dependencies
 /.packages
 
-/android
+*.env
+
+/lib/presentation/random
+/lib/routes
 /assets
-/build
-/ios
-/lib
-/logs
-/test

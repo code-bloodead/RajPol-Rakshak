@@ -3,9 +3,13 @@ from src.models.notifications_model import Notifications, GetNotifications
 from src.database.notifications_db import (
     get_notifications, 
     get_notifications_count,
-    create_notification, 
+    create_notification,
+    get_notifications_for_user,
+    mark_all_as_read_for_user, 
     mark_as_read, 
-    mark_all_as_read
+    mark_all_as_read,
+    get_notifications_count_for_user,
+    mark_as_read_for_user
     )
 
 router = APIRouter(
@@ -43,3 +47,27 @@ def mark_all_as_read_endp(notification: GetNotifications):
     if notification.station_name == "":
         return {"ERROR": "MISSING PARAMETERS"}
     return mark_all_as_read(notification)
+
+@router.get("/get_count_for_user")
+def get_count_for_user(user_id: str):
+    if user_id == "":
+        return {"ERROR": "MISSING PARAMETERS"}
+    return get_notifications_count_for_user(user_id)
+
+@router.get("/get_notifications_for_user")
+def get_notifications_for_user_endp(user_id: str):
+    if user_id == "":
+        return {"ERROR": "MISSING PARAMETERS"}
+    return get_notifications_for_user(user_id)
+
+@router.delete("/mark_as_read_for_user")
+def mark_as_read_for_user_endp(notification: GetNotifications):
+    if notification.id == "" or notification.user_id == "":
+        return {"ERROR": "MISSING PARAMETERS"}
+    return mark_as_read_for_user(notification.user_id, notification.id)
+
+@router.delete("/mark_all_as_read_for_user")
+def mark_all_as_read_for_user_endp(notification: GetNotifications):
+    if notification.user_id == "":
+        return {"ERROR": "MISSING PARAMETERS"}
+    return mark_all_as_read_for_user(notification.user_id)

@@ -68,3 +68,34 @@ def mark_all_as_read(notification):
         print(e)
         return {"ERROR":"SOME ERROR OCCURRED"}
 
+def get_notifications_count_for_user(user_id):
+    try:
+        count = notifications.count_documents({"user_id": user_id})
+        return {"SUCCESS":count}
+    except Exception as e:
+        print(e)
+        return {"ERROR":"SOME ERROR OCCURRED"}
+
+def get_notifications_for_user(user_id):
+    try:
+        notifications_list = list(notifications.find({"user_id": user_id}, {"_id":0}))
+        return {"SUCCESS": notifications_list}
+    except Exception as e:
+        print(e)
+        return {"ERROR":"SOME ERROR OCCURRED"}
+
+def mark_as_read_for_user(user_id, notification):
+    try:
+        notifications.delete_one({"id": notification.id, "user_id": user_id})
+        return {"SUCCESS":"MARKED AS READ"}
+    except Exception as e:
+        print(e)
+        return {"ERROR":"SOME ERROR OCCURRED"}
+
+def mark_all_as_read_for_user(user_id):
+    try:
+        notifications.delete_many({"user_id": user_id})
+        return {"SUCCESS":"MARKED AS READ"}
+    except Exception as e:
+        print(e)
+        return {"ERROR":"SOME ERROR OCCURRED"}
