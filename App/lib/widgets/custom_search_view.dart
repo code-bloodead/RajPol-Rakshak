@@ -16,9 +16,12 @@ class CustomSearchView extends StatelessWidget {
       this.prefix,
       this.prefixConstraints,
       this.suffix,
+      this.onChanged,
       this.suffixConstraints});
 
   SearchViewShape? shape;
+
+  Function(String)? onChanged;
 
   SearchViewPadding? padding;
 
@@ -62,6 +65,7 @@ class CustomSearchView extends StatelessWidget {
       margin: margin,
       child: TextFormField(
         controller: controller,
+        onChanged: onChanged,
         focusNode: focusNode,
         style: _setFontStyle(),
         decoration: _buildDecoration(),

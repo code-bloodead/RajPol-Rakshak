@@ -15,18 +15,35 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
     Emitter<SplashState> emit,
   ) async {
     Future.delayed(const Duration(milliseconds: 3000), () {
+      // PrefUtils().clearPreferencesData();
+      // print(PrefUtils().getId() +
+      //     " " +
+      //     PrefUtils().getMobile() +
+      //     " " +
+      //     PrefUtils().getName() +
+      //     " " +
+      //     PrefUtils().getStation());
       if (PrefUtils().getId().isEmpty && PrefUtils().getMobile().isEmpty) {
         NavigatorService.popAndPushNamed(
           AppRoutes.setRoleScreen,
         );
       }
-      PrefUtils().getId().isNotEmpty
-          ? NavigatorService.popAndPushNamed(
-              AppRoutes.homeContainerScreen,
-            )
-          : NavigatorService.popAndPushNamed(
-              AppRoutes.signInScreen,
-            );
+
+      if (PrefUtils().getId().isNotEmpty) {
+        NavigatorService.pushNamedAndRemoveUntil(AppRoutes.homeContainerScreen,
+            arguments: {
+              NavigationArgs.id: PrefUtils().getId(),
+              NavigationArgs.station: PrefUtils().getStation(),
+            });
+      }
+
+      if (PrefUtils().getMobile().isNotEmpty) {
+        NavigatorService.pushNamedAndRemoveUntil(AppRoutes.homeContainerScreen,
+            arguments: {
+              NavigationArgs.mobile: PrefUtils().getMobile(),
+              NavigationArgs.fullname: PrefUtils().getName(),
+            });
+      }
     });
   }
 }

@@ -80,6 +80,7 @@ class SignInPoliceBloc extends Bloc<SignInPoliceEvent, SignInPoliceState> {
   ) {
     PrefUtils().clearPreferencesData();
     PrefUtils().setId(resp.data!.id!.toString());
+    PrefUtils().setName(resp.data!.staff_name!.toString());
     PrefUtils().setStation(resp.data!.station_name!.toString());
     emit(
       state.copyWith(

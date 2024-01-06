@@ -2,7 +2,7 @@ import 'bloc/home_container_bloc.dart';
 import 'models/home_container_model.dart';
 import 'package:flutter/material.dart';
 import 'package:rakshak/core/app_export.dart';
-import 'package:rakshak/presentation/random/home_page/home_page.dart';
+import 'package:rakshak/presentation/citizen/home_page/home_page.dart';
 import 'package:rakshak/presentation/random/home_search_page/home_search_page.dart';
 import 'package:rakshak/presentation/random/message_page/message_page.dart';
 import 'package:rakshak/presentation/random/my_home_page/my_home_page.dart';
@@ -52,13 +52,11 @@ class HomeContainerScreen extends StatelessWidget {
     switch (type) {
       case BottomBarEnum.Home:
         return AppRoutes.homePage;
-      case BottomBarEnum.Message:
-        return AppRoutes.messagePage;
-      case BottomBarEnum.Discover:
+      case BottomBarEnum.Report:
         return AppRoutes.homeSearchPage;
-      case BottomBarEnum.Myhome:
-        return AppRoutes.myHomePage;
       case BottomBarEnum.Profile:
+        return AppRoutes.profilePage;
+      case BottomBarEnum.Rewards:
         return AppRoutes.profilePage;
       default:
         return "/";

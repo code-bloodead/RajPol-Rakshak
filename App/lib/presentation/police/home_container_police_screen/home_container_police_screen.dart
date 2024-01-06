@@ -2,7 +2,7 @@ import 'bloc/home_container_police_bloc.dart';
 import 'models/home_container_police_model.dart';
 import 'package:flutter/material.dart';
 import 'package:rakshak/core/app_export.dart';
-import 'package:rakshak/presentation/random/home_page/home_page.dart';
+import 'package:rakshak/presentation/citizen/home_page/home_page.dart';
 import 'package:rakshak/presentation/random/home_search_page/home_search_page.dart';
 import 'package:rakshak/presentation/random/message_page/message_page.dart';
 import 'package:rakshak/presentation/random/my_home_page/my_home_page.dart';
@@ -10,24 +10,25 @@ import 'package:rakshak/presentation/random/profile_page/profile_page.dart';
 import 'package:rakshak/widgets/custom_bottom_bar.dart';
 
 // ignore_for_file: must_be_immutable
-class HomeContainerScreen extends StatelessWidget {
+class HomeContainerPoliceScreen extends StatelessWidget {
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 
   static Widget builder(BuildContext context) {
     var arg =
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
-    return BlocProvider<HomeContainerBloc>(
-        create: (context) => HomeContainerBloc(HomeContainerState(
-            homeContainerModelObj: HomeContainerModel(),
-            mobile: arg[NavigationArgs.mobile],
+    return BlocProvider<HomeContainerPoliceBloc>(
+        create: (context) => HomeContainerPoliceBloc(HomeContainerPoliceState(
+            homeContainerPoliceModelObj: HomeContainerPoliceModel(),
+            id: arg[NavigationArgs.id],
+            station: arg[NavigationArgs.station],
             fullname: arg[NavigationArgs.fullname]))
-          ..add(HomeContainerInitialEvent()),
-        child: HomeContainerScreen());
+          ..add(HomeContainerPoliceInitialEvent()),
+        child: HomeContainerPoliceScreen());
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeContainerBloc, HomeContainerState>(
+    return BlocBuilder<HomeContainerPoliceBloc, HomeContainerPoliceState>(
         builder: (context, state) {
       return SafeArea(
           child: Scaffold(
@@ -52,13 +53,11 @@ class HomeContainerScreen extends StatelessWidget {
     switch (type) {
       case BottomBarEnum.Home:
         return AppRoutes.homePage;
-      case BottomBarEnum.Message:
-        return AppRoutes.messagePage;
-      case BottomBarEnum.Discover:
+      case BottomBarEnum.Report:
         return AppRoutes.homeSearchPage;
-      case BottomBarEnum.Myhome:
-        return AppRoutes.myHomePage;
       case BottomBarEnum.Profile:
+        return AppRoutes.profilePage;
+      case BottomBarEnum.Rewards:
         return AppRoutes.profilePage;
       default:
         return "/";

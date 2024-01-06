@@ -77,3 +77,13 @@ class ColorConstant {
     return Color(int.parse(buffer.toString(), radix: 16));
   }
 }
+
+Color getIncidentColor(String status) {
+  if (status.toLowerCase() == 'resolved') {
+    return ColorConstant.green500;
+  } else if (status.toLowerCase() == 'pending') {
+    return ColorConstant.yellow700;
+  } else {
+    return ColorConstant.black900;
+  }
+}

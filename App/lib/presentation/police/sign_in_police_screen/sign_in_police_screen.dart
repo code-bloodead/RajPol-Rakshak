@@ -139,6 +139,11 @@ class SignInPoliceScreen extends StatelessWidget {
           arguments: {
             NavigationArgs.id:
                 context.read<SignInPoliceBloc>().postPoliceLoginResp.data!.id!,
+            NavigationArgs.fullname: context
+                .read<SignInPoliceBloc>()
+                .postPoliceLoginResp
+                .data!
+                .staff_name!,
             NavigationArgs.station: context
                 .read<SignInPoliceBloc>()
                 .postPoliceLoginResp

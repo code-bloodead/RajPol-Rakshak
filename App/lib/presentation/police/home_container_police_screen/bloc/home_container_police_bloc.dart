@@ -5,13 +5,15 @@ import 'package:rakshak/presentation/police/home_container_police_screen/models/
 part 'home_container_police_event.dart';
 part 'home_container_police_state.dart';
 
-class HomeContainerBloc extends Bloc<HomeContainerEvent, HomeContainerState> {
-  HomeContainerBloc(HomeContainerState initialState) : super(initialState) {
-    on<HomeContainerInitialEvent>(_onInitialize);
+class HomeContainerPoliceBloc
+    extends Bloc<HomeContainerPoliceEvent, HomeContainerPoliceState> {
+  HomeContainerPoliceBloc(HomeContainerPoliceState initialState)
+      : super(initialState) {
+    on<HomeContainerPoliceInitialEvent>(_onInitialize);
   }
 
   _onInitialize(
-    HomeContainerInitialEvent event,
-    Emitter<HomeContainerState> emit,
+    HomeContainerPoliceInitialEvent event,
+    Emitter<HomeContainerPoliceState> emit,
   ) async {}
 }

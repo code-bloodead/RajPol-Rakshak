@@ -1,11 +1,11 @@
 // ignore_for_file: must_be_immutable
 
-part of 'home_container_bloc.dart';
+part of 'home_container_police_bloc.dart';
 
 @immutable
-abstract class HomeContainerEvent extends Equatable {}
+abstract class HomeContainerPoliceEvent extends Equatable {}
 
-class HomeContainerInitialEvent extends HomeContainerEvent {
+class HomeContainerPoliceInitialEvent extends HomeContainerPoliceEvent {
   @override
   List<Object?> get props => [];
 }

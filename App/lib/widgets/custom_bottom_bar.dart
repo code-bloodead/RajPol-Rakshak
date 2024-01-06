@@ -20,19 +20,14 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
       type: BottomBarEnum.Home,
     ),
     BottomMenuModel(
-      icon: ImageConstant.imgMail,
-      title: "lbl_message".tr,
-      type: BottomBarEnum.Message,
+      icon: ImageConstant.imgAddReport,
+      title: "Add Report",
+      type: BottomBarEnum.Report,
     ),
     BottomMenuModel(
-      icon: ImageConstant.imgLocation24x24,
-      title: "lbl_discover".tr,
-      type: BottomBarEnum.Discover,
-    ),
-    BottomMenuModel(
-      icon: ImageConstant.imgHome1,
-      title: "lbl_my_home".tr,
-      type: BottomBarEnum.Myhome,
+      icon: ImageConstant.imgStar16x16,
+      title: "Rewards",
+      type: BottomBarEnum.Rewards,
     ),
     BottomMenuModel(
       icon: ImageConstant.imgUser,
@@ -152,10 +147,9 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
 
 enum BottomBarEnum {
   Home,
-  Message,
-  Discover,
-  Myhome,
+  Report,
   Profile,
+  Rewards,
 }
 
 class BottomMenuModel {

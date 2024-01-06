@@ -1,9 +1,9 @@
 import 'package:equatable/equatable.dart';
 
 // ignore: must_be_immutable
-class HomeContainerModel extends Equatable {
-  HomeContainerModel copyWith() {
-    return HomeContainerModel();
+class HomeContainerPoliceModel extends Equatable {
+  HomeContainerPoliceModel copyWith() {
+    return HomeContainerPoliceModel();
   }
 
   @override

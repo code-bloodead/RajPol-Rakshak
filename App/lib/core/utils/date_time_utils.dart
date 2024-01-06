@@ -15,3 +15,15 @@ extension DateTimeExtension on DateTime {
     return DateFormat(pattern, locale).format(this);
   }
 }
+
+String formatDate(String input) {
+  DateTime dateTime = DateTime.parse(input);
+  String formattedDate = DateFormat('MMM d, yyyy').format(dateTime);
+  return formattedDate;
+}
+
+String formatTime(String input) {
+  DateTime dateTime = DateTime.parse(input);
+  String formattedTime = DateFormat('h:mm a').format(dateTime);
+  return formattedTime;
+}

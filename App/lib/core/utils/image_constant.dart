@@ -1,6 +1,11 @@
 class ImageConstant {
   static String imgLock20x20 = 'assets/images/img_lock_20x20.svg';
 
+  static String imgAddReport = 'assets/images/img_add_report.svg';
+
+  static String noImageUrl =
+      "https://st3.depositphotos.com/23594922/31822/v/450/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg";
+
   static String imgVuesaxboldvideocircle =
       'assets/images/img_vuesaxboldvideocircle.svg';
 
@@ -29,6 +34,10 @@ class ImageConstant {
       'assets/images/img_rectangle4224_62x62_1.png';
 
   static String imgEdit12x12 = 'assets/images/img_edit_12x12.svg';
+
+  static String imgView = 'assets/images/img_view.svg';
+
+  static String imgPoliceStation = 'assets/images/img_police_station.svg';
 
   static String imgArrowleft = 'assets/images/img_arrowleft.svg';
 
@@ -113,6 +122,8 @@ class ImageConstant {
   static String imgClock2 = 'assets/images/img_clock_2.svg';
 
   static String imgImg40x402 = 'assets/images/img_img_40x40_2.png';
+
+  static String imageNoDataFound = 'assets/images/img_no_data_found.png';
 
   static String imgLocation1 = 'assets/images/img_location_1.svg';
 
@@ -339,5 +350,17 @@ class ImageConstant {
 
   static String imgClock24x24 = 'assets/images/img_clock_24x24.svg';
 
-  static String imageNotFound = 'assets/images/image_not_found.png';
+  static String imageNotFound = 'assets/images/image_not_found.jpg';
+
+  static String imgPending = 'assets/images/img_pending.svg';
+}
+
+String getIncidentImage(String status) {
+  if (status.toLowerCase() == 'resolved') {
+    return ImageConstant.imgCheckmark2;
+  } else if (status.toLowerCase() == 'pending') {
+    return ImageConstant.imgPending;
+  } else {
+    return ImageConstant.imgClose;
+  }
 }
