@@ -1,10 +1,9 @@
-import { useReducer, useState } from "react";
+import { useState } from "react";
 import Card from "@/components/card";
 import Pagination from "@/components/pagination/Pagination";
-import { FaRegEye } from "react-icons/fa";
+import { FaEdit, FaRegEye } from "react-icons/fa";
 import { FaTrash } from "react-icons/fa6";
-import { MdOutlinePostAdd } from "react-icons/md";
-import { deleteIncident, resolveIncident } from "@/app/features/IncidentSlice";
+import { deleteIncident} from "@/app/features/IncidentSlice";
 
 import {
   createColumnHelper,
@@ -25,7 +24,8 @@ import { useDisclosure } from "@chakra-ui/hooks";
 import { getDate, truncateString } from "@/constants/utils";
 import IncidentModal from "@/components/modal/IncidentModal";
 import { useAppDispatch } from "@/app/store";
-import { IoMdCheckmarkCircleOutline } from "react-icons/io";
+import { IoMdClose } from "react-icons/io";
+import UpdateIncidentModal from "@/components/modal/updateIncidentModal";
 
 declare module "@tanstack/table-core" {
   interface FilterFns {
@@ -73,6 +73,12 @@ function IncidentTable(props: { tableData: any }) {
     onClose: onIncidentModalClose,
   } = useDisclosure();
 
+  const {
+    isOpen: isUpdateIncidentModalOpen,
+    onOpen: onUpdateIncidentModalOpen,
+    onClose: onUpdateIncidentModalClose,
+  } = useDisclosure();
+
   const handleView = (rowObj: RowObj) => {
     setSelectedRow(rowObj);
     onIncidentModalOpen();
@@ -83,12 +89,16 @@ function IncidentTable(props: { tableData: any }) {
     setData(data.filter((item) => item.id !== rowObj.id));
   };
 
-  const handleResolve = (rowObj: RowObj) => {
-    dispatch(resolveIncident({ id: rowObj.id, status: "Resolved" }));
+  const handleUpdate = (rowObj: RowObj) => {
+    setSelectedRow(rowObj);
+    onUpdateIncidentModalOpen();
+  };
+
+  const updateData = (id: string, status: string) => {
     setData(
       data.map((item) => {
-        if (item.id === rowObj.id) {
-          return { ...item, status: "Resolved" };
+        if (item.id === id) {
+          return { ...item, status: status };
         }
         return item;
       })
@@ -161,7 +171,9 @@ function IncidentTable(props: { tableData: any }) {
             <MdCheckCircle className="me-1 text-green-500 dark:text-green-300" />
           ) : info.getValue() === "Pending" ? (
             <BsClockHistory className="me-1 text-amber-500 dark:text-amber-300" />
-          ) : null}
+          ) : (
+            <IoMdClose className="me-2 dark:text-white-300 inline" />
+          )}
           <p className="text-sm font-bold text-navy-700 dark:text-white">
             {info.getValue()}
           </p>
@@ -185,11 +197,11 @@ function IncidentTable(props: { tableData: any }) {
             <FaRegEye className="h-4 w-4" />
           </button>
           <button
-            onClick={() => handleResolve(info.row.original)}
+            onClick={() => handleUpdate(info.row.original)}
             className={` flex items-center justify-center rounded-lg bg-lightPrimary p-[0.4rem]  font-medium text-brand-500 transition duration-200
            hover:cursor-pointer hover:bg-gray-100 dark:bg-navy-700 dark:text-white dark:hover:bg-white/20 dark:active:bg-white/10`}
           >
-            <IoMdCheckmarkCircleOutline className="h-4 w-4" />
+            <FaEdit className="h-4 w-4" />
           </button>
           <button
             onClick={() => handleDelete(info.row.original)}
@@ -305,6 +317,12 @@ function IncidentTable(props: { tableData: any }) {
             isIncidentModalOpen={isIncidentModalOpen}
             onIncidentModalClose={onIncidentModalClose}
             incident={selectedRow}
+          />
+          <UpdateIncidentModal
+            onUpdateIncidentModalClose={onUpdateIncidentModalClose}
+            isUpdateIncidentModalOpen={isUpdateIncidentModalOpen}
+            incident={selectedRow}
+            updateData={updateData}
           />
         </>
       )}

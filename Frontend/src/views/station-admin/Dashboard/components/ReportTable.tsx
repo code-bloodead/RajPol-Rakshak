@@ -20,6 +20,7 @@ import {
   rankItem,
   compareItems,
 } from "@tanstack/match-sorter-utils";
+import { IoMdClose } from "react-icons/io";
 
 declare module "@tanstack/table-core" {
   interface FilterFns {
@@ -107,7 +108,9 @@ function ReportTable(props: { tableData: any }) {
             <MdCheckCircle className="me-1 text-green-500 dark:text-green-300" />
           ) : info.getValue() === "Pending" ? (
             <BsClockHistory className="me-1 text-amber-500 dark:text-amber-300" />
-          ) : null}
+          ) : (
+            <IoMdClose className="me-2 dark:text-white-300 inline" />
+          )}
           <p className="text-sm font-bold text-navy-700 dark:text-white">
             {info.getValue()}
           </p>

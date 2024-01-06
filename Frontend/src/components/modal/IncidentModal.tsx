@@ -6,7 +6,7 @@ import {
   ModalCloseButton,
 } from "@chakra-ui/modal";
 import Card from "@/components/card";
-import { MdCheckCircle, MdOutlinePostAdd } from "react-icons/md";
+import { MdCheckCircle } from "react-icons/md";
 import { BsCardText, BsClockHistory } from "react-icons/bs";
 import { getDateTime } from "@/constants/utils";
 import { BiTimeFive, BiCategoryAlt, BiCctv } from "react-icons/bi";
@@ -16,6 +16,7 @@ import { FaTrash } from "react-icons/fa";
 import { LiaUserShieldSolid } from "react-icons/lia";
 import { useAppDispatch } from "@/app/store";
 import { deleteIncident } from "@/app/features/IncidentSlice";
+import { IoMdClose } from "react-icons/io";
 
 type Incident = {
   id: string;
@@ -153,8 +154,10 @@ const IncidentModal = ({
                     <p className="relative mt-2 flex h-12 w-full items-center rounded-xl border bg-white/0 p-3 text-sm outline-none !border-none !bg-gray-50 dark:!bg-white/5 dark:placeholder:!text-[rgba(255,255,255,0.15)] mr-3">
                       {incident?.status === "Pending" ? (
                         <BsClockHistory className="me-2 text-amber-500 dark:text-amber-300 inline" />
-                      ) : (
+                      ) : incident?.status === "Resolved" ? (
                         <MdCheckCircle className="me-2 text-green-500 dark:text-green-300 inline" />
+                      ) : (
+                        <IoMdClose className="me-2 dark:text-white-300 inline" />
                       )}
                       {incident?.status}
                     </p>
