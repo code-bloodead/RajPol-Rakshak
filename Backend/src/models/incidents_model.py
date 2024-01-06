@@ -11,8 +11,9 @@ class Incidents(BaseModel):
     # types are: Crime, Violence, Stampede, Safety Threat, Cleanliness, Others
     station_name: str = Form(...)
     location: str = Form(...)
+    # Source is either CCTV or id of the User (i.e. Mobile Number)
     source: str = Form(default="CCTV")
     # sources are: CCTV, User
     status: str = Form(default="Pending")
-    #status are: Pending, Resolved, Rejected
+    #status are: Pending, Resolved, Closed
     created_at: str = Form(default=datetime.datetime.now())

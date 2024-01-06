@@ -1,6 +1,8 @@
 from pymongo import ASCENDING
 from src.establish_db_connection import database
 from src.models.incidents_model import Incidents
+from src.models.notifications_model import Notifications
+from src.database.notifications_db import create_notification
 import random
 
 incidents = database.Incidents
@@ -83,8 +85,20 @@ def delete_incident_by_id(id):
     
 def update_incident_status(id, status):
     try:
+        user_id = incidents.find_one({"id":id},{"_id":0})['source']
         incidents.update_one({"id":id},{"$set":{"status":status}})
+        if user_id != "CCTV":
+            create_notification(Notifications(title="Report Status Marked as "+status, description=f"Your report with id {id} has been updated to {status}", type="Incident", user_id=user_id))
+   
         return {"SUCCESS":"STATUS UPDATED"}
+    except Exception as e:
+        print(e)
+        return {"ERROR":"SOME ERROR OCCURRED"}
+    
+def fetch_incidents_by_userid(id):
+    try:
+        incidents_list = list(incidents.find({"source":id},{"_id":0}))
+        return {"SUCCESS": incidents_list}
     except Exception as e:
         print(e)
         return {"ERROR":"SOME ERROR OCCURRED"}
