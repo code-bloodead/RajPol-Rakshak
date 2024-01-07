@@ -1,3 +1,15 @@
+import { ObjectDetection } from "../views/station-admin/PublicCCTVs/detections.types";
+
+export function filterDetections<T extends ObjectDetection>(
+  detections: T[],
+  minConfidence = 0.5,
+  excludeLabels: string[] = [],
+) {
+  if (!detections) return [];
+  return detections.filter((detection) => {
+    return detection.confidence > minConfidence && !excludeLabels.includes(detection.label);
+  });
+}
 export const bboxCoordsToCanvasCoords = (
   canvas: HTMLCanvasElement,
   bbox: number[]

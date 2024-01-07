@@ -16,3 +16,4 @@ export const ReadyStateMap: Record<ReadyState, string> = {
   [ReadyState.CLOSING]: "Closing ...",
   [ReadyState.CLOSED]: "Closed !",
 };
+

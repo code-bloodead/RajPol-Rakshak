@@ -6,9 +6,19 @@
         "title": "Versova Beach",
         "description": "A continuation of Juhu Beach towards the Andheri suburbs",
         "kind": "beach",
-        "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1704279241/samples/gun_video_short.mp4"
+        "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1704614357/samples/gun_video.mp4"
       },
       "geometry": { "coordinates": [72.814, 19.125], "type": "Point" }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "title": "Prison",
+        "description": "Prison in Andheri",
+        "kind": "default",
+        "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1704612681/samples/prison_escape.mp4"
+      },
+      "geometry": { "coordinates": [72.829, 19.138], "type": "Point" }
     },
     {
       "type": "Feature",
@@ -16,7 +26,7 @@
         "title": "Lokhandwala Market",
         "description": "A bustling local market in western Mumbai, near Andheri",
         "kind": "default",
-        "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1703605915/samples/market.mp4"
+        "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1703605915/samples/beach.mp4"
       },
       "geometry": { "coordinates": [72.829, 19.138], "type": "Point" }
     },
@@ -26,7 +36,7 @@
         "title": "Chota Kashmir",
         "description": "Bollywood’s rendition of a tiny Kashmir, located near Goregaon",
         "kind": "boat",
-        "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1703605906/samples/beach.mp4"
+        "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1703605906/samples/market.mp4"
       },
       "geometry": { "coordinates": [72.857, 19.155], "type": "Point" }
     },

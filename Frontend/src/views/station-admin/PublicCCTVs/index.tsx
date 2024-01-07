@@ -32,7 +32,7 @@ const PublicCCTVs = () => {
   const closeMapDrawer = () => setShowMapDrawer(false);
 
   // Dev mode
-  const NO_OF_DEFAULT_CCTVS = 1
+  const NO_OF_DEFAULT_CCTVS = 2
   useEffect(() => {
     getCctvs().then((cctvs) => setShownCctvs(cctvs.slice(0, NO_OF_DEFAULT_CCTVS)));
   }, []);

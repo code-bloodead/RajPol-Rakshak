@@ -6,11 +6,11 @@ weights = os.path.dirname(__file__)
 
 # Load YOLO model
 net = cv2.dnn.readNet(
-    os.path.join(weights, 'weights/yolov3_cv2/yolov3.weights'),
-    os.path.join(weights, 'weights/yolov3_cv2/yolov3.cfg')
+    os.path.join(weights, '../models/weights/yolov3_cv2/yolov3.weights'),
+    os.path.join(weights, '../models/weights/yolov3_cv2/yolov3.cfg')
 )
 
-with open(os.path.join(weights, 'weights/yolov3_cv2/coco.names'), 'r') as f:
+with open(os.path.join(weights, '../models/weights/yolov3_cv2/coco.names'), 'r') as f:
     classes = [line.strip() for line in f.readlines()]
 print("Yolo model ready to rock n roll !!")
 

@@ -28,6 +28,8 @@ export function drawLabel(
   fillStyle: string | CanvasGradient | CanvasPattern = "white",
 ) {
   ctx.beginPath();
+  x = Math.max(x, 0)
+  y = Math.max(y, 30)
 
   // Set background color
   ctx.fillStyle = backgroundColor;
@@ -64,6 +66,8 @@ export function drawRect(
   options: CanvasDrawRectOptions
 ) {
   // console.log("Draw rect", x, y, width, height, options);
+  x = Math.max(x, 0)
+  y = Math.max(y, 0)
 
   ctx.beginPath();
   ctx.strokeStyle = options.strokeStyle || "red";
