@@ -8,6 +8,7 @@ import PublicCctvFootages from "./PublicCctvFootages";
 import { getCctvs } from "./cctvsApi";
 
 import "./publicctvs.css";
+import { NO_OF_DEFAULT_CCTVS } from "../../../constants/config";
 
 const PublicCCTVs = () => {
   const [shownCctvs, setShownCctvs] = useState<CctvDetails[]>([]);
@@ -32,7 +33,6 @@ const PublicCCTVs = () => {
   const closeMapDrawer = () => setShowMapDrawer(false);
 
   // Dev mode
-  const NO_OF_DEFAULT_CCTVS = 2
   useEffect(() => {
     getCctvs().then((cctvs) => setShownCctvs(cctvs.slice(0, NO_OF_DEFAULT_CCTVS)));
   }, []);

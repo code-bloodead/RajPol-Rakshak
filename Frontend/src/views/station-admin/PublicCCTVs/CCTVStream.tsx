@@ -24,14 +24,12 @@ import {
   ReceivedMessageData,
   WeaponDetection,
 } from "./detections.types";
+import { VIDEO_STREAM_SERVER } from "../../../constants/config";
 
 interface CCTVStreamProps {
   cctv: CctvDetails;
 }
 
-const VIDEO_STREAM_SERVER = `ws://localhost:5005`;
-// const VIDEO_STREAM_SERVER = `ws://chigger-close-sawfish.ngrok-free.app`;
-export const MAX_VOID_FRAMES = 100;
 
 const CCTVStream: React.FC<CCTVStreamProps> = ({ cctv }) => {
   const [currentObjectDetections, setCurrentObjectDetections] = useState<
