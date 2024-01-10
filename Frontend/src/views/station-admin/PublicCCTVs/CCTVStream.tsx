@@ -30,6 +30,7 @@ interface CCTVStreamProps {
 }
 
 const VIDEO_STREAM_SERVER = `ws://localhost:5005`;
+// const VIDEO_STREAM_SERVER = `ws://chigger-close-sawfish.ngrok-free.app`;
 export const MAX_VOID_FRAMES = 100;
 
 const CCTVStream: React.FC<CCTVStreamProps> = ({ cctv }) => {
@@ -76,7 +77,7 @@ const CCTVStream: React.FC<CCTVStreamProps> = ({ cctv }) => {
       );
       const receivedWeaponDetections = filterDetections(
         lastJsonMessage.detections?.weapon || [],
-        0.3,
+        0.5,
       );
       const receivedClimberDetection = filterDetections(
         lastJsonMessage.detections?.climber || [],
@@ -84,7 +85,6 @@ const CCTVStream: React.FC<CCTVStreamProps> = ({ cctv }) => {
         ["walker"]
       );
       const receivedFightDetection = lastJsonMessage.detections?.fight;
-
       setCurrentObjectDetections(receivedObjectDetections);
       setCurrentWeaponDetection(receivedWeaponDetections);
       setCurrentClimberDetection(receivedClimberDetection);

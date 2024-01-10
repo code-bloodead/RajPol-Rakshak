@@ -3,7 +3,7 @@ env
 .env
 .vercel
 cred.json
-
+**/.DS_Store
 __pycache__/**
 
 # virtual environment
