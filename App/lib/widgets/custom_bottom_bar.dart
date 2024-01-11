@@ -25,9 +25,9 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
       type: BottomBarEnum.Report,
     ),
     BottomMenuModel(
-      icon: ImageConstant.imgStar16x16,
-      title: "Rewards",
-      type: BottomBarEnum.Rewards,
+      icon: ImageConstant.imgCall,
+      title: "Helpline",
+      type: BottomBarEnum.Helpline,
     ),
     BottomMenuModel(
       icon: ImageConstant.imgUser,
@@ -149,7 +149,7 @@ enum BottomBarEnum {
   Home,
   Report,
   Profile,
-  Rewards,
+  Helpline,
 }
 
 class BottomMenuModel {

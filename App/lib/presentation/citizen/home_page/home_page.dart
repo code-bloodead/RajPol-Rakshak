@@ -1,6 +1,5 @@
-import 'package:rakshak/data/models/home/post_incident_resp.dart';
+import 'package:rakshak/data/models/home/get_incident_resp.dart';
 import 'package:rakshak/presentation/citizen/home_page/widgets/incident_widget.dart';
-import 'package:rakshak/widgets/app_bar/appbar_subtitle.dart';
 import 'package:rakshak/widgets/custom_button.dart';
 import 'bloc/home_bloc.dart';
 import 'models/home_model.dart';
@@ -57,9 +56,12 @@ class HomePage extends StatelessWidget {
                 actions: [
                   AppbarIconbutton(
                       svgPath: ImageConstant.imgOptions,
-                      margin: getMargin(left: 24, top: 10, right: 10)),
+                      margin: getMargin(left: 24, top: 10, right: 10),
+                      onTap: () {
+                        onTapShowNotif(context);
+                      }),
                   AppbarIconbutton(
-                      svgPath: ImageConstant.imgNotification,
+                      svgPath: ImageConstant.imgNotificationPresent,
                       margin: getMargin(left: 12, top: 10, right: 34),
                       onTap: () {
                         onTapNotification(context);
@@ -205,5 +207,10 @@ class HomePage extends StatelessWidget {
     NavigatorService.pushNamed(
       AppRoutes.notificationScreen,
     );
+  }
+
+  onTapShowNotif(BuildContext context) {
+    LocalNotifications.showSimpleNotification(
+        title: "title", body: "body", payload: "payload");
   }
 }

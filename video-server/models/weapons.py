@@ -4,7 +4,7 @@ from ultralytics import YOLO
 from models.utils.yolo import parse_yolo_predictions
 from models.device import current_device
 
-weaponsYoloModel = YOLO("models/weights/weapon_detection/weapons.pt").to(torch.device(current_device))
+weaponsYoloModel = YOLO("/kaggle/input/rajpol/weights/weapon_detection/weapons.pt").to(torch.device(current_device))
 # weaponsYoloModel = YOLO("models/weights/weapon_detection/weapons_kaggle_epoch76.pt").to(torch.device(current_device))
 print("Weapons YOLO Loaded")
 

@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:rakshak/data/models/home/post_incident_resp.dart';
+import 'package:rakshak/data/models/home/get_incident_resp.dart';
+import 'package:rakshak/data/repository/repository.dart';
 import '/core/app_export.dart';
 import 'package:rakshak/presentation/citizen/home_page/models/home_model.dart';
 part 'home_event.dart';
@@ -14,6 +15,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   List<Incident> incidentList = [];
   List<Incident> tempIncidentList = [];
+  var getIncidentResp = GetIncidentResp();
+  final _repository = Repository();
 
   _onIncidentSearch(
     onIncidentSearch event,
@@ -28,7 +31,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
               element.title!
                   .toLowerCase()
                   .startsWith(event.searchVal.toLowerCase()) ||
-              element.stationName!
+              element.station_name!
                   .toLowerCase()
                   .startsWith(event.searchVal.toLowerCase()) ||
               element.location!
@@ -44,7 +47,16 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     )));
   }
 
-  List<Incident> fillHomeItemList() {
+  Future<List<Incident>> fillIncidentList() async {
+    // List<Incident> userReports = [];
+
+    // try {
+    //   getIncidentResp = await _repository.getIncident(PrefUtils().getMobile());
+    //   userReports = getIncidentResp.dataList!;
+    // } catch (error) {
+    //   print(error);
+    // }
+
     return userReports;
   }
 
@@ -52,7 +64,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     HomeInitialEvent event,
     Emitter<HomeState> emit,
   ) async {
-    incidentList = fillHomeItemList();
+    incidentList = await fillIncidentList();
     tempIncidentList = incidentList;
     emit(state.copyWith(
         homeModelObj: HomeModel(),

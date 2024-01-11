@@ -166,7 +166,7 @@ class IncidentDetailsScreen extends StatelessWidget {
                                                   padding: getPadding(left: 6),
                                                   child: Text(
                                                       formatDate(state.incident
-                                                              ?.createdAt ??
+                                                              ?.created_at ??
                                                           DateTime.now()
                                                               .toString()),
                                                       overflow:
@@ -284,7 +284,7 @@ class IncidentDetailsScreen extends StatelessWidget {
                                                           getPadding(left: 4),
                                                       child: Text(
                                                           state.incident
-                                                                  ?.stationName ??
+                                                                  ?.station_name ??
                                                               "Unknown" +
                                                                   " Police Station",
                                                           overflow: TextOverflow

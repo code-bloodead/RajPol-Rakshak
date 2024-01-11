@@ -228,7 +228,10 @@ class ImageConstant {
 
   static String imgUserBlue500 = 'assets/images/img_user_blue_500.svg';
 
-  static String imgNotification = 'assets/images/img_notification.svg';
+  static String imgNotificationPresent =
+      'assets/images/img_notification_present.svg';
+
+  static String imgNotificationNone = 'assets/images/img_notification_none.svg';
 
   static String imgArrowupBlueGray500 =
       'assets/images/img_arrowup_blue_gray_500.svg';

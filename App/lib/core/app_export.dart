@@ -20,4 +20,7 @@ export 'package:rakshak/core/utils/date_time_utils.dart';
 export 'package:rakshak/core/utils/permission_manager.dart';
 export 'package:permission_handler/permission_handler.dart';
 export 'package:rakshak/core/utils/file_upload_helper.dart';
+export 'package:rakshak/core/utils/string_utils.dart';
+export 'package:rakshak/core/utils/local_notifications.dart';
+export 'package:rakshak/core/utils/service_config.dart';
 export 'package:flutter_contacts/flutter_contacts.dart';

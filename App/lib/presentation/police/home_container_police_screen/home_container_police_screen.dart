@@ -3,10 +3,7 @@ import 'models/home_container_police_model.dart';
 import 'package:flutter/material.dart';
 import 'package:rakshak/core/app_export.dart';
 import 'package:rakshak/presentation/citizen/home_page/home_page.dart';
-import 'package:rakshak/presentation/random/home_search_page/home_search_page.dart';
-import 'package:rakshak/presentation/random/message_page/message_page.dart';
-import 'package:rakshak/presentation/random/my_home_page/my_home_page.dart';
-import 'package:rakshak/presentation/random/profile_page/profile_page.dart';
+import 'package:rakshak/presentation/citizen/profile_page/profile_page.dart';
 import 'package:rakshak/widgets/custom_bottom_bar.dart';
 
 // ignore_for_file: must_be_immutable
@@ -42,8 +39,14 @@ class HomeContainerPoliceScreen extends StatelessWidget {
                       transitionDuration: Duration(seconds: 0))),
               bottomNavigationBar:
                   CustomBottomBar(onChanged: (BottomBarEnum type) {
-                Navigator.pushNamed(
-                    navigatorKey.currentContext!, getCurrentRoute(type));
+                if (type == BottomBarEnum.Report) {
+                  NavigatorService.pushNamed(
+                    AppRoutes.addReportDetailScreen,
+                  );
+                } else {
+                  Navigator.pushNamed(
+                      navigatorKey.currentContext!, getCurrentRoute(type));
+                }
               })));
     });
   }
@@ -53,11 +56,9 @@ class HomeContainerPoliceScreen extends StatelessWidget {
     switch (type) {
       case BottomBarEnum.Home:
         return AppRoutes.homePage;
-      case BottomBarEnum.Report:
-        return AppRoutes.homeSearchPage;
       case BottomBarEnum.Profile:
         return AppRoutes.profilePage;
-      case BottomBarEnum.Rewards:
+      case BottomBarEnum.Helpline:
         return AppRoutes.profilePage;
       default:
         return "/";
@@ -72,12 +73,6 @@ class HomeContainerPoliceScreen extends StatelessWidget {
     switch (currentRoute) {
       case AppRoutes.homePage:
         return HomePage.builder(context);
-      case AppRoutes.messagePage:
-        return MessagePage.builder(context);
-      case AppRoutes.homeSearchPage:
-        return HomeSearchPage.builder(context);
-      case AppRoutes.myHomePage:
-        return MyHomePage.builder(context);
       case AppRoutes.profilePage:
         return ProfilePage.builder(context);
       default:
