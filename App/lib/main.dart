@@ -13,13 +13,15 @@ var globalMessengerKey = GlobalKey<ScaffoldMessengerState>();
 Future main() async {
   await dotenv.load(fileName: ".env");
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setPreferredOrientations([
+  await LocalNotifications.init();
+  await BackgroundService.initialize();
+
+  await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
-  ]).then((value) {
-    PrefUtils().init();
-    Logger.init(kReleaseMode ? LogMode.live : LogMode.debug);
-    runApp(const MyApp());
-  });
+  ]);
+  PrefUtils().init();
+  Logger.init(kReleaseMode ? LogMode.live : LogMode.debug);
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {

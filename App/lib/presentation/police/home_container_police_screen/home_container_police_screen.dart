@@ -3,7 +3,7 @@ import 'models/home_container_police_model.dart';
 import 'package:flutter/material.dart';
 import 'package:rakshak/core/app_export.dart';
 import 'package:rakshak/presentation/citizen/home_page/home_page.dart';
-import 'package:rakshak/presentation/random/profile_page/profile_page.dart';
+import 'package:rakshak/presentation/citizen/profile_page/profile_page.dart';
 import 'package:rakshak/widgets/custom_bottom_bar.dart';
 
 // ignore_for_file: must_be_immutable
@@ -58,7 +58,7 @@ class HomeContainerPoliceScreen extends StatelessWidget {
         return AppRoutes.homePage;
       case BottomBarEnum.Profile:
         return AppRoutes.profilePage;
-      case BottomBarEnum.Rewards:
+      case BottomBarEnum.Helpline:
         return AppRoutes.profilePage;
       default:
         return "/";

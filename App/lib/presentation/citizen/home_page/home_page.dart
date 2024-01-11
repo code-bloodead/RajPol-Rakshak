@@ -56,9 +56,12 @@ class HomePage extends StatelessWidget {
                 actions: [
                   AppbarIconbutton(
                       svgPath: ImageConstant.imgOptions,
-                      margin: getMargin(left: 24, top: 10, right: 10)),
+                      margin: getMargin(left: 24, top: 10, right: 10),
+                      onTap: () {
+                        onTapShowNotif(context);
+                      }),
                   AppbarIconbutton(
-                      svgPath: ImageConstant.imgNotification,
+                      svgPath: ImageConstant.imgNotificationPresent,
                       margin: getMargin(left: 12, top: 10, right: 34),
                       onTap: () {
                         onTapNotification(context);
@@ -204,5 +207,10 @@ class HomePage extends StatelessWidget {
     NavigatorService.pushNamed(
       AppRoutes.notificationScreen,
     );
+  }
+
+  onTapShowNotif(BuildContext context) {
+    LocalNotifications.showSimpleNotification(
+        title: "title", body: "body", payload: "payload");
   }
 }
