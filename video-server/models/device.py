@@ -15,10 +15,8 @@ detected_device = 'cuda' if torch.cuda.is_available() else "mps" if torch.backen
 # current_device = "gpu"
 # current_device = "mps"
 current_device = detected_device
-# if current_device == "mps":
-#   current_device = "cpu"  # NOTE: MPS is not working :(
-
-
+if current_device == "mps":
+  current_device = "cpu"  # NOTE: MPS is not working :(
   
 print(f"Using {current_device}")
 

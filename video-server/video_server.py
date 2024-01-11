@@ -8,11 +8,11 @@ from multiprocessing import Process, Queue, Event, Lock
 import asyncio
 from concurrent.futures import ThreadPoolExecutor
 from video_cache import attempt_cache_src
+from config import PREVENT_FRAME_OVERFLOW, LSTM_FRAME_REGISTER_EVERY_N_FRAME, DETECT_EVERY_N_FRAME, MAX_CONSECUTIVE_FRAME_FAILURES
+
 
 app = FastAPI()
 
-DETECT_EVERY_N_FRAME = 40
-MAX_CONSECUTIVE_FRAME_FAILURES = 20
 
 def is_websocket_alive(websocket: WebSocket):
     if websocket is None:
@@ -21,19 +21,23 @@ def is_websocket_alive(websocket: WebSocket):
 
 # Function to read video stream and perform detection
 # Note, we can't pass websocket to this fn as its pickled & passed to a completely new process
-def process_video_stream(url, output_queue: Queue, shutdown_event: Event):
+
+
+def process_video_stream(url, cctv_id: str, cctv_type: str, output_queue: Queue, shutdown_event: Event):
     # Importing here, coz this fn will be run in a separate process
     from models.yolo_objects import detect_objects, detect_objects_dummy
     from models.fight import detect_fight, detect_fight_dummy
     from models.weapons import detect_weapons, detect_weapons_dummy
     from models.climber_pose import detect_climber, detect_climber_dummy
+    from incident_manager import IncidentManager, IncidentType
 
     cap = cv2.VideoCapture(url)
+    incident_manager = IncidentManager(cctv_id)
 
     consecutiveFrameFailures = 0
-    framecount = 0
+    framecount = -1
 
-    detections = {
+    prev_detections = {
         'fight': None,
         'objects': None,
         'weapon': None,
@@ -45,14 +49,27 @@ def process_video_stream(url, output_queue: Queue, shutdown_event: Event):
             while not shutdown_event.is_set():
                 try:
                     framecount += 1
+                    if framecount >= PREVENT_FRAME_OVERFLOW:
+                        framecount = 0
+
                     ret, frame = cap.read()
                     if not ret:
                         break
-                    
+
+                    detections = prev_detections.copy()
+
                     # Use threads to parallelize detection tasks
+
+                    fight_future = None
+                    objects_future = None
+                    weapons_future = None
+                    climber_future = None
+
+                    # LSTM models
                     # Some Model need continuous frames (TODO - control it using time.time())
-                    fight_future = executor.submit(detect_fight, frame)
-                    # fight_future = executor.submit(detect_fight_dummy, frame)
+                    if framecount % LSTM_FRAME_REGISTER_EVERY_N_FRAME == 0:
+                        fight_future = executor.submit(detect_fight, frame)
+                        # fight_future = executor.submit(detect_fight_dummy, frame)
 
                     # Frame-independent models
                     if framecount % DETECT_EVERY_N_FRAME == 0:
@@ -61,16 +78,35 @@ def process_video_stream(url, output_queue: Queue, shutdown_event: Event):
                         # Use threads to parallelize detection tasks
                         objects_future = executor.submit(detect_objects, frame)
                         # objects_future = executor.submit(detect_objects_dummy, frame)
+
                         weapons_future = executor.submit(detect_weapons, frame)
                         # weapons_future = executor.submit(detect_weapons_dummy, frame)
+
                         climber_future = executor.submit(detect_climber, frame)
                         # climber_future = executor.submit(detect_climber_dummy, frame)
 
-                        # Wait for all threads to complete
+                    # Wait for all threads to complete
+                    if objects_future is not None and weapons_future is not None and climber_future is not None:
                         detections['objects'] = objects_future.result()
                         detections['weapon'] = weapons_future.result()
                         detections['climber'] = climber_future.result()
-                    detections['fight'] = fight_future.result()
+
+                        # Report incidents if applicable
+                        if detections['weapon'] is not None and len(detections['weapon']) > 0:
+                            incident_manager.registerDetections(
+                                frame, cctv_id, cctv_type, IncidentType.weapons, detections['weapon'])
+                        if detections['climber'] is not None and len(detections['climber']) > 0:
+                            incident_manager.registerDetections(
+                                frame, cctv_id, cctv_type, IncidentType.climber, detections['climber'])
+
+                    if fight_future is not None:
+                        detections['fight'] = fight_future.result()
+
+                        if detections['fight'] is not None and detections['fight']['prediction_confidence'] > 0.5 and detections['fight']['prediction_label'] == 'fight':
+                            incident_manager.registerDetections(
+                                frame, cctv_id, cctv_type, IncidentType.violence, detections['fight'])
+
+                    prev_detections = detections
 
                     # Convert the original frame to JPEG format and encode it in Base64
                     _, buffer = cv2.imencode('.jpg', frame)
@@ -80,7 +116,7 @@ def process_video_stream(url, output_queue: Queue, shutdown_event: Event):
                     # print("Send detections", detections)
                     output_queue.put(
                         {"frame": image_data_base64, "detections": detections})
-                    
+
                 except Exception as e:
                     print("Error", e)
                     consecutiveFrameFailures += 1
@@ -93,8 +129,10 @@ def process_video_stream(url, output_queue: Queue, shutdown_event: Event):
         output_queue.put(-1)
 
 # WebSocket endpoint to handle communication with the React client
+
+
 @app.websocket("/ws")
-async def websocket_endpoint(websocket: WebSocket, stream_url: str):
+async def websocket_endpoint(websocket: WebSocket, stream_url: str, cctv_id: str, cctv_type: str):
     try:
         print("Wait for connection acceptance", stream_url)
         # Set your desired timeout value in seconds
@@ -117,7 +155,7 @@ async def websocket_endpoint(websocket: WebSocket, stream_url: str):
             await websocket.close()
         except:
             pass
-        
+
     async def fastapi_app_shutdown():
         print("Fast API app shutdown event triggered")
         await shutdown()
@@ -128,7 +166,7 @@ async def websocket_endpoint(websocket: WebSocket, stream_url: str):
 
     # Start the video processing in a separate process
     video_process = Process(target=process_video_stream, args=(
-        stream_url, output_queue, shutdown_event))
+        stream_url, cctv_id, cctv_type, output_queue, shutdown_event))
     video_process.start()
 
     print(f"Started process {video_process._identity} for", stream_url)

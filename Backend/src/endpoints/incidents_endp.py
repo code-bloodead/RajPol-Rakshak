@@ -40,7 +40,7 @@ def generateID():
 @router.post("/create_incident")
 def new_incident(incident: Incidents):
     try:
-        if incident.title == "" or incident.type == "" or incident.station_name == "" or incident.source == "" or incident.image == "":
+        if incident.title == "" or incident.type == "" or incident.station_name == "" or incident.source == "" or incident.image == "" or incident.location == "":
             return {"ERROR": "MISSING PARAMETERS"}
 
         result = create_incident(incident)

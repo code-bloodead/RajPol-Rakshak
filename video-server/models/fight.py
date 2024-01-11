@@ -7,7 +7,6 @@ import numpy as np
 fightModel = load_model("models/weights/fights/fights2vgg2cat2.keras")
 print("Fight model loaded")
 
-
 if platform.system() == "Darwin" and platform.processor() == "arm":
     # You can adjust the learning rate if needed
     legacy_adam = legacy.Adam(learning_rate=0.001)

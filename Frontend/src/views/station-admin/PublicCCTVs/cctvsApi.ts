@@ -33,9 +33,10 @@ export async function getCctvs(): Promise<CctvDetails[]> {
   // const response = await axios.get('/api/cctvs');
   // return response.data;
 
-  return geoJson.features.map((feature, idx) => {
+  return geoJson.features.map((feature) => {
     return {
-      id: idx,
+      id: feature.properties.id,
+      cctv_type: feature.properties.cctv_type,
       name: feature.properties.title,
       description: feature.properties.description,
       latitude: feature.geometry.coordinates[1],

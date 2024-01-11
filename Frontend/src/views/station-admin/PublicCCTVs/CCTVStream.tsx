@@ -30,7 +30,6 @@ interface CCTVStreamProps {
   cctv: CctvDetails;
 }
 
-
 const CCTVStream: React.FC<CCTVStreamProps> = ({ cctv }) => {
   const [currentObjectDetections, setCurrentObjectDetections] = useState<
     ObjectDetection[]
@@ -50,7 +49,7 @@ const CCTVStream: React.FC<CCTVStreamProps> = ({ cctv }) => {
   // const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const { lastJsonMessage, readyState } = useWebSocket<ReceivedMessageData>(
-    `${VIDEO_STREAM_SERVER}/ws?stream_url=${cctv.streamUrl}`,
+    `${VIDEO_STREAM_SERVER}/ws?stream_url=${cctv.streamUrl}&cctv_id=${cctv.id}&cctv_type=${cctv.cctv_type}`,
     {
       onOpen: () => console.log("connected socket for stream", cctv.streamUrl),
       // onMessage: (msg) => console.log("message received for stream", cctv.streamUrl, msg),
@@ -63,6 +62,7 @@ const CCTVStream: React.FC<CCTVStreamProps> = ({ cctv }) => {
     const canvas = canvasRef.current;
     const ctx = canvas ? getHighDpiCanvasContext(canvas) : null;
     const newFrame: string | null = lastJsonMessage?.frame;
+    // console.log({ ctx, newFrame, lastJsonMessage });
 
     if (ctx && newFrame) {
       voidFrameCountRef.current += 1;
@@ -75,11 +75,11 @@ const CCTVStream: React.FC<CCTVStreamProps> = ({ cctv }) => {
       );
       const receivedWeaponDetections = filterDetections(
         lastJsonMessage.detections?.weapon || [],
-        0.5,
+        0.5
       );
       const receivedClimberDetection = filterDetections(
         lastJsonMessage.detections?.climber || [],
-        0.3,
+        0.5,
         ["walker"]
       );
       const receivedFightDetection = lastJsonMessage.detections?.fight;
@@ -166,6 +166,7 @@ const CCTVStream: React.FC<CCTVStreamProps> = ({ cctv }) => {
             },
           });
         });
+        // console.log(`Ready to display ${cctv.id}`);
       });
     }
   }, [lastJsonMessage]);
@@ -197,15 +198,11 @@ const CCTVStream: React.FC<CCTVStreamProps> = ({ cctv }) => {
             {/* ({currentFightDetection.prediction_confidence}%) */}
           </span>
         )}
-        {/* <button
-        onClick={() => {}}
-        className={` flex items-center justify-center rounded-lg bg-lightPrimary p-[0.4rem]  font-medium text-brand-500 transition duration-200 hover:cursor-pointer hover:bg-gray-100 dark:bg-navy-700 dark:text-white dark:hover:bg-white/20 dark:active:bg-white/10 ml-auto me-2 text-sm`}
-      >
-        <span> Create Task </span>
-        <MdOutlinePostAdd className="ml-1 h-4 w-4" />
-      </button> */}
       </div>
       <div>
+        {/* <h2>
+          {readyState}, framelen = {currentFrameData?.length || 0}
+        </h2> */}
         <canvas
           ref={canvasRef}
           className="w-full"

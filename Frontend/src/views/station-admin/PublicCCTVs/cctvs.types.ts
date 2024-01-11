@@ -1,7 +1,8 @@
 import { ReadyState } from "react-use-websocket";
 
 export interface CctvDetails {
-  id: number;
+  id: string;
+  cctv_type: string;
   name: string;
   description: string;
   latitude: number;

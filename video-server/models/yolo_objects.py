@@ -15,5 +15,5 @@ def detect_objects_dummy(frame):
     ]
 
 def detect_objects(frame):
-    outputs = pretrainedYoloModel.predict(source=frame)
+    outputs = pretrainedYoloModel.predict(source=frame, verbose=False)
     return parse_yolo_predictions(outputs)

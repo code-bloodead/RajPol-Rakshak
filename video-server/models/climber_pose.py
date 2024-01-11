@@ -26,5 +26,5 @@ def detect_climber_dummy(frame):
 
 
 def detect_climber(frame):
-    outputs = climberYoloModel.predict(source=frame)
+    outputs = climberYoloModel.predict(source=frame, verbose=False)
     return parse_yolo_predictions(outputs)

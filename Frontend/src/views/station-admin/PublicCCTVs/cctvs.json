@@ -3,6 +3,8 @@
     {
       "type": "Feature",
       "properties": {
+        "id": "cctv_0",
+        "cctv_type": "public",
         "title": "Versova Beach",
         "description": "A continuation of Juhu Beach towards the Andheri suburbs",
         "kind": "beach",
@@ -13,6 +15,20 @@
     {
       "type": "Feature",
       "properties": {
+        "id": "cctv_1",
+        "cctv_type": "public",
+        "title": "Lokhandwala Market",
+        "description": "A bustling local market in western Mumbai, near Andheri",
+        "kind": "default",
+        "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1704890971/samples/public_cam.mp4"
+      },
+      "geometry": { "coordinates": [72.829, 19.138], "type": "Point" }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "cctv_2",
+        "cctv_type": "public",
         "title": "Prison",
         "description": "Prison in Andheri",
         "kind": "default",
@@ -23,16 +39,8 @@
     {
       "type": "Feature",
       "properties": {
-        "title": "Lokhandwala Market",
-        "description": "A bustling local market in western Mumbai, near Andheri",
-        "kind": "default",
-        "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1703605915/samples/beach.mp4"
-      },
-      "geometry": { "coordinates": [72.829, 19.138], "type": "Point" }
-    },
-    {
-      "type": "Feature",
-      "properties": {
+        "id": "cctv_3",
+        "cctv_type": "public",
         "title": "Chota Kashmir",
         "description": "Bollywood’s rendition of a tiny Kashmir, located near Goregaon",
         "kind": "boat",
@@ -43,6 +51,8 @@
     {
       "type": "Feature",
       "properties": {
+        "id": "cctv_4",
+        "cctv_type": "public",
         "title": "Mahakali Caves",
         "description": "Centuries-old rock-cut monuments in western Mumbai",
         "kind": "default",
@@ -53,6 +63,8 @@
     {
       "type": "Feature",
       "properties": {
+        "id": "cctv_5",
+        "cctv_type": "public",
         "title": "Juhu Beach",
         "description": "The longest beach in Mumbai, popular among tourists",
         "kind": "beach",
