@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rakshak/core/app_export.dart';
-import 'package:rakshak/data/models/home/post_incident_resp.dart';
+import 'package:rakshak/data/models/home/get_incident_resp.dart';
 // import 'package:rakshak/widgets/custom_icon_button.dart';
 // import 'package:rakshak/widgets/custom_button.dart';
 
@@ -221,8 +221,10 @@ class IncidentWidget extends StatelessWidget {
                                           Padding(
                                               padding: getPadding(left: 4),
                                               child: Text(
-                                                  incident.location ??
-                                                      "Incident Location",
+                                                  addEllipsis(
+                                                      incident.location ??
+                                                          "Incident Location",
+                                                      24),
                                                   overflow:
                                                       TextOverflow.ellipsis,
                                                   textAlign: TextAlign.left,
@@ -245,9 +247,9 @@ class IncidentWidget extends StatelessWidget {
                                           Padding(
                                               padding: getPadding(left: 4),
                                               child: Text(
-                                                  (incident.stationName ??
+                                                  (incident.station_name ??
                                                           "Unknown") +
-                                                      " Police Station",
+                                                      " Station",
                                                   overflow:
                                                       TextOverflow.ellipsis,
                                                   textAlign: TextAlign.left,
@@ -277,7 +279,7 @@ class IncidentWidget extends StatelessWidget {
                                               padding: getPadding(left: 6),
                                               child: Text(
                                                   formatDate(
-                                                      incident.createdAt ??
+                                                      incident.created_at ??
                                                           DateTime.now()
                                                               .toString()),
                                                   overflow:
@@ -303,7 +305,7 @@ class IncidentWidget extends StatelessWidget {
                                                   padding: getPadding(left: 6),
                                                   child: Text(
                                                       formatTime(
-                                                          incident.createdAt ??
+                                                          incident.created_at ??
                                                               DateTime.now()
                                                                   .toString()),
                                                       overflow:

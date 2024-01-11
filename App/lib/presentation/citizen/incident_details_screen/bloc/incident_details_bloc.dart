@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:rakshak/data/models/home/post_incident_resp.dart';
+import 'package:rakshak/data/models/home/get_incident_resp.dart';
 import '/core/app_export.dart';
 part 'incident_details_event.dart';
 part 'incident_details_state.dart';

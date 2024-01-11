@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      title: 'rakshak',
+      title: 'Rakshak',
       initialRoute: AppRoutes.initialRoute,
       routes: AppRoutes.routes,
     );

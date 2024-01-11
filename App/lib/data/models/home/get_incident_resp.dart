@@ -1,12 +1,12 @@
-class PostIncidentResp {
+class GetIncidentResp {
   List<Incident>? dataList;
 
-  PostIncidentResp({this.dataList});
+  GetIncidentResp({this.dataList});
 
-  PostIncidentResp.fromJson(Map<String, dynamic> json) {
-    if (json['data'] != null) {
+  GetIncidentResp.fromJson(List<dynamic> json) {
+    if (json != []) {
       dataList = List<Incident>.from(
-        (json['data'] as List).map(
+        json.map(
           (item) => Incident.fromJson(item),
         ),
       );
@@ -28,11 +28,11 @@ class Incident {
   String? title;
   String? description;
   String? type;
-  String? stationName;
+  String? station_name;
   String? location;
   String? source;
   String? status;
-  String? createdAt;
+  String? created_at;
 
   Incident({
     required this.id,
@@ -40,11 +40,11 @@ class Incident {
     required this.title,
     required this.description,
     required this.type,
-    required this.stationName,
+    required this.station_name,
     required this.location,
     required this.source,
     required this.status,
-    required this.createdAt,
+    required this.created_at,
   });
 
   Incident.fromJson(Map<String, dynamic> json) {
@@ -53,11 +53,11 @@ class Incident {
     title = json['title'];
     description = json['description'];
     type = json['type'];
-    stationName = json['station_name'];
+    station_name = json['station_name'];
     location = json['location'];
     source = json['source'];
     status = json['status'];
-    createdAt = json['created_at'];
+    created_at = json['created_at'];
   }
 
   Map<String, dynamic> toJson() {
@@ -77,8 +77,8 @@ class Incident {
     if (this.type != null) {
       data['type'] = this.type;
     }
-    if (this.stationName != null) {
-      data['station_name'] = this.stationName;
+    if (this.station_name != null) {
+      data['station_name'] = this.station_name;
     }
     if (this.location != null) {
       data['location'] = this.location;
@@ -89,8 +89,8 @@ class Incident {
     if (this.status != null) {
       data['status'] = this.status;
     }
-    if (this.createdAt != null) {
-      data['created_at'] = this.createdAt;
+    if (this.created_at != null) {
+      data['created_at'] = this.created_at;
     }
     return data;
   }
