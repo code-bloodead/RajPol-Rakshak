@@ -5,6 +5,7 @@ import 'package:rakshak/data/models/login/post_login_resp.dart';
 import 'package:rakshak/data/models/login/post_police_login_resp.dart';
 import 'package:rakshak/data/models/me/get_me_resp.dart';
 import 'package:rakshak/data/models/register/post_register_resp.dart';
+import 'package:rakshak/data/models/home/get_incident_resp.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:rakshak/data/models/register/verify_otp_resp.dart';
 
@@ -178,6 +179,34 @@ class ApiClient {
       } else {
         throw response.data != null
             ? VerifyOtpResp.fromJson(response.data)
+            : 'Something Went Wrong!';
+      }
+    } catch (error, stackTrace) {
+      ProgressDialogUtils.hideProgressDialog();
+      Logger.log(
+        error,
+        stackTrace: stackTrace,
+      );
+      rethrow;
+    }
+  }
+
+  Future<GetIncidentResp> getIncident(String mobile) async {
+    ProgressDialogUtils.showProgressDialog();
+    try {
+      await isNetworkConnected();
+      var response = await _dio.get(
+        '$url/incidents/get_incidents_by_userid?id=$mobile',
+        options: Options(headers: {
+          'Content-type': 'application/json',
+        }),
+      );
+      ProgressDialogUtils.hideProgressDialog();
+      if (_isSuccessCall(response)) {
+        return GetIncidentResp.fromJson(response.data["SUCCESS"]);
+      } else {
+        throw response.data != null
+            ? GetIncidentResp.fromJson(response.data["SUCCESS"])
             : 'Something Went Wrong!';
       }
     } catch (error, stackTrace) {

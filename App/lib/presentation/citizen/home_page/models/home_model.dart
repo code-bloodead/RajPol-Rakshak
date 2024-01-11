@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:rakshak/data/models/home/post_incident_resp.dart';
+import 'package:rakshak/data/models/home/get_incident_resp.dart';
 import 'package:rakshak/data/models/selectionPopupModel/selection_popup_model.dart';
 
 // ignore: must_be_immutable

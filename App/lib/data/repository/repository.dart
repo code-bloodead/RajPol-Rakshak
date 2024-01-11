@@ -3,6 +3,7 @@ import 'package:rakshak/data/models/login/post_police_login_resp.dart';
 import 'package:rakshak/data/models/me/get_me_resp.dart';
 import 'package:rakshak/data/models/register/post_register_resp.dart';
 import 'package:rakshak/data/models/register/verify_otp_resp.dart';
+import 'package:rakshak/data/models/home/get_incident_resp.dart';
 
 import '../apiClient/api_client.dart';
 
@@ -53,5 +54,9 @@ class Repository {
       headers: headers,
       requestData: requestData,
     );
+  }
+
+  Future<GetIncidentResp> getIncident(String mobile) async {
+    return await _apiClient.getIncident(mobile);
   }
 }
