@@ -4,7 +4,7 @@ from keras.models import load_model
 from keras.optimizers import legacy
 import numpy as np
 
-fightModel = load_model("models/weights/fights/fights2vgg2cat2.keras")
+fightModel = load_model("/kaggle/input/rajpol/weights/fights/fights2vgg2cat2.keras")
 print("Fight model loaded")
 
 
