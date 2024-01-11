@@ -24,13 +24,12 @@ import {
   ReceivedMessageData,
   WeaponDetection,
 } from "./detections.types";
+import { VIDEO_STREAM_SERVER } from "../../../constants/config";
 
 interface CCTVStreamProps {
   cctv: CctvDetails;
 }
 
-const VIDEO_STREAM_SERVER = `ws://localhost:5005`;
-export const MAX_VOID_FRAMES = 100;
 
 const CCTVStream: React.FC<CCTVStreamProps> = ({ cctv }) => {
   const [currentObjectDetections, setCurrentObjectDetections] = useState<
@@ -76,7 +75,7 @@ const CCTVStream: React.FC<CCTVStreamProps> = ({ cctv }) => {
       );
       const receivedWeaponDetections = filterDetections(
         lastJsonMessage.detections?.weapon || [],
-        0.3,
+        0.5,
       );
       const receivedClimberDetection = filterDetections(
         lastJsonMessage.detections?.climber || [],
@@ -84,7 +83,6 @@ const CCTVStream: React.FC<CCTVStreamProps> = ({ cctv }) => {
         ["walker"]
       );
       const receivedFightDetection = lastJsonMessage.detections?.fight;
-
       setCurrentObjectDetections(receivedObjectDetections);
       setCurrentWeaponDetection(receivedWeaponDetections);
       setCurrentClimberDetection(receivedClimberDetection);

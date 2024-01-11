@@ -4,4 +4,6 @@ ultralytics
 numpy
 keras
 opencv-python
-tensorflow
+tensorflow[and-cuda]
+tensorflow-macos
+tensorflow-metal

@@ -3,6 +3,7 @@ env
 .env
 .vercel
 cred.json
+**/.DS_Store
 
 # virtual environment
 venv

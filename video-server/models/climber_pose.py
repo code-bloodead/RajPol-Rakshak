@@ -1,8 +1,10 @@
+import torch
 from ultralytics import YOLO
 
 from models.utils.yolo import parse_yolo_predictions
+from models.device import current_device
 
-climberYoloModel = YOLO("models/weights/climb_walk/climber.pt")
+climberYoloModel = YOLO("models/weights/climb_walk/climber.pt").to(torch.device(current_device))
 print("Climber YOLO Loaded")
 
 def detect_climber_dummy(frame):
