@@ -99,7 +99,8 @@ class IncidentManager:
                 #     f"Ignoring {detection_type} detection for CCTV {cctvId} within {THROTTLE_INCIDENT_REPORT_TIME} seconds.")
                 return
 
-        print(f"Register incident for {detection_type} due to diff: ", time_difference)
+        print(f"Register incident for {detection_type} due to huge time diff: ")
+    
         # Update the last recorded time and detection for the detection_type and cctvId
         self.incident_map[detection_type][cctvId] = (
             current_time, detections)

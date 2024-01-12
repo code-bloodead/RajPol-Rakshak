@@ -28,7 +28,8 @@ def process_video_stream(url, cctv_id: str, cctv_type: str, output_queue: Queue,
     from models.yolo_objects import detect_objects, detect_objects_dummy
     from models.fight import detect_fight, detect_fight_dummy
     from models.weapons import detect_weapons, detect_weapons_dummy
-    from models.climber_pose import detect_climber, detect_climber_dummy
+    # from models.climber_pose import detect_climber, detect_climber_dummy
+    from models.climber_lstm import detect_climber, detect_climber_dummy
     from incident_manager import IncidentManager, IncidentType
 
     cap = cv2.VideoCapture(url)
@@ -71,6 +72,9 @@ def process_video_stream(url, cctv_id: str, cctv_type: str, output_queue: Queue,
                         fight_future = executor.submit(detect_fight, frame)
                         # fight_future = executor.submit(detect_fight_dummy, frame)
 
+                        climber_future = executor.submit(detect_climber, frame)
+                        # climber_future = executor.submit(detect_climber_dummy, frame)
+
                     # Frame-independent models
                     if framecount % DETECT_EVERY_N_FRAME == 0:
                         # Single frame detection are updated every {DETECT_EVERY_N_FRAME} frames
@@ -82,8 +86,8 @@ def process_video_stream(url, cctv_id: str, cctv_type: str, output_queue: Queue,
                         weapons_future = executor.submit(detect_weapons, frame)
                         # weapons_future = executor.submit(detect_weapons_dummy, frame)
 
-                        climber_future = executor.submit(detect_climber, frame)
-                        # climber_future = executor.submit(detect_climber_dummy, frame)
+                        # climber_future = executor.submit(detect_climber, frame)
+                        # # climber_future = executor.submit(detect_climber_dummy, frame)
 
                     # Wait for all threads to complete
                     if objects_future is not None and weapons_future is not None and climber_future is not None:
@@ -95,16 +99,18 @@ def process_video_stream(url, cctv_id: str, cctv_type: str, output_queue: Queue,
                         if detections['weapon'] is not None and len(detections['weapon']) > 0:
                             incident_manager.registerDetections(
                                 frame, cctv_id, cctv_type, IncidentType.weapons, detections['weapon'])
-                        if detections['climber'] is not None and len(detections['climber']) > 0:
-                            incident_manager.registerDetections(
-                                frame, cctv_id, cctv_type, IncidentType.climber, detections['climber'])
 
-                    if fight_future is not None:
+                    if fight_future is not None and climber_future is not None:
                         detections['fight'] = fight_future.result()
+                        detections['climber'] = climber_future.result()
 
                         if detections['fight'] is not None and detections['fight']['prediction_confidence'] > 0.5 and detections['fight']['prediction_label'] == 'fight':
                             incident_manager.registerDetections(
                                 frame, cctv_id, cctv_type, IncidentType.violence, detections['fight'])
+                            
+                        # if detections['climber'] is not None and len(detections['climber']) > 0:
+                        #     incident_manager.registerDetections(
+                        #         frame, cctv_id, cctv_type, IncidentType.climber, detections['climber'])
 
                     prev_detections = detections
 
