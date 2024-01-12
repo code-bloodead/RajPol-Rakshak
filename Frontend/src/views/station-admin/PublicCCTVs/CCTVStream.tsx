@@ -6,11 +6,7 @@ import {
   getHighDpiCanvasContext,
 } from "../../../utils/canvas";
 import { CctvDetails } from "./cctvs.types";
-import {
-  getClimberColor,
-  getColor,
-  getWeaponColor,
-} from "../../../utils/pallete";
+import { getColor, getWeaponColor } from "../../../utils/pallete";
 import Card from "@/components/card";
 import {
   bboxCoordsToCanvasCoords,
@@ -18,8 +14,8 @@ import {
 } from "../../../utils/yolo";
 import { countLabels } from "../../../utils/labels";
 import {
-  ClimberDetection,
-  FightDetection,
+  ClimberClassification,
+  FightClassification,
   ObjectDetection,
   ReceivedMessageData,
   WeaponDetection,
@@ -30,7 +26,6 @@ interface CCTVStreamProps {
   cctv: CctvDetails;
 }
 
-
 const CCTVStream: React.FC<CCTVStreamProps> = ({ cctv }) => {
   const [currentObjectDetections, setCurrentObjectDetections] = useState<
     ObjectDetection[]
@@ -38,11 +33,10 @@ const CCTVStream: React.FC<CCTVStreamProps> = ({ cctv }) => {
   const [currentWeaponDetections, setCurrentWeaponDetection] = useState<
     WeaponDetection[]
   >([]);
-  const [currentClimberDetections, setCurrentClimberDetection] = useState<
-    ClimberDetection[]
-  >([]);
-  const [currentFightDetection, setCurrentFightDetection] =
-    useState<FightDetection | null>(null);
+  const [currentFightClassification, setCurrentFightClassification] =
+    useState<FightClassification | null>(null);
+  const [currentClimberClassification, setCurrentClimberClassification] =
+    useState<ClimberClassification | null>(null);
 
   const [currentFrameData, setCurrentFrameData] = useState<string | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -50,7 +44,7 @@ const CCTVStream: React.FC<CCTVStreamProps> = ({ cctv }) => {
   // const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const { lastJsonMessage, readyState } = useWebSocket<ReceivedMessageData>(
-    `${VIDEO_STREAM_SERVER}/ws?stream_url=${cctv.streamUrl}`,
+    `${VIDEO_STREAM_SERVER}/ws?stream_url=${cctv.streamUrl}&cctv_id=${cctv.id}&cctv_type=${cctv.cctv_type}`,
     {
       onOpen: () => console.log("connected socket for stream", cctv.streamUrl),
       // onMessage: (msg) => console.log("message received for stream", cctv.streamUrl, msg),
@@ -63,6 +57,7 @@ const CCTVStream: React.FC<CCTVStreamProps> = ({ cctv }) => {
     const canvas = canvasRef.current;
     const ctx = canvas ? getHighDpiCanvasContext(canvas) : null;
     const newFrame: string | null = lastJsonMessage?.frame;
+    // console.log({ ctx, newFrame, lastJsonMessage });
 
     if (ctx && newFrame) {
       voidFrameCountRef.current += 1;
@@ -75,18 +70,14 @@ const CCTVStream: React.FC<CCTVStreamProps> = ({ cctv }) => {
       );
       const receivedWeaponDetections = filterDetections(
         lastJsonMessage.detections?.weapon || [],
-        0.5,
+        0.5
       );
-      const receivedClimberDetection = filterDetections(
-        lastJsonMessage.detections?.climber || [],
-        0.3,
-        ["walker"]
-      );
-      const receivedFightDetection = lastJsonMessage.detections?.fight;
+      const receivedFightClassification = lastJsonMessage.detections?.fight;
+      const receivedClimberClassification = lastJsonMessage.detections?.climber;
       setCurrentObjectDetections(receivedObjectDetections);
       setCurrentWeaponDetection(receivedWeaponDetections);
-      setCurrentClimberDetection(receivedClimberDetection);
-      setCurrentFightDetection(receivedFightDetection);
+      setCurrentFightClassification(receivedFightClassification);
+      setCurrentClimberClassification(receivedClimberClassification);
 
       // console.log("Received", {
       //   receivedObjectDetections,
@@ -100,28 +91,6 @@ const CCTVStream: React.FC<CCTVStreamProps> = ({ cctv }) => {
       drawImageOnCanvas(ctx, "data:image/jpeg;base64," + newFrame).then(() => {
         const LabelFontSize = 18 * window.devicePixelRatio;
         const LabelFont = `${LabelFontSize}px Arial`;
-
-        receivedClimberDetection.forEach((climberDetection) => {
-          const climberColor = getClimberColor(climberDetection.label);
-          const { x, y, width, height } = bboxCoordsToCanvasCoords(
-            canvas,
-            climberDetection.bbox
-          );
-
-          drawRect(ctx, x, y, width, height, {
-            lineWidth: 2,
-            strokeStyle: climberColor,
-            label: {
-              text: `${
-                climberDetection.label
-              } ${climberDetection.confidence.toFixed(2)}`,
-              xOffset: 0,
-              yOffset: -5,
-              font: LabelFont,
-              backgroundColor: climberColor,
-            },
-          });
-        });
 
         receivedWeaponDetections.forEach((weaponDetection) => {
           const weaponColor = getWeaponColor(weaponDetection.label);
@@ -145,6 +114,7 @@ const CCTVStream: React.FC<CCTVStreamProps> = ({ cctv }) => {
           });
         });
 
+        // @TODO - Use for climbers (draw any person detected without labels)
         receivedObjectDetections.forEach((objectDetection, idx) => {
           const objColor = getColor(idx);
           const { x, y, width, height } = bboxCoordsToCanvasCoords(
@@ -166,6 +136,7 @@ const CCTVStream: React.FC<CCTVStreamProps> = ({ cctv }) => {
             },
           });
         });
+        // console.log(`Ready to display ${cctv.id}`);
       });
     }
   }, [lastJsonMessage]);
@@ -182,30 +153,45 @@ const CCTVStream: React.FC<CCTVStreamProps> = ({ cctv }) => {
       </div>
       <div className="p-2 flex flex-row items-center justify-between">
         <span className="mx-2">{cctv.description}</span>
-        {currentFightDetection && (
+        {currentFightClassification && (
           <span
             className={
               "mr-2 rounded px-2.5 py-0.5 text-xs font-medium " +
-              (currentFightDetection.predicted_class == 1
+              (currentFightClassification.predicted_class == 1
                 ? "bg-red-100 border border-red-400 text-red-700"
                 : "bg-green-100 border border-green-400 text-green-700")
             }
           >
-            {currentFightDetection.predicted_class === 1
-              ? "Fight detected"
+            {currentFightClassification.predicted_class === 1
+              ? "Fight"
               : "No fight"}
-            {/* ({currentFightDetection.prediction_confidence}%) */}
+            (
+            {Math.round(
+              currentFightClassification.prediction_confidence * 10000
+            ) / 100}
+            %)
           </span>
         )}
-        {/* <button
-        onClick={() => {}}
-        className={` flex items-center justify-center rounded-lg bg-lightPrimary p-[0.4rem]  font-medium text-brand-500 transition duration-200 hover:cursor-pointer hover:bg-gray-100 dark:bg-navy-700 dark:text-white dark:hover:bg-white/20 dark:active:bg-white/10 ml-auto me-2 text-sm`}
-      >
-        <span> Create Task </span>
-        <MdOutlinePostAdd className="ml-1 h-4 w-4" />
-      </button> */}
+        {currentClimberClassification &&
+          currentClimberClassification.predicted_class == 1 && (
+            <span
+              className={
+                "mr-2 rounded px-2.5 py-0.5 text-xs font-medium " +
+                "bg-red-100 border border-red-400 text-red-700"
+              }
+            >
+              Climber (
+              {Math.round(
+                currentClimberClassification.prediction_confidence * 100
+              ) / 100}
+              %)
+            </span>
+          )}
       </div>
       <div>
+        {/* <h2>
+          {readyState}, framelen = {currentFrameData?.length || 0}
+        </h2> */}
         <canvas
           ref={canvasRef}
           className="w-full"
@@ -269,16 +255,6 @@ const CCTVStream: React.FC<CCTVStreamProps> = ({ cctv }) => {
           <h2>
             Detected objects:{" "}
             {countLabels(currentObjectDetections.map((d) => d.label))
-              .map(
-                ([label, count]) => `${count} ${label}${count > 1 ? "s" : ""}`
-              )
-              .join(", ")}
-          </h2>
-        )}
-        {currentObjectDetections.length > 0 && (
-          <h2>
-            Detected poses:{" "}
-            {countLabels(currentClimberDetections.map((d) => d.label))
               .map(
                 ([label, count]) => `${count} ${label}${count > 1 ? "s" : ""}`
               )

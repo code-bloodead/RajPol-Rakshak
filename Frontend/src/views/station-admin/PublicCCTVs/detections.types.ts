@@ -3,8 +3,8 @@ export interface ReceivedMessageData {
   detections: {
     objects: ObjectDetection[];
     weapon: WeaponDetection[];
-    climber: ClimberDetection[];
-    fight: FightDetection;
+    fight: FightClassification;
+    climber: ClimberClassification;
   };
 }
 
@@ -18,12 +18,14 @@ export interface ObjectDetection {
 export interface WeaponDetection extends ObjectDetection {
   label: "gun" | "knife";
 }
-export interface ClimberDetection extends ObjectDetection {
-  label: "climber" | "walker";
-}
-
-export interface FightDetection {
+export interface Classification {
   predicted_class: number;
   prediction_confidence: number;
   prediction_label: string;
+}
+export interface FightClassification extends Classification {
+  prediction_label: "fight" | "no-fight";
+}
+export interface ClimberClassification extends Classification {
+  prediction_label: "climber" | "no-climber";
 }

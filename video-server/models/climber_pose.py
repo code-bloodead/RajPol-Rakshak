@@ -4,7 +4,7 @@ from ultralytics import YOLO
 from models.utils.yolo import parse_yolo_predictions
 from models.device import current_device
 
-climberYoloModel = YOLO("/kaggle/input/rajpol/weights/climb_walk/climber.pt").to(torch.device(current_device))
+climberYoloModel = YOLO("models/weights/climb_walk/climber.pt").to(torch.device(current_device))
 print("Climber YOLO Loaded")
 
 def detect_climber_dummy(frame):
@@ -26,5 +26,5 @@ def detect_climber_dummy(frame):
 
 
 def detect_climber(frame):
-    outputs = climberYoloModel.predict(source=frame)
+    outputs = climberYoloModel.predict(source=frame, verbose=False)
     return parse_yolo_predictions(outputs)

@@ -4,7 +4,7 @@ from ultralytics import YOLO
 from models.utils.yolo import parse_yolo_predictions
 from models.device import current_device
 
-pretrainedYoloModel = YOLO("/kaggle/input/rajpol/weights/yolo_v8/yolov8n.pt").to(torch.device(current_device))
+pretrainedYoloModel = YOLO("models/weights/yolo_v8/yolov8n.pt").to(torch.device(current_device))
 print("Pre-trained YOLO Loaded")
 
 def detect_objects_dummy(frame):
@@ -15,5 +15,5 @@ def detect_objects_dummy(frame):
     ]
 
 def detect_objects(frame):
-    outputs = pretrainedYoloModel.predict(source=frame)
+    outputs = pretrainedYoloModel.predict(source=frame, verbose=False)
     return parse_yolo_predictions(outputs)

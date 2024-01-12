@@ -5,6 +5,7 @@ env
 cred.json
 **/.DS_Store
 __pycache__/**
+logs/*
 
 # virtual environment
 venv
