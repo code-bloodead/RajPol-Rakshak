@@ -2,7 +2,7 @@ import 'bloc/profile_bloc.dart';
 import 'models/profile_model.dart';
 import 'package:flutter/material.dart';
 import 'package:rakshak/core/app_export.dart';
-import 'package:rakshak/widgets/app_bar/appbar_iconbutton_1.dart';
+import 'package:rakshak/widgets/custom_switch.dart';
 import 'package:rakshak/widgets/app_bar/appbar_subtitle.dart';
 import 'package:rakshak/widgets/app_bar/custom_app_bar.dart';
 import 'package:rakshak/widgets/custom_icon_button.dart';
@@ -10,9 +10,10 @@ import 'package:rakshak/widgets/custom_icon_button.dart';
 class ProfilePage extends StatelessWidget {
   static Widget builder(BuildContext context) {
     return BlocProvider<ProfileBloc>(
-        create: (context) =>
-            ProfileBloc(ProfileState(profileModelObj: ProfileModel()))
-              ..add(ProfileInitialEvent()),
+        create: (context) => ProfileBloc(ProfileState(
+            profileModelObj: ProfileModel(),
+            isSelectedNotification: PrefUtils().getNotificationStatus()))
+          ..add(ProfileInitialEvent()),
         child: ProfilePage());
   }
 
@@ -24,13 +25,6 @@ class ProfilePage extends StatelessWidget {
               backgroundColor: ColorConstant.gray50,
               appBar: CustomAppBar(
                   height: getVerticalSize(48),
-                  leadingWidth: 64,
-                  leading: AppbarIconbutton1(
-                      svgPath: ImageConstant.imgArrowleft,
-                      margin: getMargin(left: 24, top: 16),
-                      onTap: () {
-                        onTapArrowleft15(context);
-                      }),
                   centerTitle: true,
                   title: AppbarSubtitle(
                     text: "lbl_profile".tr,
@@ -49,10 +43,9 @@ class ProfilePage extends StatelessWidget {
                                 alignment: Alignment.bottomRight,
                                 children: [
                                   CustomImageView(
-                                      imagePath:
-                                          ImageConstant.imgRectangle36170x70,
-                                      height: getSize(70),
-                                      width: getSize(70),
+                                      imagePath: ImageConstant.imgUserSample,
+                                      height: getSize(80),
+                                      width: getSize(80),
                                       radius: BorderRadius.circular(
                                           getHorizontalSize(35)),
                                       alignment: Alignment.center),
@@ -72,72 +65,34 @@ class ProfilePage extends StatelessWidget {
                                 ])),
                         Padding(
                             padding: getPadding(top: 8),
-                            child: Text("msg_cameron_william".tr,
+                            child: Text(PrefUtils().getName(),
                                 overflow: TextOverflow.ellipsis,
                                 textAlign: TextAlign.left,
                                 style: AppStyle.txtManropeBold18.copyWith(
                                     letterSpacing: getHorizontalSize(0.2)))),
                         Padding(
                             padding: getPadding(top: 4),
-                            child: Text("lbl_hello_gmail_com".tr,
+                            child: Text(PrefUtils().getMobile(),
                                 overflow: TextOverflow.ellipsis,
                                 textAlign: TextAlign.left,
                                 style: AppStyle.txtManropeMedium14Bluegray500)),
-                        Align(
-                            alignment: Alignment.centerLeft,
-                            child: Padding(
-                                padding: getPadding(top: 31),
-                                child: Text("lbl_home_search".tr,
-                                    overflow: TextOverflow.ellipsis,
-                                    textAlign: TextAlign.left,
-                                    style: AppStyle
-                                        .txtManropeExtraBold14Bluegray500
-                                        .copyWith(
-                                            letterSpacing:
-                                                getHorizontalSize(0.2))))),
-                        GestureDetector(
-                            onTap: () {
-                              onTapRowinstagram(context);
-                            },
-                            child: Padding(
-                                padding: getPadding(top: 15),
-                                child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      CustomIconButton(
-                                          height: 40,
-                                          width: 40,
-                                          variant:
-                                              IconButtonVariant.FillBluegray50,
-                                          shape:
-                                              IconButtonShape.RoundedBorder10,
-                                          padding:
-                                              IconButtonPadding.PaddingAll12,
-                                          child: CustomImageView(
-                                              svgPath:
-                                                  ImageConstant.imgInstagram)),
-                                      Padding(
-                                          padding: getPadding(
-                                              left: 16, top: 12, bottom: 7),
-                                          child: Text("lbl_recently_viewed2".tr,
-                                              overflow: TextOverflow.ellipsis,
-                                              textAlign: TextAlign.left,
-                                              style: AppStyle
-                                                  .txtManropeSemiBold14Gray900)),
-                                      Spacer(),
-                                      CustomImageView(
-                                          svgPath: ImageConstant
-                                              .imgArrowrightBlueGray500,
-                                          height: getSize(20),
-                                          width: getSize(20),
-                                          margin:
-                                              getMargin(top: 10, bottom: 10))
-                                    ]))),
-                        GestureDetector(
-                            onTap: () {
-                              onTapMyfavorites(context);
-                            },
-                            child: Padding(
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Align(
+                                alignment: Alignment.centerLeft,
+                                child: Padding(
+                                    padding: getPadding(top: 31),
+                                    child: Text("lbl_settings".tr,
+                                        overflow: TextOverflow.ellipsis,
+                                        textAlign: TextAlign.left,
+                                        style: AppStyle
+                                            .txtManropeExtraBold14Bluegray500
+                                            .copyWith(
+                                                letterSpacing:
+                                                    getHorizontalSize(0.2))))),
+                            Padding(
                                 padding: getPadding(top: 16),
                                 child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -152,30 +107,34 @@ class ProfilePage extends StatelessWidget {
                                           padding:
                                               IconButtonPadding.PaddingAll12,
                                           child: CustomImageView(
+                                              color: ColorConstant.blue500,
                                               svgPath: ImageConstant
-                                                  .imgLocation40x40)),
+                                                  .imgNotificationNone)),
                                       Padding(
                                           padding: getPadding(
                                               left: 16, top: 12, bottom: 7),
-                                          child: Text("lbl_my_favorites".tr,
+                                          child: Text("lbl_notification".tr,
                                               overflow: TextOverflow.ellipsis,
                                               textAlign: TextAlign.left,
                                               style: AppStyle
                                                   .txtManropeSemiBold14Gray900)),
                                       Spacer(),
-                                      CustomImageView(
-                                          svgPath: ImageConstant
-                                              .imgArrowrightBlueGray500,
-                                          height: getSize(20),
-                                          width: getSize(20),
-                                          margin:
-                                              getMargin(top: 10, bottom: 10))
-                                    ]))),
-                        GestureDetector(
-                            onTap: () {
-                              onTapPasttour(context);
-                            },
-                            child: Padding(
+                                      BlocSelector<ProfileBloc, ProfileState,
+                                              bool?>(
+                                          selector: (state) =>
+                                              state.isSelectedNotification,
+                                          builder: (context,
+                                              isSelectedNotification) {
+                                            return CustomSwitch(
+                                                value: isSelectedNotification,
+                                                onChanged: (value) {
+                                                  context.read<ProfileBloc>().add(
+                                                      ChangeNotificationSwitchEvent(
+                                                          value: value));
+                                                });
+                                          })
+                                    ])),
+                            Padding(
                                 padding: getPadding(top: 16),
                                 child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -190,70 +149,89 @@ class ProfilePage extends StatelessWidget {
                                           padding:
                                               IconButtonPadding.PaddingAll12,
                                           child: CustomImageView(
-                                              svgPath: ImageConstant.imgFile)),
+                                              color: ColorConstant.blue500,
+                                              svgPath:
+                                                  ImageConstant.imgDarkMode)),
+                                      Padding(
+                                          padding: getPadding(
+                                              left: 16, top: 12, bottom: 7),
+                                          child: Text("lbl_dark_mode".tr,
+                                              overflow: TextOverflow.ellipsis,
+                                              textAlign: TextAlign.left,
+                                              style: AppStyle
+                                                  .txtManropeSemiBold14Gray900)),
+                                      Spacer(),
+                                      BlocSelector<ProfileBloc, ProfileState,
+                                              bool?>(
+                                          selector: (state) =>
+                                              state.isSelectedDark,
+                                          builder: (context, isSelectedDark) {
+                                            return CustomSwitch(
+                                                value: isSelectedDark,
+                                                onChanged: (value) {
+                                                  context
+                                                      .read<ProfileBloc>()
+                                                      .add(
+                                                          ChangeDarkSwitchEvent(
+                                                              value: value));
+                                                });
+                                          })
+                                    ])),
+                            Padding(
+                                padding: getPadding(top: 16),
+                                child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      CustomIconButton(
+                                          height: 40,
+                                          width: 40,
+                                          variant:
+                                              IconButtonVariant.FillBluegray50,
+                                          shape:
+                                              IconButtonShape.RoundedBorder10,
+                                          padding:
+                                              IconButtonPadding.PaddingAll12,
+                                          child: CustomImageView(
+                                              color: ColorConstant.blue500,
+                                              svgPath:
+                                                  ImageConstant.imgLanguage)),
                                       Padding(
                                           padding: getPadding(
                                               left: 16, top: 10, bottom: 9),
-                                          child: Text("lbl_past_tour".tr,
+                                          child: Text("lbl_language".tr,
                                               overflow: TextOverflow.ellipsis,
                                               textAlign: TextAlign.left,
                                               style: AppStyle
                                                   .txtManropeSemiBold14Gray900)),
                                       Spacer(),
+                                      Padding(
+                                          padding:
+                                              getPadding(top: 2, bottom: 1),
+                                          child: Text("lbl_english".tr,
+                                              overflow: TextOverflow.ellipsis,
+                                              textAlign: TextAlign.left,
+                                              style: AppStyle
+                                                  .txtManropeSemiBold14)),
                                       CustomImageView(
                                           svgPath: ImageConstant
                                               .imgArrowrightBlueGray500,
                                           height: getSize(20),
                                           width: getSize(20),
-                                          margin:
-                                              getMargin(top: 10, bottom: 10))
-                                    ]))),
-                        Align(
-                            alignment: Alignment.centerLeft,
-                            child: Padding(
-                                padding: getPadding(top: 32),
-                                child: Text("lbl_general".tr,
-                                    overflow: TextOverflow.ellipsis,
-                                    textAlign: TextAlign.left,
-                                    style: AppStyle
-                                        .txtManropeExtraBold14Bluegray500
-                                        .copyWith(
-                                            letterSpacing:
-                                                getHorizontalSize(0.2))))),
-                        Padding(
-                            padding: getPadding(top: 16),
-                            child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  CustomIconButton(
-                                      height: 40,
-                                      width: 40,
-                                      variant: IconButtonVariant.FillBluegray50,
-                                      shape: IconButtonShape.RoundedBorder10,
-                                      padding: IconButtonPadding.PaddingAll12,
-                                      child: CustomImageView(
-                                          svgPath: ImageConstant.imgMenu1)),
-                                  Padding(
-                                      padding: getPadding(
-                                          left: 16, top: 12, bottom: 7),
-                                      child: Text("lbl_sell_my_home".tr,
-                                          overflow: TextOverflow.ellipsis,
-                                          textAlign: TextAlign.left,
-                                          style: AppStyle
-                                              .txtManropeSemiBold14Gray900)),
-                                  Spacer(),
-                                  CustomImageView(
-                                      svgPath: ImageConstant
-                                          .imgArrowrightBlueGray500,
-                                      height: getSize(20),
-                                      width: getSize(20),
-                                      margin: getMargin(top: 10, bottom: 10))
-                                ])),
-                        GestureDetector(
-                            onTap: () {
-                              onTapMylistings(context);
-                            },
-                            child: Padding(
+                                          margin: getMargin(left: 4, bottom: 3))
+                                    ])),
+                            Align(
+                                alignment: Alignment.centerLeft,
+                                child: Padding(
+                                    padding: getPadding(top: 32),
+                                    child: Text("lbl_support".tr,
+                                        overflow: TextOverflow.ellipsis,
+                                        textAlign: TextAlign.left,
+                                        style: AppStyle
+                                            .txtManropeExtraBold14Bluegray500
+                                            .copyWith(
+                                                letterSpacing:
+                                                    getHorizontalSize(0.2))))),
+                            Padding(
                                 padding: getPadding(top: 16),
                                 child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -268,12 +246,11 @@ class ProfilePage extends StatelessWidget {
                                           padding:
                                               IconButtonPadding.PaddingAll12,
                                           child: CustomImageView(
-                                              svgPath:
-                                                  ImageConstant.imgHome44x44)),
+                                              svgPath: ImageConstant.imgMenu1)),
                                       Padding(
                                           padding: getPadding(
                                               left: 16, top: 12, bottom: 7),
-                                          child: Text("lbl_my_listings".tr,
+                                          child: Text("lbl_terms_of_use".tr,
                                               overflow: TextOverflow.ellipsis,
                                               textAlign: TextAlign.left,
                                               style: AppStyle
@@ -286,13 +263,9 @@ class ProfilePage extends StatelessWidget {
                                           width: getSize(20),
                                           margin:
                                               getMargin(top: 10, bottom: 10))
-                                    ]))),
-                        GestureDetector(
-                            onTap: () {
-                              onTapSettings(context);
-                            },
-                            child: Padding(
-                                padding: getPadding(top: 16, bottom: 5),
+                                    ])),
+                            Padding(
+                                padding: getPadding(top: 16),
                                 child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
@@ -306,12 +279,12 @@ class ProfilePage extends StatelessWidget {
                                           padding:
                                               IconButtonPadding.PaddingAll12,
                                           child: CustomImageView(
-                                              svgPath:
-                                                  ImageConstant.imgSettings1)),
+                                              color: ColorConstant.blue500,
+                                              svgPath: ImageConstant.imgAbout)),
                                       Padding(
                                           padding: getPadding(
                                               left: 16, top: 12, bottom: 7),
-                                          child: Text("lbl_settings".tr,
+                                          child: Text("lbl_about".tr,
                                               overflow: TextOverflow.ellipsis,
                                               textAlign: TextAlign.left,
                                               style: AppStyle
@@ -324,7 +297,50 @@ class ProfilePage extends StatelessWidget {
                                           width: getSize(20),
                                           margin:
                                               getMargin(top: 10, bottom: 10))
-                                    ])))
+                                    ])),
+                            GestureDetector(
+                                onTap: () {
+                                  onTapFaqs(context);
+                                },
+                                child: Padding(
+                                    padding: getPadding(top: 16, bottom: 5),
+                                    child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          CustomIconButton(
+                                              height: 40,
+                                              width: 40,
+                                              variant: IconButtonVariant
+                                                  .FillBluegray50,
+                                              shape: IconButtonShape
+                                                  .RoundedBorder10,
+                                              padding: IconButtonPadding
+                                                  .PaddingAll12,
+                                              child: CustomImageView(
+                                                  color: ColorConstant.blue500,
+                                                  svgPath:
+                                                      ImageConstant.imgFaqs)),
+                                          Padding(
+                                              padding: getPadding(
+                                                  left: 16, top: 12, bottom: 7),
+                                              child: Text("lbl_faqs".tr,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  textAlign: TextAlign.left,
+                                                  style: AppStyle
+                                                      .txtManropeSemiBold14Gray900)),
+                                          Spacer(),
+                                          CustomImageView(
+                                              svgPath: ImageConstant
+                                                  .imgArrowrightBlueGray500,
+                                              height: getSize(20),
+                                              width: getSize(20),
+                                              margin: getMargin(
+                                                  top: 10, bottom: 10))
+                                        ])))
+                          ],
+                        ),
                       ]))));
     });
   }
@@ -335,37 +351,9 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  onTapRowinstagram(BuildContext context) {
+  onTapFaqs(BuildContext context) {
     NavigatorService.pushNamed(
-      AppRoutes.recentlyViewsScreen,
+      AppRoutes.faqsGetHelpScreen,
     );
-  }
-
-  onTapMyfavorites(BuildContext context) {
-    NavigatorService.pushNamed(
-      AppRoutes.favoriteScreen,
-    );
-  }
-
-  onTapPasttour(BuildContext context) {
-    NavigatorService.pushNamed(
-      AppRoutes.pastToursScreen,
-    );
-  }
-
-  onTapMylistings(BuildContext context) {
-    NavigatorService.pushNamed(
-      AppRoutes.homeListingScreen,
-    );
-  }
-
-  onTapSettings(BuildContext context) {
-    NavigatorService.pushNamed(
-      AppRoutes.settingsScreen,
-    );
-  }
-
-  onTapArrowleft15(BuildContext context) {
-    NavigatorService.goBack();
   }
 }

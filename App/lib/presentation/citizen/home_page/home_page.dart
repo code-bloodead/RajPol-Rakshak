@@ -85,7 +85,7 @@ class HomePage extends StatelessWidget {
                                     return CustomSearchView(
                                         onChanged: (value) {
                                           return context.read<HomeBloc>().add(
-                                              onIncidentSearch(
+                                              OnIncidentSearch(
                                                   searchVal:
                                                       incidentSearchController!
                                                           .text

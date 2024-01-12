@@ -10,7 +10,7 @@ const Reports = () => {
 
   useEffect(() => {
     setFilteredIncidents(
-      incidents.filter((obj: Incident) => obj.source === "User Report")
+      incidents.filter((obj: Incident) => obj.source !== "CCTV")
     );
   }, [incidents]);
 

@@ -12,14 +12,15 @@ var globalMessengerKey = GlobalKey<ScaffoldMessengerState>();
 
 Future main() async {
   await dotenv.load(fileName: ".env");
-  WidgetsFlutterBinding.ensureInitialized();
+  await WidgetsFlutterBinding.ensureInitialized();
+  await PrefUtils().init();
   await LocalNotifications.init();
   await BackgroundService.initialize();
 
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
-  PrefUtils().init();
+
   Logger.init(kReleaseMode ? LogMode.live : LogMode.debug);
   runApp(const MyApp());
 }

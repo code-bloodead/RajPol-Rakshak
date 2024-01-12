@@ -55,7 +55,6 @@ class AddReportBloc extends Bloc<AddReportEvent, AddReportState> {
     Emitter<AddReportState> emit,
   ) {
     emit(state.copyWith(incidentImage: event.imagePath));
-    print(state.incidentImage);
   }
 
   List<ValueItem> fillIncidentCategoryList() {

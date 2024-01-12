@@ -206,14 +206,12 @@ const IncidentModal = ({
                     >
                       {incident?.source === "CCTV" ? (
                         <BiCctv className="h-5 w-5 text-navy-700 dark:text-white mr-2" />
-                      ) : incident?.source === "User Report" ? (
-                        <LiaUserShieldSolid className="h-5 w-5 text-navy-700 dark:text-white mr-2" />
                       ) : (
-                        ""
+                        <LiaUserShieldSolid className="h-5 w-5 text-navy-700 dark:text-white mr-2" />
                       )}
 
                       <p>
-                        {incident?.source ? incident?.source : "Not Available"}
+                        {incident?.source != "CCTV" ? "User Report" : incident?.source}
                       </p>
                     </div>
                   </div>

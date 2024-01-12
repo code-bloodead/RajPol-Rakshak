@@ -4,6 +4,7 @@ import 'package:rakshak/core/utils/progress_dialog_utils.dart';
 import 'package:rakshak/data/models/login/post_login_resp.dart';
 import 'package:rakshak/data/models/login/post_police_login_resp.dart';
 import 'package:rakshak/data/models/me/get_me_resp.dart';
+import 'package:rakshak/data/models/notification/notification_model.dart';
 import 'package:rakshak/data/models/register/post_register_resp.dart';
 import 'package:rakshak/data/models/home/get_incident_resp.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -207,6 +208,34 @@ class ApiClient {
       } else {
         throw response.data != null
             ? GetIncidentResp.fromJson(response.data["SUCCESS"])
+            : 'Something Went Wrong!';
+      }
+    } catch (error, stackTrace) {
+      ProgressDialogUtils.hideProgressDialog();
+      Logger.log(
+        error,
+        stackTrace: stackTrace,
+      );
+      rethrow;
+    }
+  }
+
+  Future<GetNotificationResp> getNotifications(String user_id) async {
+    ProgressDialogUtils.showProgressDialog();
+    try {
+      await isNetworkConnected();
+      var response = await _dio.get(
+        '$url/notifications/get_notifications_for_user?user_id=$user_id',
+        options: Options(headers: {
+          'Content-type': 'application/json',
+        }),
+      );
+      ProgressDialogUtils.hideProgressDialog();
+      if (_isSuccessCall(response)) {
+        return GetNotificationResp.fromJson(response.data["SUCCESS"]);
+      } else {
+        throw response.data != null
+            ? GetNotificationResp.fromJson(response.data["SUCCESS"])
             : 'Something Went Wrong!';
       }
     } catch (error, stackTrace) {

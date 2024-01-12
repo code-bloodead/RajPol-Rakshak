@@ -80,6 +80,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
     PrefUtils().clearPreferencesData();
     PrefUtils().setMobile(resp.data!.mobile!.toString());
     PrefUtils().setName(resp.data!.fullname!.toString());
+    PrefUtils().setNotificationStatus(true);
     emit(
       state.copyWith(
         signInModelObj: state.signInModelObj?.copyWith(),

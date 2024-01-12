@@ -18,7 +18,7 @@ const Dashboard = () => {
   ).sort((a, b) => (a.status > b.status) ? 1 : -1);
   
   const reportedIncidents = incidents.filter(
-    (obj) => obj.source === "User Report" 
+    (obj) => obj.source !== "CCTV" 
   ).sort((a, b) => (a.status > b.status) ? 1 : -1);
 
   const resolvedIncidents = incidents.filter(

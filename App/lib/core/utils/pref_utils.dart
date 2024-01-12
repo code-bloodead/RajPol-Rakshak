@@ -77,4 +77,17 @@ class PrefUtils {
       return '';
     }
   }
+
+  Future<void> setNotificationStatus(bool value) {
+    return _sharedPreferences!.setBool('notificationStatus', value);
+  }
+
+  bool getNotificationStatus() {
+    try {
+      return _sharedPreferences!.getBool('notificationStatus') ?? true;
+    } catch (e) {
+      print(e);
+      return true;
+    }
+  }
 }

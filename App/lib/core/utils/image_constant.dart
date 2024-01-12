@@ -1,7 +1,15 @@
 class ImageConstant {
+  static String imgDarkMode = 'assets/images/img_dark_mode.svg';
+
   static String imgLock20x20 = 'assets/images/img_lock_20x20.svg';
 
   static String imgAddReport = 'assets/images/img_add_report.svg';
+
+  static String imgLanguage = 'assets/images/img_language.svg';
+
+  static String imgAbout = 'assets/images/img_about.svg';
+
+  static String imgFaqs = 'assets/images/img_faqs.svg';
 
   static String noImageUrl =
       "https://st3.depositphotos.com/23594922/31822/v/450/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg";
@@ -140,6 +148,8 @@ class ImageConstant {
   static String imgFrame = 'assets/images/img_frame.svg';
 
   static String imgUser = 'assets/images/img_user.svg';
+
+  static String imgUserSample = 'assets/images/img_user_sample.png';
 
   static String imgHome20x20 = 'assets/images/img_home_20x20.svg';
 
