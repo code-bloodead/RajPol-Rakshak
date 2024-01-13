@@ -13,7 +13,9 @@ export function getWeaponColor(weaponLabel: string) {
   return WeaponColorMap[weaponLabel] || WeaponColorMap.Other;
 }
 
+export const ACCIDENT_COLOR = "red";
 export const CLIMBER_COLOR = "red";
+
 // export const ClimberColorMap: Record<string, string> = {
 //   climber: "red",
 //   walker: "gray",

@@ -6,32 +6,51 @@ import {
   getHighDpiCanvasContext,
 } from "@/utils/canvas";
 import { CctvDetails } from "@/apis/cctvs.types";
-import { CLIMBER_COLOR, getWeaponColor } from "@/utils/pallete";
+import { ACCIDENT_COLOR, CLIMBER_COLOR, getWeaponColor } from "@/utils/pallete";
 import Card from "@/components/card";
 import { bboxCoordsToCanvasCoords, filterDetections } from "@/utils/yolo";
 import { countLabels } from "@/utils/labels";
 import {
-  ClimberClassification,
+  AccidentDetection,
+  AnomalyClassification,
   FightClassification,
   ObjectDetection,
   ReceivedMessageData,
   WeaponDetection,
 } from "./detections.types";
 import { VIDEO_STREAM_SERVER } from "@/constants/config";
+import DangerTag from "./DangerTag";
 
 interface CCTVStreamProps {
   cctv: CctvDetails;
+  violenceMode?: boolean;
+  climbingMode?: boolean;
+  suspiciousMode?: boolean;
+  weaponsMode?: boolean;
+  accidentMode?: boolean;
 }
 
-const CCTVStream: React.FC<CCTVStreamProps> = ({ cctv }) => {
+const CCTVStream: React.FC<CCTVStreamProps> = (props) => {
+  const {
+    cctv,
+    violenceMode,
+    climbingMode,
+    suspiciousMode,
+    weaponsMode,
+    accidentMode,
+  } = props;
+
   const [, setCurrentObjectDetections] = useState<ObjectDetection[]>([]);
   const [currentWeaponDetections, setCurrentWeaponDetection] = useState<
     WeaponDetection[]
   >([]);
+  const [currentAccidentDetections, setCurrentAccidentDetection] = useState<
+    AccidentDetection[]
+  >([]);
   const [currentFightClassification, setCurrentFightClassification] =
     useState<FightClassification | null>(null);
-  const [currentClimberClassification, setCurrentClimberClassification] =
-    useState<ClimberClassification | null>(null);
+  const [currentAnomalyClassification, setCurrentAnomalyClassification] =
+    useState<AnomalyClassification | null>(null);
 
   const [currentFrameData, setCurrentFrameData] = useState<string | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -39,7 +58,10 @@ const CCTVStream: React.FC<CCTVStreamProps> = ({ cctv }) => {
   // const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const { lastJsonMessage, readyState } = useWebSocket<ReceivedMessageData>(
-    `${VIDEO_STREAM_SERVER}/ws?stream_url=${cctv.streamUrl}&cctv_id=${cctv.id}&cctv_type=${cctv.cctv_type}`,
+    `${VIDEO_STREAM_SERVER}/ws?stream_url=${cctv.streamUrl}` +
+      `&cctv_id=${cctv.id}&cctv_type=${cctv.cctv_type}` +
+      `&violence=${violenceMode}&climbing=${climbingMode}` +
+      `&suspicious=${suspiciousMode}&weapons=${weaponsMode}&accidents=${accidentMode}`,
     {
       onOpen: () => console.log("connected socket for stream", cctv.streamUrl),
       // onMessage: (msg) => console.log("message received for stream", cctv.streamUrl, msg),
@@ -63,20 +85,29 @@ const CCTVStream: React.FC<CCTVStreamProps> = ({ cctv }) => {
         0.1
       );
       const receivedWeaponDetections = filterDetections(
-        lastJsonMessage.detections?.weapon || [],
+        lastJsonMessage.detections?.weapons || [],
         0.5
       );
-      const receivedFightClassification = lastJsonMessage.detections?.fight;
-      const receivedClimberClassification = lastJsonMessage.detections?.climber;
+      const receivedAccidentDetections = filterDetections(
+        lastJsonMessage.detections?.accidents || [],
+        0.5
+      );
+
+      const receivedFightClassification =
+        lastJsonMessage.detections?.fight || null;
+      const receivedAnomalyClassification =
+        lastJsonMessage.detections?.anomalies || null;
       setCurrentObjectDetections(receivedObjectDetections);
       setCurrentWeaponDetection(receivedWeaponDetections);
+      setCurrentAccidentDetection(receivedAccidentDetections);
       setCurrentFightClassification(receivedFightClassification);
-      setCurrentClimberClassification(receivedClimberClassification);
+      setCurrentAnomalyClassification(receivedAnomalyClassification);
 
       // console.log("Received", {
       //   receivedObjectDetections,
       //   receivedWeaponDetections,
       //   receivedFightDetection,
+      //   receivedAnomalyClassification,
       // });
 
       // Don't Clear the canvas !!
@@ -108,9 +139,30 @@ const CCTVStream: React.FC<CCTVStreamProps> = ({ cctv }) => {
           });
         });
 
+        receivedAccidentDetections.forEach((accidentDetection) => {
+          const { x, y, width, height } = bboxCoordsToCanvasCoords(
+            canvas,
+            accidentDetection.bbox
+          );
+
+          drawRect(ctx, x, y, width, height, {
+            lineWidth: 2,
+            strokeStyle: ACCIDENT_COLOR,
+            label: {
+              text: `${
+                accidentDetection.label
+              } ${accidentDetection.confidence.toFixed(2)}`,
+              xOffset: 0,
+              yOffset: -5,
+              font: LabelFont,
+              backgroundColor: ACCIDENT_COLOR,
+            },
+          });
+        });
+
         if (
-          receivedClimberClassification &&
-          receivedClimberClassification.predicted_class == 1
+          receivedAnomalyClassification &&
+          receivedAnomalyClassification.climbing
         ) {
           // When climber is detected, draw any person detected without label
           receivedObjectDetections
@@ -135,6 +187,23 @@ const CCTVStream: React.FC<CCTVStreamProps> = ({ cctv }) => {
 
   const showFeed = readyState === ReadyState.OPEN && currentFrameData !== null;
 
+  // if (currentAnomalyClassification?.climbing)
+  //   console.log(
+  //     `Anomaly class => ${
+  //       currentAnomalyClassification.prediction.prediction_label
+  //     } (${currentAnomalyClassification.prediction.prediction_confidence.toFixed(
+  //       2
+  //     )}%)`
+  //   );
+  
+  console.log({
+    currentAnomalyClassification,
+    currentFightClassification,
+    currentWeaponDetections,
+    currentAccidentDetections,
+  });
+  
+
   return (
     <Card extra="min-h-[40vh] " key={cctv.id}>
       <div className="flex items-center justify-start">
@@ -145,40 +214,46 @@ const CCTVStream: React.FC<CCTVStreamProps> = ({ cctv }) => {
       </div>
       <div className="p-2 flex flex-row items-center justify-between">
         <span className="mx-2">{cctv.description}</span>
-        {currentFightClassification && (
-          <span
-            className={
-              "mr-2 rounded px-2.5 py-0.5 text-xs font-medium " +
-              (currentFightClassification.predicted_class == 1
-                ? "bg-red-100 border border-red-400 text-red-700"
-                : "bg-green-100 border border-green-400 text-green-700")
-            }
-          >
-            {currentFightClassification.predicted_class === 1 ||
-            ["punching person (boxing)"].includes(
-              currentClimberClassification?.discrete_label || "none"
-            )
-              ? "Fight"
-              : "No fight"}
-            {/* (
-            {Math.round(
-              currentFightClassification.prediction_confidence * 10000
-            ) / 100}
-            %) */}
-          </span>
+        {currentAnomalyClassification?.violence && (
+          <DangerTag>
+            Lstm: Violence{" "}
+            {currentAnomalyClassification.prediction.prediction_confidence.toFixed(
+              2
+            )}
+            %
+          </DangerTag>
         )}
-        {currentClimberClassification &&
-          currentClimberClassification.predicted_class == 1 && (
-            <span
-              className={
-                "mr-2 rounded px-2.5 py-0.5 text-xs font-medium " +
-                "bg-red-100 border border-red-400 text-red-700"
-              }
-            >
-              Climber
-              {/* {currentClimberClassification?.prediction_confidence?.toFixed(2)} % */}
-            </span>
+        {currentFightClassification &&
+          currentFightClassification.predicted_class == 1 && (
+            <DangerTag>
+              Vgg: Fight{" "}
+              {Math.round(
+                currentFightClassification.prediction_confidence * 10000
+              ) / 100}
+              %
+            </DangerTag>
           )}
+        {currentAnomalyClassification?.suspicious && (
+          <DangerTag>
+            Suspicious{" "}
+            {currentAnomalyClassification.prediction.prediction_confidence.toFixed(
+              2
+            )}
+            %
+          </DangerTag>
+        )}
+        {currentAnomalyClassification?.climbing && (
+          <DangerTag>
+            Climber{" "}
+            {currentAnomalyClassification.prediction.prediction_confidence.toFixed(
+              2
+            )}
+            %
+          </DangerTag>
+        )}
+        {currentAccidentDetections.length > 0 && (
+          <DangerTag>Accident </DangerTag>
+        )}
       </div>
       <div>
         {/* <h2>
@@ -268,3 +343,11 @@ const CCTVStream: React.FC<CCTVStreamProps> = ({ cctv }) => {
 };
 
 export default CCTVStream;
+
+CCTVStream.defaultProps = {
+  violenceMode: false,
+  climbingMode: false,
+  suspiciousMode: false,
+  weaponsMode: false,
+  accidentMode: false,
+};
