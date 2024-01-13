@@ -54,18 +54,19 @@ class HomePage extends StatelessWidget {
                               ]))
                         ])),
                 actions: [
-                  AppbarIconbutton(
-                      svgPath: ImageConstant.imgOptions,
-                      margin: getMargin(left: 24, top: 10, right: 10),
-                      onTap: () {
-                        onTapShowNotif(context);
-                      }),
-                  AppbarIconbutton(
-                      svgPath: ImageConstant.imgNotificationPresent,
-                      margin: getMargin(left: 12, top: 10, right: 34),
-                      onTap: () {
-                        onTapNotification(context);
-                      })
+                  BlocSelector<HomeBloc, HomeState, bool>(
+                    selector: (state) => state.isNotificationPresent,
+                    builder: (context, isNotificationPresent) {
+                      return AppbarIconbutton(
+                          svgPath: isNotificationPresent
+                              ? ImageConstant.imgNotificationPresent
+                              : ImageConstant.imgNotificationNone,
+                          margin: getMargin(left: 12, top: 10, right: 34),
+                          onTap: () {
+                            onTapNotification(context);
+                          });
+                    },
+                  )
                 ],
                 styleType: Style.bgFillGray50),
             body: SizedBox(
@@ -207,10 +208,5 @@ class HomePage extends StatelessWidget {
     NavigatorService.pushNamed(
       AppRoutes.notificationScreen,
     );
-  }
-
-  onTapShowNotif(BuildContext context) {
-    LocalNotifications.showSimpleNotification(
-        title: "title", body: "body", payload: "payload");
   }
 }

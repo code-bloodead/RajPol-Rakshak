@@ -51,7 +51,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     // List<Incident> userReports = [];
 
     // try {
-    //   getIncidentResp = await _repository.getIncident(PrefUtils().getMobile());
+    // getIncidentResp = await _repository.getIncident(PrefUtils().getMobile());
     //   userReports = getIncidentResp.dataList!;
     // } catch (error) {
     //   print(error);
@@ -71,8 +71,17 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     }
     incidentList = await fillIncidentList();
     tempIncidentList = incidentList;
+    int count = 0;
+    try {
+      count = await _repository.getNotificationCount(PrefUtils().getMobile());
+    } catch (error) {
+      count = 0;
+      print(error);
+    }
+
     emit(state.copyWith(
         homeModelObj: HomeModel(),
+        isNotificationPresent: count != 0 ? true : false,
         incidentSearchController: TextEditingController()));
     emit(state.copyWith(
         homeModelObj: state.homeModelObj.copyWith(

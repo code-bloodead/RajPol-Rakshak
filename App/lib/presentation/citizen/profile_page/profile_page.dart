@@ -5,6 +5,7 @@ import 'package:rakshak/core/app_export.dart';
 import 'package:rakshak/widgets/custom_switch.dart';
 import 'package:rakshak/widgets/app_bar/appbar_subtitle.dart';
 import 'package:rakshak/widgets/app_bar/custom_app_bar.dart';
+import 'package:rakshak/widgets/custom_button.dart';
 import 'package:rakshak/widgets/custom_icon_button.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -246,39 +247,6 @@ class ProfilePage extends StatelessWidget {
                                           padding:
                                               IconButtonPadding.PaddingAll12,
                                           child: CustomImageView(
-                                              svgPath: ImageConstant.imgMenu1)),
-                                      Padding(
-                                          padding: getPadding(
-                                              left: 16, top: 12, bottom: 7),
-                                          child: Text("lbl_terms_of_use".tr,
-                                              overflow: TextOverflow.ellipsis,
-                                              textAlign: TextAlign.left,
-                                              style: AppStyle
-                                                  .txtManropeSemiBold14Gray900)),
-                                      Spacer(),
-                                      CustomImageView(
-                                          svgPath: ImageConstant
-                                              .imgArrowrightBlueGray500,
-                                          height: getSize(20),
-                                          width: getSize(20),
-                                          margin:
-                                              getMargin(top: 10, bottom: 10))
-                                    ])),
-                            Padding(
-                                padding: getPadding(top: 16),
-                                child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      CustomIconButton(
-                                          height: 40,
-                                          width: 40,
-                                          variant:
-                                              IconButtonVariant.FillBluegray50,
-                                          shape:
-                                              IconButtonShape.RoundedBorder10,
-                                          padding:
-                                              IconButtonPadding.PaddingAll12,
-                                          child: CustomImageView(
                                               color: ColorConstant.blue500,
                                               svgPath: ImageConstant.imgAbout)),
                                       Padding(
@@ -320,7 +288,7 @@ class ProfilePage extends StatelessWidget {
                                               child: CustomImageView(
                                                   color: ColorConstant.blue500,
                                                   svgPath:
-                                                      ImageConstant.imgFaqs)),
+                                                      ImageConstant.imgMenu1)),
                                           Padding(
                                               padding: getPadding(
                                                   left: 16, top: 12, bottom: 7),
@@ -341,6 +309,31 @@ class ProfilePage extends StatelessWidget {
                                         ])))
                           ],
                         ),
+                        Spacer(),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 6.0),
+                          child: CustomButton(
+                              height: getVerticalSize(50),
+                              width: getHorizontalSize(327),
+                              text: "lbl_logout".tr,
+                              suffixWidget: Container(
+                                  margin: getMargin(left: 10),
+                                  child: Icon(
+                                    Icons.logout,
+                                    color: ColorConstant.blue500,
+                                    size: 16,
+                                  )),
+                              shape: ButtonShape.RoundedBorder10,
+                              padding: ButtonPadding.PaddingAll12,
+                              variant: ButtonVariant.OutlineBlue500_1,
+                              fontStyle: ButtonFontStyle.ManropeBold14Blue500_1,
+                              onTap: () async {
+                                BackgroundService.stopBackground();
+                                PrefUtils().clearPreferencesData();
+                                await NavigatorService.pushNamedAndRemoveUntil(
+                                    AppRoutes.signInScreen);
+                              }),
+                        )
                       ]))));
     });
   }

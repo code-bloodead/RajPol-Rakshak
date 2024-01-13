@@ -69,4 +69,12 @@ class Repository {
     }
     return await _apiClient.getNotifications(user_id);
   }
+
+  Future<int> getNotificationCount(String user_id) async {
+    if (user_id.isEmpty || user_id == "") {
+      await PrefUtils().init();
+      user_id = PrefUtils().getMobile();
+    }
+    return await _apiClient.getNotificationCount(user_id);
+  }
 }
