@@ -15,4 +15,3 @@ class Staff(BaseModel):
 class StaffLogin(BaseModel):
     id: str = Form(...)
     password: str = Form(...)
-    notifcation_token: str = Form(default="")

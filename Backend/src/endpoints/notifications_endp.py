@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from src.models.notifications_model import Notifications, GetNotifications
+from src.models.notifications_model import Notifications, GetNotificationsAdmin, GetNotificationsUser
 from src.database.notifications_db import (
     get_notifications, 
     get_notifications_count,
@@ -37,13 +37,13 @@ def create_notification_endp(notification: Notifications):
     return create_notification(notification)
 
 @router.delete("/mark_as_read")
-def mark_as_read_endp(notification: GetNotifications):
+def mark_as_read_endp(notification: GetNotificationsAdmin):
     if notification.id == "" or notification.station_name == "":
         return {"ERROR": "MISSING PARAMETERS"}
     return mark_as_read(notification)
 
 @router.delete("/mark_all_as_read")
-def mark_all_as_read_endp(notification: GetNotifications):
+def mark_all_as_read_endp(notification: GetNotificationsAdmin):
     if notification.station_name == "":
         return {"ERROR": "MISSING PARAMETERS"}
     return mark_all_as_read(notification)
@@ -61,13 +61,13 @@ def get_notifications_for_user_endp(user_id: str):
     return get_notifications_for_user(user_id)
 
 @router.delete("/mark_as_read_for_user")
-def mark_as_read_for_user_endp(notification: GetNotifications):
+def mark_as_read_for_user_endp(notification: GetNotificationsUser):
     if notification.id == "" or notification.user_id == "":
         return {"ERROR": "MISSING PARAMETERS"}
     return mark_as_read_for_user(notification.user_id, notification.id)
 
 @router.delete("/mark_all_as_read_for_user")
-def mark_all_as_read_for_user_endp(notification: GetNotifications):
+def mark_all_as_read_for_user_endp(notification: GetNotificationsUser):
     if notification.user_id == "":
         return {"ERROR": "MISSING PARAMETERS"}
     return mark_all_as_read_for_user(notification.user_id)

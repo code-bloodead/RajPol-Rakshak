@@ -36,3 +36,16 @@ def update_staff_status(id, status):
     except Exception as e:
         print(e)
         return {"ERROR":"SOME ERROR OCCURRED"}
+
+def get_staffs_by_id(id):
+    try:
+        document = admins.find_one({"id":id})
+        if document == None:
+            return {"ERROR":"NO SUCH STAFF EXISTS"}
+        else:
+            del document['_id']
+            del document['password']
+            return {"SUCCESS":document}
+    except Exception as e:
+        print(e)
+        return {"ERROR":"SOME ERROR OCCURRED"}

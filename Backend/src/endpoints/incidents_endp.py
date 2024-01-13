@@ -3,7 +3,7 @@ from fastapi import UploadFile, Form
 from src.models.incidents_model import Incidents
 from src.models.notifications_model import Notifications
 from src.database.notifications_db import create_notification
-from src.database.incident_db import (create_incident, fetch_all_incidents, fetch_incidents_by_station, delete_incident_by_id, update_incident_status, fetch_incidents_by_userid)
+from src.database.incident_db import (create_incident, fetch_all_incidents, fetch_incidents_by_id, fetch_incidents_by_station, delete_incident_by_id, update_incident_status, fetch_incidents_by_userid)
 from src.config import AWS_KEY, SECRET_KEY_AWS, S3_BUCKET_NAME
 import boto3
 import random
@@ -98,16 +98,31 @@ def get_all_incidents():
 ## get incident by dept name and station name
 @router.get("/get_incidents_by_station")
 def get_incidents_by_station(station_name: str):
+    if station_name == "":
+        return {"ERROR": "MISSING PARAMETERS"}
     return fetch_incidents_by_station(station_name)
+
+## get incident by id
+@router.get("/get_incident_by_id")
+def get_incident_by_id(id: str):
+    if id == "":
+        return {"ERROR": "MISSING PARAMETERS"}
+    return fetch_incidents_by_id(id)
 
 @router.delete("/delete_incident")
 def delete_incident(id: str):
+    if id == "":
+        return {"ERROR": "MISSING PARAMETERS"}
     return delete_incident_by_id(id)
 
 @router.put("/update_incident_status")
 def update_status(id: str, status: str):
+    if id == "" or status == "":
+        return {"ERROR": "MISSING PARAMETERS"}
     return update_incident_status(id, status)
 
 @router.get("/get_incidents_by_userid")
 def get_incidents_by_userid(id: str):
+    if id == "":
+        return {"ERROR": "MISSING PARAMETERS"}
     return fetch_incidents_by_userid(id)

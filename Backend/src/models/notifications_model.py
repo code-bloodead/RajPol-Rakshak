@@ -10,7 +10,9 @@ class Notifications(BaseModel):
     station_name: str = Form(default="")
     created_at: str = Form(default=datetime.datetime.now())
     user_id: str = Form(default="")
-class GetNotifications(BaseModel):
+class GetNotificationsAdmin(BaseModel):
     id: str = Form(default="")
     station_name: str = Form(default="")
+class GetNotificationsUser(BaseModel):
+    id: str = Form(default="")
     user_id: str = Form(default="")

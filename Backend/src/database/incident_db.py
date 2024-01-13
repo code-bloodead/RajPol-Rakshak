@@ -102,3 +102,11 @@ def fetch_incidents_by_userid(id):
     except Exception as e:
         print(e)
         return {"ERROR":"SOME ERROR OCCURRED"}
+
+def fetch_incidents_by_id(id):
+    try:
+        incident = incidents.find_one({"id":id},{"_id":0})
+        return {"SUCCESS": incident}
+    except Exception as e:
+        print(e)
+        return {"ERROR":"SOME ERROR OCCURRED"}
