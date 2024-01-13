@@ -6,7 +6,12 @@ import {
   getHighDpiCanvasContext,
 } from "@/utils/canvas";
 import { CctvDetails } from "@/apis/cctvs.types";
-import { ACCIDENT_COLOR, CLIMBER_COLOR, getWeaponColor } from "@/utils/pallete";
+import {
+  ACCIDENT_COLOR,
+  CLIMBER_COLOR,
+  FIRE_COLOR,
+  getWeaponColor,
+} from "@/utils/pallete";
 import Card from "@/components/card";
 import { bboxCoordsToCanvasCoords, filterDetections } from "@/utils/yolo";
 import { countLabels } from "@/utils/labels";
@@ -14,6 +19,7 @@ import {
   AccidentDetection,
   AnomalyClassification,
   FightClassification,
+  FireDetection,
   ObjectDetection,
   ReceivedMessageData,
   WeaponDetection,
@@ -28,6 +34,7 @@ interface CCTVStreamProps {
   suspiciousMode?: boolean;
   weaponsMode?: boolean;
   accidentMode?: boolean;
+  fireMode?: boolean;
 }
 
 const CCTVStream: React.FC<CCTVStreamProps> = (props) => {
@@ -38,11 +45,15 @@ const CCTVStream: React.FC<CCTVStreamProps> = (props) => {
     suspiciousMode,
     weaponsMode,
     accidentMode,
+    fireMode,
   } = props;
 
   const [, setCurrentObjectDetections] = useState<ObjectDetection[]>([]);
   const [currentWeaponDetections, setCurrentWeaponDetection] = useState<
     WeaponDetection[]
+  >([]);
+  const [currentFireDetections, setCurrentFireDetection] = useState<
+    FireDetection[]
   >([]);
   const [currentAccidentDetections, setCurrentAccidentDetection] = useState<
     AccidentDetection[]
@@ -61,7 +72,8 @@ const CCTVStream: React.FC<CCTVStreamProps> = (props) => {
     `${VIDEO_STREAM_SERVER}/ws?stream_url=${cctv.streamUrl}` +
       `&cctv_id=${cctv.id}&cctv_type=${cctv.cctv_type}` +
       `&violence=${violenceMode}&climbing=${climbingMode}` +
-      `&suspicious=${suspiciousMode}&weapons=${weaponsMode}&accidents=${accidentMode}`,
+      `&suspicious=${suspiciousMode}&weapons=${weaponsMode}` +
+      `&accidents=${accidentMode}&fire=${fireMode}`,
     {
       onOpen: () => console.log("connected socket for stream", cctv.streamUrl),
       // onMessage: (msg) => console.log("message received for stream", cctv.streamUrl, msg),
@@ -88,6 +100,10 @@ const CCTVStream: React.FC<CCTVStreamProps> = (props) => {
         lastJsonMessage.detections?.weapons || [],
         0.5
       );
+      const receivedFireDetections = filterDetections(
+        lastJsonMessage.detections?.fire || [],
+        0.4
+      );
       const receivedAccidentDetections = filterDetections(
         lastJsonMessage.detections?.accidents || [],
         0.5
@@ -99,14 +115,16 @@ const CCTVStream: React.FC<CCTVStreamProps> = (props) => {
         lastJsonMessage.detections?.anomalies || null;
       setCurrentObjectDetections(receivedObjectDetections);
       setCurrentWeaponDetection(receivedWeaponDetections);
+      setCurrentFireDetection(receivedFireDetections);
       setCurrentAccidentDetection(receivedAccidentDetections);
       setCurrentFightClassification(receivedFightClassification);
       setCurrentAnomalyClassification(receivedAnomalyClassification);
 
-      // console.log("Received", {
+      // console.log(`Received ${receivedFireDetections.length} fires`, {
       //   receivedObjectDetections,
       //   receivedWeaponDetections,
-      //   receivedFightDetection,
+      //   receivedAccidentDetections,
+      //   receivedFireDetections,
       //   receivedAnomalyClassification,
       // });
 
@@ -135,6 +153,27 @@ const CCTVStream: React.FC<CCTVStreamProps> = (props) => {
               yOffset: -5,
               font: LabelFont,
               backgroundColor: weaponColor,
+            },
+          });
+        });
+
+        receivedFireDetections.forEach((fireDetection) => {
+          const { x, y, width, height } = bboxCoordsToCanvasCoords(
+            canvas,
+            fireDetection.bbox
+          );
+
+          drawRect(ctx, x, y, width, height, {
+            lineWidth: 2,
+            strokeStyle: FIRE_COLOR,
+            label: {
+              text: `${fireDetection.label} ${fireDetection.confidence.toFixed(
+                2
+              )}`,
+              xOffset: 0,
+              yOffset: -5,
+              font: LabelFont,
+              backgroundColor: FIRE_COLOR,
             },
           });
         });
@@ -195,14 +234,6 @@ const CCTVStream: React.FC<CCTVStreamProps> = (props) => {
   //       2
   //     )}%)`
   //   );
-  
-  console.log({
-    currentAnomalyClassification,
-    currentFightClassification,
-    currentWeaponDetections,
-    currentAccidentDetections,
-  });
-  
 
   return (
     <Card extra="min-h-[40vh] " key={cctv.id}>
@@ -242,6 +273,9 @@ const CCTVStream: React.FC<CCTVStreamProps> = (props) => {
             %
           </DangerTag>
         )}
+        {currentFireDetections.length > 0 && (
+            <DangerTag>Fire </DangerTag>
+          )}
         {currentAnomalyClassification?.climbing && (
           <DangerTag>
             Climber{" "}
@@ -350,4 +384,5 @@ CCTVStream.defaultProps = {
   suspiciousMode: false,
   weaponsMode: false,
   accidentMode: false,
+  fireMode: false,
 };

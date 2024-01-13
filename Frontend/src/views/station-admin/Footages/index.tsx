@@ -49,7 +49,7 @@ const Footages = () => {
 
       <div className="mx-3 mt-3 grid grid-cols-1 gap-5 md:grid-cols-2">
         {shownCctvs.map((cctv) => (
-          <CCTVStream cctv={cctv} key={cctv.id} climbingMode suspiciousMode violenceMode weaponsMode accidentMode  />
+          <CCTVStream cctv={cctv} key={cctv.id} climbingMode suspiciousMode violenceMode weaponsMode accidentMode fireMode />
         ))}
       </div>
     </div>

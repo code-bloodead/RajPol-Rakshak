@@ -110,6 +110,7 @@ const PublicCctvFootages = (props: PublicCctvFootagesProps) => {
               violenceMode
               weaponsMode
               accidentMode
+              fireMode
             />
           ))}
         </div>
