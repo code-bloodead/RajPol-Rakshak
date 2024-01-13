@@ -75,7 +75,7 @@ def detect_fight(frame):
         # Get the class with the highest probability as the predicted class
         predicted_class = np.argmax(prediction, axis=1)
 
-        print("Performed Fight detection: ", prediction)
+        # print("Performed Fight detection: ", prediction)
 
         fight_detection = {
             'predicted_class':  int(predicted_class[0]),
@@ -85,7 +85,6 @@ def detect_fight(frame):
         # print("Performed fight detection:", fight_detection)
         reset_buffer()
     else:
-        # print("Pass ...")
         pass
 
     return fight_detection

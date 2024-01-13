@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 import io
 import json
+import os
 import random
 import threading
 import time
@@ -25,6 +26,7 @@ class IncidentType():
     overcrowd = 'overcrowd'
     accident = 'accident'
     climber = 'climber'
+    suspicious = 'suspicious'
 
 
 incident_meta_data = {
@@ -42,9 +44,14 @@ incident_meta_data = {
     },
     IncidentType.climber: {
         'title': "Prisoner escaping detected",
-    }
+    },
+    IncidentType.suspicious: {
+        'title': "Suspicious activity detected",
+    },
 }
 
+if not os.path.exists("logs"):
+    os.makedirs("logs")
 
 class IncidentManager:
     def __init__(self, identifier: str):
@@ -68,6 +75,7 @@ class IncidentManager:
                 IncidentType.overcrowd: {},
                 IncidentType.accident: {},
                 IncidentType.climber: {},
+                IncidentType.suspicious: {},
             }
 
     def save_data(self):
@@ -114,7 +122,7 @@ class IncidentManager:
     def notify(self, frame, cctvId, cctv_type, detection_type, detections):
         # Dummy notify function (replace with actual implementation)
         print(
-            f"Notifying for {detection_type} detection on CCTV {cctvId}: {detections}")
+            f"Notifying for {detection_type} detection on CCTV {cctvId}:", detections)
 
         incident = {
             'title': incident_meta_data[detection_type]['title'],

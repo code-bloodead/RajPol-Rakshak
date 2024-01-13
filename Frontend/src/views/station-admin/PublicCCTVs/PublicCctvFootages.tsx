@@ -102,7 +102,15 @@ const PublicCctvFootages = (props: PublicCctvFootagesProps) => {
           }}
         >
           {cctvs.map((cctv) => (
-            <CCTVStream cctv={cctv} key={cctv.id} />
+            <CCTVStream
+              cctv={cctv}
+              key={cctv.id}
+              climbingMode
+              suspiciousMode
+              violenceMode
+              weaponsMode
+              accidentMode
+            />
           ))}
         </div>
       )}

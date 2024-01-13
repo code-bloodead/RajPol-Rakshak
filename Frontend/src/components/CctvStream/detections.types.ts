@@ -1,10 +1,11 @@
 export interface ReceivedMessageData {
   frame: string; // Base64 encoded frame
   detections: {
-    objects: ObjectDetection[];
-    weapon: WeaponDetection[];
     fight: FightClassification;
-    climber: ClimberClassification;
+    anomalies: AnomalyClassification;
+    objects: ObjectDetection[];
+    weapons: WeaponDetection[];
+    accidents: AccidentDetection[];
   };
 }
 
@@ -18,6 +19,9 @@ export interface ObjectDetection {
 export interface WeaponDetection extends ObjectDetection {
   label: "gun" | "knife";
 }
+export interface AccidentDetection extends ObjectDetection {
+  label: "Accident";
+}
 export interface Classification {
   predicted_class: number;
   prediction_confidence: number;
@@ -26,8 +30,13 @@ export interface Classification {
 export interface FightClassification extends Classification {
   prediction_label: "fight" | "no-fight";
 }
-export interface ClimberClassification extends Classification {
-  prediction_label: "climber" | "no-climber";
-  discrete_class: number;
-  discrete_label: string;
+export interface AnomalyClassification {
+  climbing: boolean;
+  violence: boolean;
+  suspicious: boolean;
+  prediction: {
+    predicted_class: number;
+    prediction_confidence: number;
+    prediction_label: string;
+  };
 }

@@ -23,14 +23,16 @@ def is_websocket_alive(websocket: WebSocket):
 # Note, we can't pass websocket to this fn as its pickled & passed to a completely new process
 
 
-def process_video_stream(url, cctv_id: str, cctv_type: str, output_queue: Queue, shutdown_event: Event):
+def process_video_stream(url, cctv_id: str, cctv_type: str, output_queue: Queue, shutdown_event: Event, violence: bool, climbing: bool, weapons: bool, suspicious: bool, accidents: bool):
     # Importing here, coz this fn will be run in a separate process
     from models.yolo_objects import detect_objects, detect_objects_dummy
-    from models.fight import detect_fight, detect_fight_dummy
     from models.weapons import detect_weapons, detect_weapons_dummy
-    # from models.climber_pose import detect_climber, detect_climber_dummy
-    from models.climber_lstm import detect_climber, detect_climber_dummy
+    from models.accident import detect_accident, detect_accident_dummy
+    # from models.climber_yolo import detect_climber, detect_climber_dummy
+    from models.fight import detect_fight, detect_fight_dummy
+    from models.anomaly_lstm import detect_anomaly, detect_anomaly_dummy
     from incident_manager import IncidentManager, IncidentType
+    from config import MIN_ACCIDENT_REPORT_CONF, MIN_VIOLENCE_REPORT_CONF, MIN_WEAPON_REPORT_CONF
 
     cap = cv2.VideoCapture(url)
     incident_manager = IncidentManager(cctv_id)
@@ -40,9 +42,10 @@ def process_video_stream(url, cctv_id: str, cctv_type: str, output_queue: Queue,
 
     prev_detections = {
         'fight': None,
+        'anomalies': None,
         'objects': None,
-        'weapon': None,
-        'climber': None,
+        'weapons': None,
+        'accidents': None,
     }
 
     try:
@@ -62,55 +65,87 @@ def process_video_stream(url, cctv_id: str, cctv_type: str, output_queue: Queue,
                     # Use threads to parallelize detection tasks
 
                     fight_future = None
+                    anomaly_future = None
                     objects_future = None
                     weapons_future = None
-                    climber_future = None
+                    accidents_future = None
 
                     # LSTM models
-                    # Some Model need continuous frames (TODO - control it using time.time())
+                    # Some Model need continuous frames (@TODO - control it using time.time())
                     if framecount % LSTM_FRAME_REGISTER_EVERY_N_FRAME == 0:
-                        fight_future = executor.submit(detect_fight, frame)
-                        # fight_future = executor.submit(detect_fight_dummy, frame)
+                        if violence:
+                            fight_future = executor.submit(detect_fight, frame)
+                            # fight_future = executor.submit(detect_fight_dummy, frame)
 
-                        climber_future = executor.submit(detect_climber, frame)
-                        # climber_future = executor.submit(detect_climber_dummy, frame)
+                        if climbing or suspicious:
+                            anomaly_future = executor.submit(
+                                detect_anomaly, frame)
+                            # anomaly_future = executor.submit(detect_anomaly_dummy, frame)
 
                     # Frame-independent models
+                    # Single frame detection are updated every {DETECT_EVERY_N_FRAME} frames
                     if framecount % DETECT_EVERY_N_FRAME == 0:
-                        # Single frame detection are updated every {DETECT_EVERY_N_FRAME} frames
-
                         # Use threads to parallelize detection tasks
                         objects_future = executor.submit(detect_objects, frame)
                         # objects_future = executor.submit(detect_objects_dummy, frame)
 
-                        weapons_future = executor.submit(detect_weapons, frame)
-                        # weapons_future = executor.submit(detect_weapons_dummy, frame)
+                        if accidents:
+                            accidents_future = executor.submit(
+                                detect_accident, frame)
+
+                        if weapons:
+                            weapons_future = executor.submit(
+                                detect_weapons, frame)
+                            # weapons_future = executor.submit(detect_weapons_dummy, frame)
 
                         # climber_future = executor.submit(detect_climber, frame)
                         # # climber_future = executor.submit(detect_climber_dummy, frame)
 
-                    # Wait for all threads to complete
-                    if objects_future is not None and weapons_future is not None and climber_future is not None:
+                    # Wait for all frame-independent threads to complete
+                    if objects_future is not None:
                         detections['objects'] = objects_future.result()
-                        detections['weapon'] = weapons_future.result()
-                        detections['climber'] = climber_future.result()
 
-                        # Report incidents if applicable
-                        if detections['weapon'] is not None and len(detections['weapon']) > 0:
+                    if accidents_future is not None:
+                        detections['accidents'] = accidents_future.result()
+
+                        # Report incident for accident if applicable
+                        if detections['accidents'] is not None and len(detections['accidents']) > 0:
+                            for prediction in detections['accidents']:
+                                if prediction['label'] == "Accident" and prediction['confidence'] >= MIN_ACCIDENT_REPORT_CONF:
+                                    # incident_manager.registerDetections(
+                                    #     frame, cctv_id, cctv_type, IncidentType.accident, detections['accidents'])
+                                    break
+
+                    if weapons_future is not None:
+                        detections['weapons'] = weapons_future.result()
+
+                        # Report incident for weapon if applicable
+                        if detections['weapons'] is not None and len(detections['weapons']) > 0:
+                            for prediction in detections['weapons']:
+                                if prediction['confidence'] >= MIN_WEAPON_REPORT_CONF:
+                                    incident_manager.registerDetections(
+                                        frame, cctv_id, cctv_type, IncidentType.weapons, detections['weapons'])
+                                    break
+
+                    # Wait for all LSTM threads to complete
+                    if anomaly_future is not None:
+                        detections['anomalies'] = anomaly_future.result()
+
+                        # Report incident for anomalies if applicable
+                        if detections['anomalies'] is not None and detections['anomalies']['climbing']:
                             incident_manager.registerDetections(
-                                frame, cctv_id, cctv_type, IncidentType.weapons, detections['weapon'])
+                                frame, cctv_id, cctv_type, IncidentType.climber, [])  # Nothing to draw here
+                        if detections['anomalies'] is not None and detections['anomalies']['suspicious']:
+                            incident_manager.registerDetections(
+                                frame, cctv_id, cctv_type, IncidentType.suspicious, [])  # Nothing to draw here
 
-                    if fight_future is not None and climber_future is not None:
+                    if fight_future is not None:
                         detections['fight'] = fight_future.result()
-                        detections['climber'] = climber_future.result()
 
+                        # Report incident for fight if applicable
                         if detections['fight'] is not None and detections['fight']['prediction_confidence'] > 0.5 and detections['fight']['prediction_label'] == 'fight':
                             incident_manager.registerDetections(
-                                frame, cctv_id, cctv_type, IncidentType.violence, detections['fight'])
-                            
-                        # if detections['climber'] is not None and len(detections['climber']) > 0:
-                        #     incident_manager.registerDetections(
-                        #         frame, cctv_id, cctv_type, IncidentType.climber, detections['climber'])
+                                frame, cctv_id, cctv_type, IncidentType.violence, [])  # Nothing to draw here
 
                     prev_detections = detections
 
@@ -138,7 +173,16 @@ def process_video_stream(url, cctv_id: str, cctv_type: str, output_queue: Queue,
 
 
 @app.websocket("/ws")
-async def websocket_endpoint(websocket: WebSocket, stream_url: str, cctv_id: str, cctv_type: str):
+async def websocket_endpoint(websocket: WebSocket, stream_url: str, cctv_id: str, cctv_type: str, violence: bool, climbing: bool, weapons: bool, suspicious: bool, accidents: bool):
+    print("Websocket connection initiated", {
+        "stream_url": stream_url,
+        "cctv_id": cctv_id,
+        "cctv_type": cctv_type,
+        "violence": violence,
+        "climbing": climbing,
+        "weapons": weapons,
+        "suspicious": suspicious
+    })
     try:
         print("Wait for connection acceptance", stream_url)
         # Set your desired timeout value in seconds
@@ -172,7 +216,7 @@ async def websocket_endpoint(websocket: WebSocket, stream_url: str, cctv_id: str
 
     # Start the video processing in a separate process
     video_process = Process(target=process_video_stream, args=(
-        stream_url, cctv_id, cctv_type, output_queue, shutdown_event))
+        stream_url, cctv_id, cctv_type, output_queue, shutdown_event, violence, climbing, weapons, suspicious, accidents))
     video_process.start()
 
     print(f"Started process {video_process._identity} for", stream_url)

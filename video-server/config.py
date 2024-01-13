@@ -20,3 +20,7 @@ PREVENT_FRAME_OVERFLOW = 1200
 # Toggle this to prevent unnecessary incidents from being registered during development
 REGISTER_INCIDENT = False
 THROTTLE_INCIDENT_REPORT_TIME = 120  # 10 seconds
+
+MIN_ACCIDENT_REPORT_CONF = 0.5
+MIN_VIOLENCE_REPORT_CONF = 0.5
+MIN_WEAPON_REPORT_CONF = 0.5
