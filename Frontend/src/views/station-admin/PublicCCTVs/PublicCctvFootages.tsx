@@ -1,4 +1,4 @@
-import { CctvDetails } from "./cctvs.types";
+import { CctvDetails } from "../../../apis/cctvs.types";
 
 import Card from "@/components/card";
 import ReactApexChart from "react-apexcharts";
@@ -6,7 +6,7 @@ import { useState } from "react";
 import { MdOutlineConnectedTv } from "react-icons/md";
 import useCrowdCounter from "../Footages/Stream/useCrowdCounter";
 import { CrowdData, getAlert } from "../Footages/crowdAnalyser";
-import CCTVStream from "./CCTVStream";
+import CCTVStream from "@/components/CctvStream/CCTVStream";
 
 enum Tab {
   Footage = "Footage",
@@ -94,7 +94,7 @@ const PublicCctvFootages = (props: PublicCctvFootagesProps) => {
         </div>
       </div>
 
-      <>
+      {activeTab === Tab.Footage && (
         <div
           className="mx-3 mt-3 grid grid-cols-1 gap-5 md:grid-cols-2"
           style={{
@@ -105,7 +105,7 @@ const PublicCctvFootages = (props: PublicCctvFootagesProps) => {
             <CCTVStream cctv={cctv} key={cctv.id} />
           ))}
         </div>
-      </>
+      )}
 
       <>
         <div

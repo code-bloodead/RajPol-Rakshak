@@ -1,12 +1,8 @@
 import React, { useEffect } from "react";
-import { LocationTypes, getLocationIcon } from "./locationType";
+import { getLocationIcon } from "./locationType";
+import { LocationSuggestion } from "../../apis/cctvs";
 
-export interface LocationSuggestion {
-  name: string;
-  lat: number;
-  lon: number;
-  type: LocationTypes;
-}
+
 interface SearchDialogProps {
   getSuggestions: (search: string) => Promise<LocationSuggestion[]>;
 }

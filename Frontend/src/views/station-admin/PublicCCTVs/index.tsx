@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import SlidingPanel from "react-sliding-side-panel";
 import { toast, ToastOptions } from "react-toastify";
 
+import { CCTV_TYPES, CctvDetails } from "@/apis/cctvs.types";
+import { getCctvs } from "@/apis/cctvs";
 import MapWithSearch from "./MapWithSearch";
-import { CctvDetails } from "./cctvs.types";
 import PublicCctvFootages from "./PublicCctvFootages";
-import { getCctvs } from "./cctvsApi";
+import { NO_OF_DEFAULT_CCTVS } from "@/constants/config";
 
 import "./publicctvs.css";
-import { NO_OF_DEFAULT_CCTVS } from "../../../constants/config";
 
 const PublicCCTVs = () => {
   const [shownCctvs, setShownCctvs] = useState<CctvDetails[]>([]);
@@ -34,7 +34,9 @@ const PublicCCTVs = () => {
 
   // Dev mode
   useEffect(() => {
-    getCctvs().then((cctvs) => setShownCctvs(cctvs.slice(0, NO_OF_DEFAULT_CCTVS)));
+    getCctvs(CCTV_TYPES.PUBLIC).then((cctvs) =>
+      setShownCctvs(cctvs.slice(0, NO_OF_DEFAULT_CCTVS))
+    );
   }, []);
 
   return (

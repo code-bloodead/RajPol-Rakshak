@@ -1,4 +1,4 @@
-import { ObjectDetection } from "../views/station-admin/PublicCCTVs/detections.types";
+import { ObjectDetection } from "@/components/CctvStream/detections.types";
 
 export function filterDetections<T extends ObjectDetection>(
   detections: T[],

@@ -1,13 +1,7 @@
 import { FaBus, FaHome, FaUmbrellaBeach } from "react-icons/fa";
 import { FaLocationDot, FaSailboat } from "react-icons/fa6";
+import { LocationTypes } from "../../apis/cctvs";
 
-export enum LocationTypes {
-  DEFAULT = "default",
-  HOME = "home",
-  BEACH = "beach",
-  BOAT = "boat",
-  PUBLIC_TRANSPORT = "public-transport",
-}
 
 const LocationWiseIcons: Record<LocationTypes, () => JSX.Element> = {
   [LocationTypes.DEFAULT]: () => (

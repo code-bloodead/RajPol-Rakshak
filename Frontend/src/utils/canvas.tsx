@@ -55,7 +55,7 @@ interface CanvasDrawRectOptions {
     yOffset?: number;
     fillStyle?: string | CanvasGradient | CanvasPattern;
     backgroundColor?: string | CanvasGradient | CanvasPattern;
-  };
+  } | false;
 }
 export function drawRect(
   ctx: CanvasRenderingContext2D,

@@ -1,5 +1,5 @@
 import { MdOutlineConnectedTv } from "react-icons/md";
-import { CctvDetails } from "./cctvs.types";
+import { CctvDetails } from "@/apis/cctvs.types";
 
 interface CctvMarkerPopupProps {
   cctv: CctvDetails;

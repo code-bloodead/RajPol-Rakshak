@@ -1,15 +1,16 @@
 import React, { useEffect } from "react";
 import Map, { Marker, Popup } from "react-map-gl";
-import { MAPBOX_TOKEN } from "../../../constants/tokens";
+import { MAPBOX_TOKEN } from "@/constants/tokens";
 
 import {
   getCctvs,
   getDefaultMapCenter,
   getLocationSuggestions,
-} from "./cctvsApi";
-import SearchDialog from "../../../components/SearchDialog";
+} from "@/apis/cctvs";
+import { CCTV_TYPES } from "@/apis/cctvs.types";
+import SearchDialog from "@/components/SearchDialog";
 import CctvMarkerPopupContent from "./CctvMarkerPopupContent";
-import { CctvDetails } from "./cctvs.types";
+import { CctvDetails } from "@/apis/cctvs.types";
 
 import "./map.css";
 
@@ -27,7 +28,7 @@ const MapWithSearch = (props: MapWithSearchProps) => {
   } | null>(null);
 
   useEffect(() => {
-    getCctvs().then((cctvs) => setCctvs(cctvs));
+    getCctvs(CCTV_TYPES.PUBLIC).then((cctvs) => setCctvs(cctvs));
   }, []);
 
   // useEffect(() => {
@@ -90,9 +91,9 @@ const MapWithSearch = (props: MapWithSearchProps) => {
                       <CctvMarkerPopupContent
                         cctv={cctv}
                         onViewFootage={(cctv) => {
-                          onFootageSelected(cctv)
-                          setFocusedLocation(null)
-                          }}
+                          onFootageSelected(cctv);
+                          setFocusedLocation(null);
+                        }}
                         onClose={() => {}}
                       />
                     </Popup>

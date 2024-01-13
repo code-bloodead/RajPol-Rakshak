@@ -5,20 +5,20 @@ from time import time
 # Model spec
 # number of frames passed to model for making single inference . this specification is as per the model used and should not be changed
 NO_OF_FRAMES_FOR_INFERENCE = 16
-valid_climber_classes = ['abseiling', 'rock climbing', 'ice climbing',
-                         'cleaning windows', 'climbing a rope', 'climbing ladder', 'climbing tree']
+valid_climber_classes = ['abseiling', 'rock climbing', 'ice climbing', 'bungee jumping',
+                         'hopscotch', 'cleaning windows', 'climbing a rope', 'climbing ladder', 'climbing tree']
 
 
 climberResnetModel = cv2.dnn.readNet(
     "models/weights/climber_lstm/resnet-34_kinetics.onnx")
-print("Climber LSTM model Loaded")
 
 # loading class names
 # original source - https://github.com/kenshohara/video-classification-3d-cnn-pytorch/blob/master/class_names_list
 filepath_class_names = 'models/weights/climber_lstm/class_names_list.txt'
 with open(filepath_class_names, 'r') as fh:
     class_names = fh.read().strip().split('\n')
-print(f"Climber class has {len(class_names)} classes")
+
+print(f"Climber LSTM model Loaded with {len(class_names)} classes")
 
 
 def preprocess(frames):
@@ -36,9 +36,9 @@ def preprocess(frames):
 
 
 def get_generic_prediction(pred_class: int, pred):
-    discrete_class = class_names[pred_class]
-    confidence = float(pred[0][pred_class]),
-    if discrete_class in valid_climber_classes:
+    discrete_label = class_names[pred_class]
+    confidence = float(pred[0][pred_class])
+    if discrete_label in valid_climber_classes:
         return 1, "climber", confidence
     else:
         return 0, "no-climber", confidence
@@ -59,12 +59,7 @@ def detect_climber_dummy(frame):
     global dummy_called
     dummy_called += 1
     if dummy_called == NO_OF_FRAMES_FOR_INFERENCE:
-        predictions = [[0.9999999, 0.0000001]]
-        return {
-            'predicted_class': 0,
-            'prediction_confidence': predictions[0][0],
-            'prediction_label': 'abseiling'
-        }
+        return {'predicted_class': 0, 'prediction_confidence': (5.519692420959473,), 'prediction_label': 'no-climber'}
     return None
 
 
@@ -88,12 +83,15 @@ def detect_climber(frame):
         climberResnetModel.setInput(frames_processed)
         pred = climberResnetModel.forward()  # resulting pred.shape will be (1 , 400)
 
-        pred_class, pred_label, pred_conf = get_generic_prediction(np.argmax(pred), pred)
+        pred_class, pred_label, pred_conf = get_generic_prediction(
+            np.argmax(pred), pred)
 
         climber_classification = {
             'predicted_class': pred_class,
             'prediction_confidence': pred_conf,
             'prediction_label': pred_label,
+            'discrete_class': int(np.argmax(pred)),
+            'discrete_label': class_names[np.argmax(pred)]
         }
 
         print("Performed climber classification: ", climber_classification)

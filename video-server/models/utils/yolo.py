@@ -2,13 +2,13 @@ import io
 import cv2
 
 
-def parse_yolo_predictions(predictions):
+def parse_yolo_predictions(predictions, min_conf=0.5):
     if predictions is None or len(predictions) == 0:
         return []
 
     results = []
     for i in range(len(predictions[0].boxes)):
-        if predictions[0].boxes[i].conf[0].item() >= 0.5:
+        if predictions[0].boxes[i].conf[0].item() >= min_conf:
             results.append({
                 'confidence': predictions[0].boxes[i].conf[0].item(),
                 'label': predictions[0].names[predictions[0].boxes[i].cls.item()],

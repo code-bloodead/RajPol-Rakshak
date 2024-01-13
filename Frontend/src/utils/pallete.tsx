@@ -13,12 +13,12 @@ export function getWeaponColor(weaponLabel: string) {
   return WeaponColorMap[weaponLabel] || WeaponColorMap.Other;
 }
 
-
-export const ClimberColorMap: Record<string, string> = {
-  climber: "red",
-  walker: "gray",
-  Other: "gray",
-};
-export function getClimberColor(climberLabel: string) {
-  return ClimberColorMap[climberLabel] || ClimberColorMap.Other;
-}
+export const CLIMBER_COLOR = "red";
+// export const ClimberColorMap: Record<string, string> = {
+//   climber: "red",
+//   walker: "gray",
+//   Other: "gray",
+// };
+// export function getClimberColor(climberLabel: string) {
+//   return ClimberColorMap[climberLabel] || ClimberColorMap.Other;
+// }
