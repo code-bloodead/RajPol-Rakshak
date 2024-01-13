@@ -9,3 +9,25 @@ class ProfileInitialEvent extends ProfileEvent {
   @override
   List<Object?> get props => [];
 }
+
+class ChangeNotificationSwitchEvent extends ProfileEvent {
+  ChangeNotificationSwitchEvent({required this.value});
+
+  bool value;
+
+  @override
+  List<Object?> get props => [
+        value,
+      ];
+}
+
+class ChangeDarkSwitchEvent extends ProfileEvent {
+  ChangeDarkSwitchEvent({required this.value});
+
+  bool value;
+
+  @override
+  List<Object?> get props => [
+        value,
+      ];
+}

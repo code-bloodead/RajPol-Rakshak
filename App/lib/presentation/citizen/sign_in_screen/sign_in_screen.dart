@@ -149,7 +149,7 @@ class SignInScreen extends StatelessWidget {
                       //     }),
 
                       Padding(
-                          padding: getPadding(left: 42, top: 30, right: 41),
+                          padding: getPadding(top: 20, bottom: 10),
                           child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [

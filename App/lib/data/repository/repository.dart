@@ -1,8 +1,10 @@
+import 'package:rakshak/core/app_export.dart';
 import 'package:rakshak/data/models/login/post_login_resp.dart';
 import 'package:rakshak/data/models/login/post_police_login_resp.dart';
 import 'package:rakshak/data/models/me/get_me_resp.dart';
 import 'package:rakshak/data/models/register/post_register_resp.dart';
 import 'package:rakshak/data/models/register/verify_otp_resp.dart';
+import 'package:rakshak/data/models/notification/notification_model.dart';
 import 'package:rakshak/data/models/home/get_incident_resp.dart';
 
 import '../apiClient/api_client.dart';
@@ -58,5 +60,13 @@ class Repository {
 
   Future<GetIncidentResp> getIncident(String mobile) async {
     return await _apiClient.getIncident(mobile);
+  }
+
+  Future<GetNotificationResp> getNotifications(String user_id) async {
+    if (user_id.isEmpty || user_id == "") {
+      await PrefUtils().init();
+      user_id = PrefUtils().getMobile();
+    }
+    return await _apiClient.getNotifications(user_id);
   }
 }

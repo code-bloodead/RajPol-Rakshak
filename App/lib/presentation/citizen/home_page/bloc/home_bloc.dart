@@ -10,7 +10,7 @@ part 'home_state.dart';
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc(HomeState initialState) : super(initialState) {
     on<HomeInitialEvent>(_onInitialize);
-    on<onIncidentSearch>(_onIncidentSearch);
+    on<OnIncidentSearch>(_onIncidentSearch);
   }
 
   List<Incident> incidentList = [];
@@ -19,7 +19,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final _repository = Repository();
 
   _onIncidentSearch(
-    onIncidentSearch event,
+    OnIncidentSearch event,
     Emitter<HomeState> emit,
   ) {
     if (event.searchVal.isEmpty) {
@@ -64,6 +64,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     HomeInitialEvent event,
     Emitter<HomeState> emit,
   ) async {
+    if (PrefUtils().getNotificationStatus()) {
+      await BackgroundService.startBackground();
+    } else {
+      BackgroundService.stopBackground();
+    }
     incidentList = await fillIncidentList();
     tempIncidentList = incidentList;
     emit(state.copyWith(

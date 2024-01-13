@@ -10,8 +10,8 @@ class HomeInitialEvent extends HomeEvent {
   List<Object?> get props => [];
 }
 
-class onIncidentSearch extends HomeEvent {
-  onIncidentSearch({required this.searchVal});
+class OnIncidentSearch extends HomeEvent {
+  OnIncidentSearch({required this.searchVal});
 
   String searchVal;
 

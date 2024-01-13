@@ -160,8 +160,7 @@ class SignUpScreen extends StatelessWidget {
                       Align(
                           alignment: Alignment.center,
                           child: Padding(
-                              padding: getPadding(
-                                  left: 22, top: 27, right: 21, bottom: 5),
+                              padding: getPadding(top: 27, bottom: 5),
                               child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [

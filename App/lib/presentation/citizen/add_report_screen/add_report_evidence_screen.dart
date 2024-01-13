@@ -108,7 +108,6 @@ class AddReportEvidenceScreen extends StatelessWidget {
                       Flexible(
                         child: BlocBuilder<AddReportBloc, AddReportState>(
                           builder: (context, state) {
-                            // print("hi: " + (state.incidentImage ?? "ok"));
                             return Container(
                               margin: getMargin(top: 30),
                               child: state.incidentImage == null
