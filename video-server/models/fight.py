@@ -70,7 +70,7 @@ def detect_fight(frame):
         input_video_clip = np.expand_dims(input_video_clip, axis=0)
 
         # Perform predictions
-        prediction = fightModel.predict(input_video_clip)
+        prediction = fightModel.predict(input_video_clip, verbose=False)
 
         # Get the class with the highest probability as the predicted class
         predicted_class = np.argmax(prediction, axis=1)

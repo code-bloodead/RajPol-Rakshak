@@ -27,6 +27,7 @@ class IncidentType():
     accident = 'accident'
     climber = 'climber'
     suspicious = 'suspicious'
+    fire = 'fire'
 
 
 incident_meta_data = {
@@ -47,6 +48,9 @@ incident_meta_data = {
     },
     IncidentType.suspicious: {
         'title': "Suspicious activity detected",
+    },
+    IncidentType.fire: {
+        'title': "Fire detected",
     },
 }
 
@@ -76,6 +80,7 @@ class IncidentManager:
                 IncidentType.accident: {},
                 IncidentType.climber: {},
                 IncidentType.suspicious: {},
+                IncidentType.fire: {},
             }
 
     def save_data(self):

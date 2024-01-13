@@ -14,7 +14,8 @@ export function getWeaponColor(weaponLabel: string) {
 }
 
 export const ACCIDENT_COLOR = "red";
-export const CLIMBER_COLOR = "red";
+export const FIRE_COLOR = "#370088";
+export const CLIMBER_COLOR = "#005b18";
 
 // export const ClimberColorMap: Record<string, string> = {
 //   climber: "red",

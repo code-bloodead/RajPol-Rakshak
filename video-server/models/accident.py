@@ -5,7 +5,7 @@ from models.utils.yolo import parse_yolo_predictions
 from models.device import current_device
 
 accidentsYoloModel = YOLO(
-    "models/weights/accident/accident.pt").to(torch.device(current_device))
+    "models/weights/accident/accident_latest.pt").to(torch.device(current_device))
 print("Accidents YOLO Loaded")
 
 def detect_accident_dummy(frame):
@@ -18,4 +18,4 @@ def detect_accident_dummy(frame):
 
 def detect_accident(frame):
     outputs = accidentsYoloModel.predict(source=frame, verbose=False)
-    return parse_yolo_predictions(outputs)
+    return parse_yolo_predictions(outputs, 0.5)

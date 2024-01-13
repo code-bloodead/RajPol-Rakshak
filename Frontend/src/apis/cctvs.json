@@ -51,7 +51,31 @@
     {
       "type": "Feature",
       "properties": {
-        "id": "cctv_0",
+        "id": "cctv_p03",
+        "cctv_type": "public",
+        "title": "Lokhandwala Market, Andheri West",
+        "description": "Local market",
+        "kind": "default",
+        "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1705171052/samples/fire_sample.mp4"
+      },
+      "geometry": { "coordinates": [72.829, 19.138], "type": "Point" }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "cctv_p04",
+        "cctv_type": "public",
+        "title": "Chota Kashmir, Goregaon East",
+        "description": "Feel Kashmir in your city",
+        "kind": "boat",
+        "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1704890971/samples/public_cam.mp4"
+      },
+      "geometry": { "coordinates": [72.857, 19.155], "type": "Point" }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "cctv_p05",
         "cctv_type": "public",
         "title": "Versova Beach",
         "description": "Bustling Beach in suburbs",
@@ -63,31 +87,7 @@
     {
       "type": "Feature",
       "properties": {
-        "id": "cctv_1",
-        "cctv_type": "public",
-        "title": "Lokhandwala Market, Andheri West",
-        "description": "Local market",
-        "kind": "default",
-        "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1704890971/samples/public_cam.mp4"
-      },
-      "geometry": { "coordinates": [72.829, 19.138], "type": "Point" }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "id": "cctv_2",
-        "cctv_type": "public",
-        "title": "Chota Kashmir, Goregaon East",
-        "description": "Feel Kashmir in your city",
-        "kind": "boat",
-        "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1703605906/samples/market.mp4"
-      },
-      "geometry": { "coordinates": [72.857, 19.155], "type": "Point" }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "id": "cctv_3",
+        "id": "cctv_p06",
         "cctv_type": "public",
         "title": "Mahakali Caves, Andheri East",
         "description": "Rock-cut monuments",
@@ -99,7 +99,7 @@
     {
       "type": "Feature",
       "properties": {
-        "id": "cctv_4",
+        "id": "cctv_p07",
         "cctv_type": "public",
         "title": "Juhu Beach, Andheri West",
         "description": "Longest beach in Mumbai",
