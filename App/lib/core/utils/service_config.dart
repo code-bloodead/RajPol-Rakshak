@@ -7,7 +7,7 @@ import 'package:rakshak/data/repository/repository.dart';
 import 'package:rakshak/core/app_export.dart';
 
 class BackgroundService {
-  static List<Notification> notifList = [];
+  static List<String> notifList = [];
   static var _mobile = PrefUtils().getMobile();
   static var getNotifResp = GetNotificationResp(dataList: []);
   static var _repository = Repository();
@@ -65,19 +65,58 @@ class BackgroundService {
       if (service is AndroidServiceInstance) {
         try {
           Timer.periodic(const Duration(seconds: 10), (timer) async {
-            print("mobile" + _mobile);
-            if (_mobile == null || _mobile == "") {
+            if (_mobile == "") {
               await PrefUtils().init();
               _mobile = PrefUtils().getMobile();
             }
             getNotifResp = await _repository.getNotifications(_mobile);
-            if (notifList != getNotifResp.dataList!) {
-              notifList = getNotifResp.dataList!;
-              if (notifList.length > 0)
-                LocalNotifications.showSimpleNotification(
-                    title: notifList.first.title ?? "title",
-                    body: notifList.first.description ?? "description",
-                    payload: "payload");
+
+            if (getNotifResp.dataList!.length > 0) {
+              if (PrefUtils().getNotificationList().length == 0) {
+                getNotifResp.dataList!.forEach((element) {
+                  notifList.add(element.id!);
+                });
+                await PrefUtils().setNotificationList(notifList);
+                if (notifList.length > 1) {
+                  String len = notifList.length.toString();
+                  LocalNotifications.showSimpleNotification(
+                      title: "$len new notifications",
+                      body: "Reported incidents status has been updated",
+                      payload: "payload");
+                } else if (notifList.length == 1) {
+                  LocalNotifications.showSimpleNotification(
+                      title: getNotifResp.dataList!.first.title!,
+                      body: getNotifResp.dataList!.first.description!,
+                      payload: "payload");
+                }
+              } else {
+                if (PrefUtils().getNotificationList().length > 0 &&
+                    getNotifResp.dataList!.length > 0 &&
+                    PrefUtils().getNotificationList().first !=
+                        getNotifResp.dataList!.first.id!) {
+                  getNotifResp.dataList!.forEach((element) {
+                    notifList.add(element.id!);
+                  });
+                  await PrefUtils().setNotificationList(notifList);
+                  if (getNotifResp.dataList!.length > 1) {
+                    String len = getNotifResp.dataList!.length.toString();
+                    LocalNotifications.showSimpleNotification(
+                        title: "$len new notifications",
+                        body: "Reported incidents status has been updated",
+                        payload: "payload");
+                  } else if (getNotifResp.dataList!.length == 1) {
+                    LocalNotifications.showSimpleNotification(
+                        title: getNotifResp.dataList!.first.title!,
+                        body: getNotifResp.dataList!.first.description!,
+                        payload: "payload");
+                  }
+                } else {
+                  print("No new notifications");
+                }
+              }
+            } else {
+              PrefUtils().setNotificationList([]);
+              print("No notifications");
             }
           });
         } catch (error) {

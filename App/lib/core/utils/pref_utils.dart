@@ -90,4 +90,17 @@ class PrefUtils {
       return true;
     }
   }
+
+  Future<void> setNotificationList(List<String> value) {
+    return _sharedPreferences!.setStringList('notificationList', value);
+  }
+
+  List<String> getNotificationList() {
+    try {
+      return _sharedPreferences!.getStringList('notificationList') ?? [];
+    } catch (e) {
+      print(e);
+      return [];
+    }
+  }
 }

@@ -247,4 +247,32 @@ class ApiClient {
       rethrow;
     }
   }
+
+  Future<int> getNotificationCount(String user_id) async {
+    ProgressDialogUtils.showProgressDialog();
+    try {
+      await isNetworkConnected();
+      var response = await _dio.get(
+        '$url/notifications/get_count_for_user?user_id=$user_id',
+        options: Options(headers: {
+          'Content-type': 'application/json',
+        }),
+      );
+      ProgressDialogUtils.hideProgressDialog();
+      if (_isSuccessCall(response)) {
+        return response.data["SUCCESS"];
+      } else {
+        throw response.data != null
+            ? response.data["SUCCESS"]
+            : 'Something Went Wrong!';
+      }
+    } catch (error, stackTrace) {
+      ProgressDialogUtils.hideProgressDialog();
+      Logger.log(
+        error,
+        stackTrace: stackTrace,
+      );
+      rethrow;
+    }
+  }
 }
