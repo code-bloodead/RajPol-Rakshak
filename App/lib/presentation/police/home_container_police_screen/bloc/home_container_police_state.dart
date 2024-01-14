@@ -5,34 +5,34 @@ part of 'home_container_police_bloc.dart';
 class HomeContainerPoliceState extends Equatable {
   HomeContainerPoliceState({
     this.id,
-    this.station,
     this.fullname,
+    this.station,
     this.homeContainerPoliceModelObj,
   });
 
   HomeContainerPoliceModel? homeContainerPoliceModelObj;
 
-  var id;
-  var station;
-  var fullname;
+  String? id;
+  String? fullname;
+  String? station;
 
   @override
   List<Object?> get props => [
         id,
-        station,
         fullname,
+        station,
         homeContainerPoliceModelObj,
       ];
   HomeContainerPoliceState copyWith({
-    var id,
-    var mobile,
-    var fullname,
+    String? id,
+    String? fullname,
+    String? station,
     HomeContainerPoliceModel? homeContainerPoliceModelObj,
   }) {
     return HomeContainerPoliceState(
       id: id ?? this.id,
-      station: station ?? this.station,
       fullname: fullname ?? this.fullname,
+      station: station ?? this.station,
       homeContainerPoliceModelObj:
           homeContainerPoliceModelObj ?? this.homeContainerPoliceModelObj,
     );

@@ -55,7 +55,6 @@ class SignInPoliceBloc extends Bloc<SignInPoliceEvent, SignInPoliceState> {
     var postPoliceLoginReq = PostPoliceLoginReq(
       id: state.idController?.text.trim(),
       password: state.passwordController?.text.trim(),
-      notification_token: "unnecessary",
     );
     print(postPoliceLoginReq.toJson());
     try {
@@ -81,7 +80,9 @@ class SignInPoliceBloc extends Bloc<SignInPoliceEvent, SignInPoliceState> {
     PrefUtils().clearPreferencesData();
     PrefUtils().setId(resp.data!.id!.toString());
     PrefUtils().setName(resp.data!.staff_name!.toString());
+    PrefUtils().setNotificationStatus(true);
     PrefUtils().setStation(resp.data!.station_name!.toString());
+    PrefUtils().setDuty(resp.data!.duty!.toString());
     emit(
       state.copyWith(
         signInPoliceModelObj: state.signInPoliceModelObj?.copyWith(),

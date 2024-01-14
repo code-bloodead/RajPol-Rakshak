@@ -23,16 +23,17 @@ class Data {
   String? status;
   String? id;
   String? station_name;
-  String? notification_token;
+  String? duty;
 
-  Data(
-      {this.id,
-      this.phone,
-      this.photo,
-      this.staff_name,
-      this.status,
-      this.station_name,
-      this.notification_token});
+  Data({
+    this.id,
+    this.phone,
+    this.photo,
+    this.staff_name,
+    this.status,
+    this.station_name,
+    this.duty,
+  });
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -41,7 +42,7 @@ class Data {
     staff_name = json['staff_name'];
     status = json['status'];
     station_name = json['station_name'];
-    notification_token = "unecessary";
+    duty = json['duty'];
   }
 
   Map<String, dynamic> toJson() {
@@ -64,7 +65,9 @@ class Data {
     if (this.station_name != null) {
       data['station_name'] = this.station_name;
     }
-    data['notification_token'] = "unecessary";
+    if (this.duty != null) {
+      data['duty'] = this.duty;
+    }
     return data;
   }
 }

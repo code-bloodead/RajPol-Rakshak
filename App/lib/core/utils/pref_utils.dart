@@ -103,4 +103,16 @@ class PrefUtils {
       return [];
     }
   }
+
+  Future<void> setDuty(String value) {
+    return _sharedPreferences!.setString('duty', value);
+  }
+
+  String getDuty() {
+    try {
+      return _sharedPreferences!.getString('duty') ?? '';
+    } catch (e) {
+      return '';
+    }
+  }
 }
