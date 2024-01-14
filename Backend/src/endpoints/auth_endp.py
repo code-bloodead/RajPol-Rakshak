@@ -68,7 +68,7 @@ def login_staff(staff: StaffLogin, response: Response):
 # #create station admin
 @router.post("/create_staff", description="Create staff")
 def add_staff(staff: Staff):
-    if staff.password == "" or staff.station_name == "" or staff.dept_name == "" or staff.staff_name == "" or staff.phone == "":
+    if staff.password == "" or staff.station_name == "" or staff.dept_name == "" or staff.staff_name == "" or staff.phone == "" or staff.duty == "":
         return {"ERROR":"MISSING PARAMETERS"}
     
     result = create_staff(staff)

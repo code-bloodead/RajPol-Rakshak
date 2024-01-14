@@ -10,6 +10,7 @@ class Staff(BaseModel):
     #status are: Available, Unavailable
     phone: str = Form(...)
     photo: str = Form(default="https://cdn-icons-png.flaticon.com/512/848/848006.png")
+    duty: str = Form(default="station")
     # notification_token: str = Form(default="")
 
 class StaffLogin(BaseModel):

@@ -44,6 +44,10 @@ def new_incident(incident: Incidents):
             return {"ERROR": "MISSING PARAMETERS"}
 
         result = create_incident(incident)
+        notification = Notifications(station_name=incident.station_name, title="New Incident: " + incident.title, description=incident.description, type="incident")
+        create_notification(notification)
+        notification = Notifications(station_name=incident.station_name, title="New Incident: " + incident.title, description=incident.description, type="staff_incident")
+        create_notification(notification)
         return result
     except Exception as e:
         print(e)
@@ -84,6 +88,8 @@ async def create_incident_by_user(image: UploadFile, title: str = Form(...), des
         result = create_incident(incident)
         
         notification = Notifications(station_name=incident.station_name, title="New Report: " + incident.title, description=incident.description, type="report")
+        create_notification(notification)
+        notification = Notifications(station_name=incident.station_name, title="New Report: " + incident.title, description=incident.description, type="staff_report")
         create_notification(notification)
         return result
     except Exception as e:

@@ -16,3 +16,8 @@ class GetNotificationsAdmin(BaseModel):
 class GetNotificationsUser(BaseModel):
     id: str = Form(default="")
     user_id: str = Form(default="")
+
+class GetNotificationsStaff(BaseModel):
+    id: str = Form(default="")
+    station_name: str = Form(default="")
+    duty: str = Form(default="")
