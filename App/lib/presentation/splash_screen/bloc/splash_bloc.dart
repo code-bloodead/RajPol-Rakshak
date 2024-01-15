@@ -30,9 +30,11 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
       }
 
       if (PrefUtils().getId().isNotEmpty) {
-        NavigatorService.pushNamedAndRemoveUntil(AppRoutes.homeContainerScreen,
+        NavigatorService.pushNamedAndRemoveUntil(
+            AppRoutes.homeContainerPoliceScreen,
             arguments: {
               NavigationArgs.id: PrefUtils().getId(),
+              NavigationArgs.fullname: PrefUtils().getName(),
               NavigationArgs.station: PrefUtils().getStation(),
             });
       }

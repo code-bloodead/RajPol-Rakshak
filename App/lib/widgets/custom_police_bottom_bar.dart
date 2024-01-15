@@ -1,39 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:rakshak/core/app_export.dart';
 
-class CustomBottomBar extends StatefulWidget {
-  CustomBottomBar({this.onChanged});
+class CustomPoliceBottomBar extends StatefulWidget {
+  CustomPoliceBottomBar({this.onChanged});
 
   Function(BottomBarEnum)? onChanged;
 
   @override
-  _CustomBottomBarState createState() => _CustomBottomBarState();
+  _CustomPoliceBottomBarState createState() => _CustomPoliceBottomBarState();
 }
 
-class _CustomBottomBarState extends State<CustomBottomBar> {
+class _CustomPoliceBottomBarState extends State<CustomPoliceBottomBar> {
   int selectedIndex = 0;
 
   List<BottomMenuModel> bottomMenuList = [
     BottomMenuModel(
-      icon: ImageConstant.imgHome24x24,
-      title: "lbl_home".tr,
-      type: BottomBarEnum.Home,
+      icon: ImageConstant.imgOptions,
+      title: "lbl_dashboard".tr,
+      type: BottomBarEnum.Dashboard,
     ),
     BottomMenuModel(
-      icon: ImageConstant.imgAddReport,
-      title: "lbl_add_report".tr,
-      type: BottomBarEnum.Report,
+      icon: ImageConstant.imgMenu1,
+      title: "lbl_incidents".tr,
+      type: BottomBarEnum.Incidents,
     ),
     BottomMenuModel(
-      icon: ImageConstant.imgStar,
-      title: "lbl_rewards".tr,
-      type: BottomBarEnum.Rewards,
+      icon: ImageConstant.imgMap,
+      title: "lbl_map".tr,
+      type: BottomBarEnum.Map,
     ),
     BottomMenuModel(
       icon: ImageConstant.imgUser,
       title: "lbl_profile".tr,
       type: BottomBarEnum.Profile,
-    ),
+    )
   ];
 
   @override
@@ -146,10 +146,10 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
 }
 
 enum BottomBarEnum {
-  Home,
-  Report,
   Profile,
-  Rewards,
+  Incidents,
+  Map,
+  Dashboard,
 }
 
 class BottomMenuModel {

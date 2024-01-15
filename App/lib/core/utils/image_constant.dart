@@ -11,6 +11,10 @@ class ImageConstant {
 
   static String imgFaqs = 'assets/images/img_faqs.svg';
 
+  static String imgMap = 'assets/images/img_map.svg';
+
+  static String imgCctv = 'assets/images/img_cctv.svg';
+
   static String noImageUrl =
       "https://st3.depositphotos.com/23594922/31822/v/450/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg";
 

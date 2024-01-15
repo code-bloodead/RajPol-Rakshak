@@ -135,7 +135,8 @@ class SignInPoliceScreen extends StatelessWidget {
     );
 
     Future.delayed(Duration(seconds: 1), () {
-      NavigatorService.pushNamedAndRemoveUntil(AppRoutes.homeContainerScreen,
+      NavigatorService.pushNamedAndRemoveUntil(
+          AppRoutes.homeContainerPoliceScreen,
           arguments: {
             NavigationArgs.id:
                 context.read<SignInPoliceBloc>().postPoliceLoginResp.data!.id!,

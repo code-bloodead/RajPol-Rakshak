@@ -57,7 +57,7 @@ class HomeContainerScreen extends StatelessWidget {
         return AppRoutes.homePage;
       case BottomBarEnum.Profile:
         return AppRoutes.profilePage;
-      case BottomBarEnum.Helpline:
+      case BottomBarEnum.Rewards:
         return AppRoutes.profilePage;
       default:
         return "/";
