@@ -10,13 +10,11 @@ class DashboardPoliceInitialEvent extends DashboardPoliceEvent {
   List<Object?> get props => [];
 }
 
-class OnIncidentSearch extends DashboardPoliceEvent {
-  OnIncidentSearch({required this.searchVal});
-
-  String searchVal;
-
+class DashboardPoliceTooltipEvent extends DashboardPoliceEvent {
+  DashboardPoliceTooltipEvent({required this.value});
+  int value;
   @override
   List<Object?> get props => [
-        searchVal,
+        value,
       ];
 }

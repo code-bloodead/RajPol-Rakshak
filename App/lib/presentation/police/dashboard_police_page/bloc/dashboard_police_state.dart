@@ -4,34 +4,36 @@ part of 'dashboard_police_bloc.dart';
 
 class DashboardPoliceState extends Equatable {
   DashboardPoliceState({
-    this.incidentSearchController,
     this.isNotificationPresent = false,
+    required this.barChartConstants,
     required this.dashboardPoliceModelObj,
+    this.recentIncident,
   });
 
-  TextEditingController? incidentSearchController;
-
   bool isNotificationPresent;
-
+  BarChartConstants barChartConstants;
+  Incident? recentIncident;
   DashboardPoliceModel dashboardPoliceModelObj;
 
   @override
   List<Object?> get props => [
-        incidentSearchController,
         dashboardPoliceModelObj,
         isNotificationPresent,
+        barChartConstants,
+        recentIncident,
       ];
   DashboardPoliceState copyWith({
-    TextEditingController? incidentSearchController,
     required DashboardPoliceModel dashboardPoliceModelObj,
+    BarChartConstants? barChartConstants,
     bool? isNotificationPresent,
+    Incident? recentIncident,
   }) {
     return DashboardPoliceState(
-      incidentSearchController:
-          incidentSearchController ?? this.incidentSearchController,
       dashboardPoliceModelObj: dashboardPoliceModelObj,
       isNotificationPresent:
           isNotificationPresent ?? this.isNotificationPresent,
+      barChartConstants: barChartConstants ?? this.barChartConstants,
+      recentIncident: recentIncident ?? this.recentIncident,
     );
   }
 }

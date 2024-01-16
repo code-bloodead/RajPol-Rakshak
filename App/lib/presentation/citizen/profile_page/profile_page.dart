@@ -331,7 +331,7 @@ class ProfilePage extends StatelessWidget {
                                 BackgroundService.stopBackground();
                                 PrefUtils().clearPreferencesData();
                                 await NavigatorService.pushNamedAndRemoveUntil(
-                                    AppRoutes.signInScreen);
+                                    AppRoutes.setRoleScreen);
                               }),
                         )
                       ]))));

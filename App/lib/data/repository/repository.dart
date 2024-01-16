@@ -77,4 +77,14 @@ class Repository {
     }
     return await _apiClient.getNotificationCount(user_id);
   }
+
+  Future<GetNotificationResp> getNotificationsForStaff(
+      String duty, String station) async {
+    if (duty.isEmpty || duty == "" || station.isEmpty || station == "") {
+      await PrefUtils().init();
+      duty = PrefUtils().getDuty();
+      station = PrefUtils().getStation();
+    }
+    return await _apiClient.getNotificationsForStaff(duty, station);
+  }
 }

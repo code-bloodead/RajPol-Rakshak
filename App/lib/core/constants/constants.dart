@@ -15,7 +15,49 @@ List<Incident> userReports = [
     location: "Chakala street",
     source: "9324326404",
     status: "Closed",
-    created_at: "2023-12-27T00:21:12.102+00:00",
+    created_at: "2024-01-11T00:21:12.102+00:00",
+  ),
+  Incident(
+    id: "ABCB1234",
+    image:
+        "https://st3.depositphotos.com/23594922/31822/v/450/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg",
+    title: "IncidentA99",
+    description:
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
+    type: "Crime",
+    station_name: "Andheri",
+    location: "Chakala street",
+    source: "9324326404",
+    status: "Closed",
+    created_at: "2024-01-15T00:21:12.102+00:00",
+  ),
+  Incident(
+    id: "BBCB1234",
+    image:
+        "https://st3.depositphotos.com/23594922/31822/v/450/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg",
+    title: "IncidentA98",
+    description:
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
+    type: "Crime",
+    station_name: "Andheri",
+    location: "Chakala street",
+    source: "CCTV",
+    status: "Closed",
+    created_at: "2024-01-15T00:21:12.102+00:00",
+  ),
+  Incident(
+    id: "DBCB1234",
+    image:
+        "https://st3.depositphotos.com/23594922/31822/v/450/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg",
+    title: "IncidentA88",
+    description:
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
+    type: "Crime",
+    station_name: "Andheri",
+    location: "Chakala street",
+    source: "CCTV",
+    status: "Closed",
+    created_at: "2024-01-15T00:21:12.102+00:00",
   ),
   Incident(
     id: "EFGH5678",
@@ -28,7 +70,7 @@ List<Incident> userReports = [
     location: "Gateway of India",
     source: "CCTV",
     status: "Pending",
-    created_at: "2023-12-28T08:45:30.512+00:00",
+    created_at: "2024-01-12T08:45:30.512+00:00",
   ),
   Incident(
     id: "IJKL9012",
@@ -41,11 +83,12 @@ List<Incident> userReports = [
     location: "Linking Road",
     source: "9324326404",
     status: "Resolved",
-    created_at: "2023-12-29T14:10:05.721+00:00",
+    created_at: "2024-01-12T14:10:05.721+00:00",
   ),
   Incident(
     id: "MNOP3456",
-    image: "https://example.com/image1.jpg",
+    image:
+        "https://st3.depositphotos.com/23594922/31822/v/450/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg",
     title: "IncidentD3",
     description: "Incident3",
     type: "Vandalism",
@@ -53,11 +96,12 @@ List<Incident> userReports = [
     location: "Shivaji Park",
     source: "CCTV",
     status: "Pending",
-    created_at: "2023-12-30T18:30:40.901+00:00",
+    created_at: "2024-01-13T18:30:40.901+00:00",
   ),
   Incident(
     id: "QRST7890",
-    image: "https://example.com/image2.jpg",
+    image:
+        "https://st3.depositphotos.com/23594922/31822/v/450/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg",
     title: "IncidentE4",
     description: "Incident4",
     type: "Missing Person",
@@ -65,11 +109,12 @@ List<Incident> userReports = [
     location: "Sea Face",
     source: "9324326404",
     status: "Open",
-    created_at: "2023-12-31T09:15:22.623+00:00",
+    created_at: "2024-01-14T09:15:22.623+00:00",
   ),
   Incident(
     id: "UVWX1234",
-    image: "https://example.com/image3.jpg",
+    image:
+        "https://st3.depositphotos.com/23594922/31822/v/450/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg",
     title: "IncidentF5",
     description: "Incident5",
     type: "Traffic Violation",
@@ -77,11 +122,12 @@ List<Incident> userReports = [
     location: "Western Express Highway",
     source: "CCTV",
     status: "Closed",
-    created_at: "2024-01-01T12:45:55.321+00:00",
+    created_at: "2024-01-15T12:45:55.321+00:00",
   ),
   Incident(
     id: "YZAB5678",
-    image: "https://example.com/image4.jpg",
+    image:
+        "https://st3.depositphotos.com/23594922/31822/v/450/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg",
     title: "IncidentG6",
     description: "Incident6",
     type: "Fire",
@@ -89,20 +135,109 @@ List<Incident> userReports = [
     location: "Local Market",
     source: "9324326404",
     status: "Resolved",
-    created_at: "2024-01-02T16:20:30.430+00:00",
+    created_at: "2024-01-04T16:20:30.430+00:00",
   ),
   Incident(
     id: "CDEF9012",
-    image: "https://example.com/image5.jpg",
-    title: "IncidentH7",
+    image:
+        "https://st3.depositphotos.com/23594922/31822/v/450/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg",
+    title: "IncidentHZ",
     description: "Incident7",
     type: "Suspicious Activity",
     station_name: "Fort",
     location: "CST Station",
     source: "9324326404",
     status: "Pending",
-    created_at: "2024-01-03T21:05:15.812+00:00",
+    created_at: "2024-01-15T21:05:15.812+00:00",
   ),
+  Incident(
+    id: "CDEF9013",
+    image:
+        "https://st3.depositphotos.com/23594922/31822/v/450/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg",
+    title: "IncidentHA",
+    description: "Incident7",
+    type: "Suspicious Activity",
+    station_name: "Fort",
+    location: "CST Station",
+    source: "9324326404",
+    status: "Pending",
+    created_at: "2024-01-10T21:05:15.812+00:00",
+  ),
+  Incident(
+    id: "CDEF9000",
+    image:
+        "https://st3.depositphotos.com/23594922/31822/v/450/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg",
+    title: "IncidentGH7",
+    description: "Incident7",
+    type: "Suspicious Activity",
+    station_name: "Fort",
+    location: "CST Station",
+    source: "User Report",
+    status: "Pending",
+    created_at: "2024-01-10T21:05:15.812+00:00",
+  ),
+  Incident(
+    id: "CDEF7000",
+    image:
+        "https://st3.depositphotos.com/23594922/31822/v/450/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg",
+    title: "Incident37",
+    description: "Incident7",
+    type: "Suspicious Activity",
+    station_name: "Fort",
+    location: "CST Station",
+    source: "User Report",
+    status: "Pending",
+    created_at: "2024-01-09T21:05:15.812+00:00",
+  ),
+  Incident(
+    id: "CDEF6000",
+    image:
+        "https://st3.depositphotos.com/23594922/31822/v/450/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg",
+    title: "Incident67",
+    description: "Incident7",
+    type: "Suspicious Activity",
+    station_name: "Fort",
+    location: "CST Station",
+    source: "9324326404",
+    status: "Pending",
+    created_at: "2024-01-09T21:05:15.812+00:00",
+  ),
+  Incident(
+    id: "CDEF5000",
+    image:
+        "https://st3.depositphotos.com/23594922/31822/v/450/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg",
+    title: "IncidentHA",
+    description: "Incident7",
+    type: "Suspicious Activity",
+    station_name: "Fort",
+    location: "CST Station",
+    source: "9324326404",
+    status: "Pending",
+    created_at: "2024-01-08T21:05:15.812+00:00",
+  ),
+  Incident(
+    id: "CAEF5000",
+    image:
+        "https://st3.depositphotos.com/23594922/31822/v/450/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg",
+    title: "IncidentHH",
+    description: "Incident7",
+    type: "Suspicious Activity",
+    station_name: "Fort",
+    location: "CST Station",
+    source: "9324326404",
+    status: "Pending",
+    created_at: "2024-01-07T21:05:15.812+00:00",
+  ),
+];
+
+List<BarData> dataListConstants = [
+  BarData(ColorConstant.blue500, 18, 18),
+  BarData(ColorConstant.blue500, 17, 8),
+  BarData(ColorConstant.blue500, 10, 15),
+  BarData(ColorConstant.blue500, 2.5, 5),
+  BarData(ColorConstant.blue500, 2, 2.5),
+  BarData(ColorConstant.blue500, 2, 2),
+  BarData(ColorConstant.blue500, 10, 15),
 ];
 
 List<ValueItem> incidentCategoryConst = [

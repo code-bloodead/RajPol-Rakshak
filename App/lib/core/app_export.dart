@@ -1,5 +1,6 @@
 export 'package:rakshak/localization/app_localization.dart';
 export 'package:rakshak/core/constants/constants.dart';
+export 'package:rakshak/core/constants/chart.dart';
 export 'package:rakshak/core/utils/image_constant.dart';
 export 'package:rakshak/core/utils/color_constant.dart';
 export 'package:rakshak/core/utils/size_utils.dart';

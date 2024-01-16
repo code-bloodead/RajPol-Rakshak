@@ -280,6 +280,7 @@ final Map<String, String> enUs = {
   "lbl_rewards": "Rewards",
   "lbl_dashboard": "Dashboard",
   "lbl_incidents": "Incidents",
+  "lbl_recent_incident": "Recent Incident",
   "lbl_map": "Map",
   "lbl_add_report": "Add Report",
   "lbl_mark_as_read": "Mark as Read",

@@ -36,6 +36,11 @@ dependencies:
   multi_dropdown: ^2.0.0
   flutter_local_notifications: ^16.3.0
   flutter_background_service: ^2.4.6
+  fl_chart: ^0.63.0
+  path_provider: ^2.0.2
+  # mapbox_gl: ^0.15.0
+  # location: ^4.3.0
+  # flutter_mapbox_navigation: ^0.0.26
   
 dev_dependencies: 
   flutter_test: 
