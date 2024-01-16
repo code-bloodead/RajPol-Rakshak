@@ -6,7 +6,7 @@
 /.flutter-plugins
 /.flutter-plugins-dependencies
 /.packages
-
+/android/gradle.properties
 *.env
 
 /lib/presentation/random

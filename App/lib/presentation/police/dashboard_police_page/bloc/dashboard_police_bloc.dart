@@ -11,44 +11,28 @@ class DashboardPoliceBloc
     extends Bloc<DashboardPoliceEvent, DashboardPoliceState> {
   DashboardPoliceBloc(DashboardPoliceState initialState) : super(initialState) {
     on<DashboardPoliceInitialEvent>(_onInitialize);
-    on<OnIncidentSearch>(_onIncidentSearch);
+    on<DashboardPoliceTooltipEvent>(_onToolTipEvent);
   }
 
+  Map<String, List<Incident>> incidentsByDate = {};
   List<Incident> incidentList = [];
-  List<Incident> tempIncidentList = [];
+  List<Incident> reportedList = [];
+  List<Incident> detectedList = [];
+  List<BarData> dataList = [
+    BarData(ColorConstant.blue500, 18, 18),
+    BarData(ColorConstant.blue500, 17, 8),
+    BarData(ColorConstant.blue500, 10, 15),
+    BarData(ColorConstant.blue500, 2.5, 5),
+    BarData(ColorConstant.blue500, 2, 2.5),
+    BarData(ColorConstant.blue500, 2, 2),
+    BarData(ColorConstant.blue500, 10, 15),
+  ];
+  Incident? recentIncident;
+
   var getIncidentResp = GetIncidentResp();
   final _repository = Repository();
 
-  _onIncidentSearch(
-    OnIncidentSearch event,
-    Emitter<DashboardPoliceState> emit,
-  ) {
-    if (event.searchVal.isEmpty) {
-      tempIncidentList = incidentList;
-    } else {
-      // if not empty then filter incidents based on searchVal on title as well as station_name and location
-      tempIncidentList = incidentList
-          .where((element) =>
-              element.title!
-                  .toLowerCase()
-                  .startsWith(event.searchVal.toLowerCase()) ||
-              element.station_name!
-                  .toLowerCase()
-                  .startsWith(event.searchVal.toLowerCase()) ||
-              element.location!
-                  .toLowerCase()
-                  .startsWith(event.searchVal.toLowerCase()))
-          .toList();
-    }
-    print(tempIncidentList.toString());
-    emit(state.copyWith(
-        dashboardPoliceModelObj: state.dashboardPoliceModelObj.copyWith(
-      incidentList: incidentList,
-      tempIncidentList: tempIncidentList,
-    )));
-  }
-
-  Future<List<Incident>> fillIncidentList() async {
+  Future<void> fillIncidentList() async {
     // List<Incident> userReports = [];
 
     // try {
@@ -58,7 +42,14 @@ class DashboardPoliceBloc
     //   print(error);
     // }
 
-    return userReports;
+    userReports.sort(compareIncidentByCreatedAt);
+    incidentList = userReports;
+    recentIncident = incidentList.length > 0 ? incidentList.first : null;
+    reportedList =
+        userReports.where((element) => element.source != "CCTV").toList();
+    detectedList =
+        userReports.where((element) => element.source == "CCTV").toList();
+    incidentsByDate = separateIncidentPerDates(userReports);
   }
 
   _onInitialize(
@@ -70,8 +61,8 @@ class DashboardPoliceBloc
     } else {
       BackgroundService.stopBackground();
     }
-    incidentList = await fillIncidentList();
-    tempIncidentList = incidentList;
+    await fillIncidentList();
+
     int count = 0;
     // try {
     //   count = await _repository.getNotificationCount(PrefUtils().getMobile());
@@ -80,14 +71,46 @@ class DashboardPoliceBloc
     //   print(error);
     // }
 
+    await Future.delayed(Duration(milliseconds: 50), () {
+      dataList = [];
+      int reports = 0;
+      int detects = 0;
+      incidentsByDate.forEach((date, incidents) {
+        reports = incidents.where((element) => element.source != "CCTV").length;
+        detects = incidents.length - reports;
+        dataList.add(BarData(
+            ColorConstant.blue500, reports.toDouble(), detects.toDouble()));
+      });
+    });
+
     emit(state.copyWith(
-        dashboardPoliceModelObj: DashboardPoliceModel(),
-        isNotificationPresent: count != 0 ? true : false,
-        incidentSearchController: TextEditingController()));
+      dashboardPoliceModelObj: DashboardPoliceModel(),
+      barChartConstants: BarChartConstants(-1, dataList),
+      recentIncident: recentIncident,
+      isNotificationPresent: count != 0 ? true : false,
+    ));
     emit(state.copyWith(
         dashboardPoliceModelObj: state.dashboardPoliceModelObj.copyWith(
       incidentList: incidentList,
-      tempIncidentList: tempIncidentList,
+      reportedList: reportedList,
+      detectedList: detectedList,
+    )));
+  }
+
+  _onToolTipEvent(
+    DashboardPoliceTooltipEvent event,
+    Emitter<DashboardPoliceState> emit,
+  ) async {
+    emit(state.copyWith(
+      dashboardPoliceModelObj: DashboardPoliceModel(),
+      barChartConstants: BarChartConstants(event.value, dataList),
+      recentIncident: recentIncident,
+    ));
+    emit(state.copyWith(
+        dashboardPoliceModelObj: state.dashboardPoliceModelObj.copyWith(
+      incidentList: incidentList,
+      reportedList: reportedList,
+      detectedList: detectedList,
     )));
   }
 }

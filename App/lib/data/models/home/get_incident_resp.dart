@@ -95,3 +95,32 @@ class Incident {
     return data;
   }
 }
+
+int compareIncidentByCreatedAt(Incident a, Incident b) {
+  DateTime createdAtA = DateTime.parse(a.created_at ?? "");
+  DateTime createdAtB = DateTime.parse(b.created_at ?? "");
+  return createdAtB.compareTo(createdAtA);
+}
+
+Map<String, List<Incident>> separateIncidentPerDates(
+    List<Incident> userReports) {
+  Map<String, List<Incident>> incidentsByDate = {};
+  String todaysDate = DateTime.now().toString();
+  for (Incident incident in userReports) {
+    // Extract date from the created_at field
+    String date = (incident.created_at ?? todaysDate).substring(8, 10) +
+        '/' +
+        (incident.created_at ?? todaysDate).substring(5, 7);
+
+    // Check if the date is within the past 7 days
+    DateTime currentDate = DateTime.now();
+    DateTime incidentDate = DateTime.parse(incident.created_at ?? todaysDate);
+
+    if (currentDate.difference(incidentDate).inDays < 6) {
+      // Add the incident to the corresponding date category
+      incidentsByDate.putIfAbsent(date, () => []);
+      incidentsByDate[date]!.add(incident);
+    }
+  }
+  return incidentsByDate;
+}

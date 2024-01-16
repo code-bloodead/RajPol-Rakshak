@@ -9,6 +9,8 @@ import 'package:rakshak/core/app_export.dart';
 class BackgroundService {
   static List<String> notifList = [];
   static var _mobile = PrefUtils().getMobile();
+  static var _station = PrefUtils().getStation();
+  static var _duty = PrefUtils().getDuty();
   static var getNotifResp = GetNotificationResp(dataList: []);
   static var _repository = Repository();
   static Future<void> initialize() async {
@@ -28,8 +30,11 @@ class BackgroundService {
     final service = FlutterBackgroundService();
     var isRunning = await service.isRunning();
     if (!isRunning) {
+      notifList = [];
       await PrefUtils().init();
       _mobile = PrefUtils().getMobile();
+      _duty = PrefUtils().getDuty();
+      _station = PrefUtils().getStation();
       await service.startService();
       FlutterBackgroundService().invoke("setAsBackground");
     }
@@ -64,61 +69,130 @@ class BackgroundService {
     Future.delayed(Duration(seconds: 5), () async {
       if (service is AndroidServiceInstance) {
         try {
-          Timer.periodic(const Duration(seconds: 10), (timer) async {
-            if (_mobile == "") {
-              await PrefUtils().init();
-              _mobile = PrefUtils().getMobile();
-            }
-            getNotifResp = await _repository.getNotifications(_mobile);
+          if (PrefUtils().getStation() == "")
+            Timer.periodic(const Duration(seconds: 10), (timer) async {
+              print("In citizen notif");
+              if (_mobile == "") {
+                await PrefUtils().init();
+                _mobile = PrefUtils().getMobile();
+              }
+              getNotifResp = await _repository.getNotifications(_mobile);
 
-            if (getNotifResp.dataList!.length > 0) {
-              if (PrefUtils().getNotificationList().length == 0) {
-                getNotifResp.dataList!.forEach((element) {
-                  notifList.add(element.id!);
-                });
-                await PrefUtils().setNotificationList(notifList);
-                if (notifList.length > 1) {
-                  String len = notifList.length.toString();
-                  LocalNotifications.showSimpleNotification(
-                      title: "$len new notifications",
-                      body: "Reported incidents status has been updated",
-                      payload: "payload");
-                } else if (notifList.length == 1) {
-                  LocalNotifications.showSimpleNotification(
-                      title: getNotifResp.dataList!.first.title!,
-                      body: getNotifResp.dataList!.first.description!,
-                      payload: "payload");
-                }
-              } else {
-                if (PrefUtils().getNotificationList().length > 0 &&
-                    getNotifResp.dataList!.length > 0 &&
-                    PrefUtils().getNotificationList().first !=
-                        getNotifResp.dataList!.first.id!) {
+              if (getNotifResp.dataList!.length > 0) {
+                if (PrefUtils().getNotificationList().length == 0) {
                   getNotifResp.dataList!.forEach((element) {
                     notifList.add(element.id!);
                   });
                   await PrefUtils().setNotificationList(notifList);
-                  if (getNotifResp.dataList!.length > 1) {
-                    String len = getNotifResp.dataList!.length.toString();
+                  if (notifList.length > 1) {
+                    String len = notifList.length.toString();
                     LocalNotifications.showSimpleNotification(
                         title: "$len new notifications",
                         body: "Reported incidents status has been updated",
                         payload: "payload");
-                  } else if (getNotifResp.dataList!.length == 1) {
+                  } else if (notifList.length == 1) {
                     LocalNotifications.showSimpleNotification(
                         title: getNotifResp.dataList!.first.title!,
                         body: getNotifResp.dataList!.first.description!,
                         payload: "payload");
                   }
                 } else {
-                  print("No new notifications");
+                  if (PrefUtils().getNotificationList().length > 0 &&
+                      getNotifResp.dataList!.length > 0 &&
+                      PrefUtils().getNotificationList().first !=
+                          getNotifResp.dataList!.first.id!) {
+                    getNotifResp.dataList!.forEach((element) {
+                      notifList.add(element.id!);
+                    });
+                    await PrefUtils().setNotificationList(notifList);
+                    if (getNotifResp.dataList!.length > 1) {
+                      String len = getNotifResp.dataList!.length.toString();
+                      LocalNotifications.showSimpleNotification(
+                          title: "$len new notifications",
+                          body: "Reported incidents status has been updated",
+                          payload: "payload");
+                    } else if (getNotifResp.dataList!.length == 1) {
+                      LocalNotifications.showSimpleNotification(
+                          title: getNotifResp.dataList!.first.title!,
+                          body: getNotifResp.dataList!.first.description!,
+                          payload: "payload");
+                    }
+                  } else {
+                    print("No new notifications");
+                  }
                 }
+              } else {
+                PrefUtils().setNotificationList([]);
+                print("No notifications");
               }
-            } else {
-              PrefUtils().setNotificationList([]);
-              print("No notifications");
-            }
-          });
+            });
+          else
+            Timer.periodic(const Duration(seconds: 10), (timer) async {
+              print("In police notif");
+              if (_duty == "") {
+                await PrefUtils().init();
+                _duty = PrefUtils().getDuty();
+                _station = PrefUtils().getStation();
+              }
+              getNotifResp =
+                  await _repository.getNotificationsForStaff(_duty, _station);
+
+              print(getNotifResp.dataList);
+
+              if (getNotifResp.dataList!.length > 0) {
+                if (PrefUtils().getNotificationList().length == 0) {
+                  getNotifResp.dataList!.forEach((element) {
+                    notifList.add(element.id!);
+                  });
+                  await PrefUtils().setNotificationList(notifList);
+                  if (notifList.length > 1) {
+                    String len = notifList.length.toString();
+                    LocalNotifications.showSimpleNotification(
+                        title: "$len new notifications",
+                        body: "$len new incidents detected near $_station",
+                        payload: "payload");
+                  } else if (notifList.length == 1) {
+                    LocalNotifications.showBannerNotification(
+                        title: getNotifResp.dataList!.first.title!,
+                        body: getNotifResp.dataList!.first.description!,
+                        imageUrl: getNotifResp.dataList!.first.image! ??
+                            "https://st3.depositphotos.com/23594922/31822/v/450/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg",
+                        payload: "payload");
+                  }
+                } else {
+                  if (PrefUtils().getNotificationList().length > 0 &&
+                      getNotifResp.dataList!.length > 0 &&
+                      PrefUtils().getNotificationList().first !=
+                          getNotifResp.dataList!.first.id!) {
+                    getNotifResp.dataList!.forEach((element) {
+                      notifList.add(element.id!);
+                    });
+                    await PrefUtils().setNotificationList(notifList);
+                    if (getNotifResp.dataList!.length > 1) {
+                      print("Multiple Notification");
+                      String len = getNotifResp.dataList!.length.toString();
+                      LocalNotifications.showSimpleNotification(
+                          title: "$len new notifications",
+                          body: "Reported incidents status has been updated",
+                          payload: "payload");
+                    } else if (getNotifResp.dataList!.length == 1) {
+                      print("1 Notification");
+                      LocalNotifications.showBannerNotification(
+                          title: getNotifResp.dataList!.first.title!,
+                          body: getNotifResp.dataList!.first.description!,
+                          imageUrl: getNotifResp.dataList!.first.image! ??
+                              "https://st3.depositphotos.com/23594922/31822/v/450/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg",
+                          payload: "payload");
+                    }
+                  } else {
+                    print("No new notifications");
+                  }
+                }
+              } else {
+                PrefUtils().setNotificationList([]);
+                print("No notifications");
+              }
+            });
         } catch (error) {
           print(error);
         }

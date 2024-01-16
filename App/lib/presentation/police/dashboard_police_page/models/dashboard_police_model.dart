@@ -5,21 +5,26 @@ import 'package:rakshak/data/models/selectionPopupModel/selection_popup_model.da
 // ignore: must_be_immutable
 class DashboardPoliceModel extends Equatable {
   DashboardPoliceModel(
-      {this.incidentList = const [], this.tempIncidentList = const []});
+      {this.incidentList = const [],
+      this.reportedList = const [],
+      this.detectedList = const []});
 
   List<Incident> incidentList;
-  List<Incident> tempIncidentList;
+  List<Incident> reportedList;
+  List<Incident> detectedList;
 
   DashboardPoliceModel copyWith(
       {List<Incident>? incidentList,
-      List<Incident>? tempIncidentList,
+      List<Incident>? reportedList,
+      List<Incident>? detectedList,
       List<SelectionPopupModel>? dropdownItemList}) {
     return DashboardPoliceModel(
       incidentList: incidentList ?? this.incidentList,
-      tempIncidentList: tempIncidentList ?? this.tempIncidentList,
+      reportedList: reportedList ?? this.reportedList,
+      detectedList: detectedList ?? this.detectedList,
     );
   }
 
   @override
-  List<Object?> get props => [incidentList, tempIncidentList];
+  List<Object?> get props => [incidentList, reportedList, detectedList];
 }
