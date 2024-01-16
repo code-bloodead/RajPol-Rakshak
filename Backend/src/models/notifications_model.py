@@ -10,6 +10,7 @@ class Notifications(BaseModel):
     station_name: str = Form(default="")
     created_at: str = Form(default=datetime.datetime.now())
     user_id: str = Form(default="")
+    image: str = Form(default="https://www.shutterstock.com/image-vector/3d-vector-yellow-warning-sign-260nw-2198150477.jpg")
 class GetNotificationsAdmin(BaseModel):
     id: str = Form(default="")
     station_name: str = Form(default="")
