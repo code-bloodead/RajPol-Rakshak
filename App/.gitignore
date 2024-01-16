@@ -6,8 +6,10 @@
 /.flutter-plugins
 /.flutter-plugins-dependencies
 /.packages
-/android/gradle.properties
+/android/app/src/main/AndroidManifest.xml
+
 *.env
+
 
 /lib/presentation/random
 /lib/routes

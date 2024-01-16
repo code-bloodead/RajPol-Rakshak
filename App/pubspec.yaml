@@ -38,9 +38,7 @@ dependencies:
   flutter_background_service: ^2.4.6
   fl_chart: ^0.63.0
   path_provider: ^2.0.2
-  # mapbox_gl: ^0.15.0
-  # location: ^4.3.0
-  # flutter_mapbox_navigation: ^0.0.26
+  google_maps_flutter: ^2.5.0
   
 dev_dependencies: 
   flutter_test: 
