@@ -275,4 +275,33 @@ class ApiClient {
       rethrow;
     }
   }
+
+  Future<GetNotificationResp> getNotificationsForStaff(
+      String duty, String station) async {
+    ProgressDialogUtils.showProgressDialog();
+    try {
+      await isNetworkConnected();
+      var response = await _dio.get(
+        '$url/notifications/get_notifications_for_staff?station_name=$station&duty=$duty',
+        options: Options(headers: {
+          'Content-type': 'application/json',
+        }),
+      );
+      ProgressDialogUtils.hideProgressDialog();
+      if (_isSuccessCall(response)) {
+        return GetNotificationResp.fromJson(response.data["SUCCESS"]);
+      } else {
+        throw response.data != null
+            ? GetNotificationResp.fromJson(response.data["SUCCESS"])
+            : 'Something Went Wrong!';
+      }
+    } catch (error, stackTrace) {
+      ProgressDialogUtils.hideProgressDialog();
+      Logger.log(
+        error,
+        stackTrace: stackTrace,
+      );
+      rethrow;
+    }
+  }
 }

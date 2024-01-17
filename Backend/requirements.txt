@@ -14,6 +14,7 @@ python-multipart==0.0.5
 ultralytics
 numpy
 opencv-python
+googlemaps
 # pandas
 # seaborn
 # scikit-learn

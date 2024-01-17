@@ -99,3 +99,40 @@ def mark_all_as_read_for_user(user_id):
     except Exception as e:
         print(e)
         return {"ERROR":"SOME ERROR OCCURRED"}
+    
+def get_notifications_count_for_staff(station_name, duty):
+    try:
+        notification_type = "staff_" + ("report" if duty == "public" else "incident")
+        count = notifications.count_documents({"station_name": station_name, "type": notification_type})
+        return {"SUCCESS":count}
+    except Exception as e:
+        print(e)
+        return {"ERROR":"SOME ERROR OCCURRED"}
+
+def get_notifications_for_staff(station_name, duty):
+    try:
+        notification_type = "staff_" + ("report" if duty == "public" else "incident")
+        notifications_list = list(notifications.find({"station_name": station_name, "type": notification_type}, {"_id":0}))
+        return {"SUCCESS": notifications_list}
+    except Exception as e:
+        print(e)
+        return {"ERROR":"SOME ERROR OCCURRED"}
+    
+def mark_as_read_for_staff(notification):
+    try:
+        notification_type = "staff_" + ("report" if notification.duty == "public" else "incident")
+        notifications.delete_one({"id": notification.id, "station_name": notification.station_name, "type": notification_type})
+        return {"SUCCESS":"MARKED AS READ"}
+    except Exception as e:
+        print(e)
+        return {"ERROR":"SOME ERROR OCCURRED"}
+    
+def mark_all_as_read_for_staff(notification):
+    try:
+        notification_type = "staff_" + ("report" if notification.duty == "public" else "incident")
+        notifications.delete_many({"station_name": notification.station_name, "type": notification_type})
+        return {"SUCCESS":"MARKED AS READ"}
+    except Exception as e:
+        print(e)
+        return {"ERROR":"SOME ERROR OCCURRED"}
+    

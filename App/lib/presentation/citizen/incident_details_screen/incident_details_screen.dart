@@ -409,8 +409,11 @@ class IncidentDetailsScreen extends StatelessWidget {
                                         Padding(
                                             padding: getPadding(left: 4),
                                             child: Text(
-                                                state.incident?.location ??
-                                                    "location",
+                                                addEllipsis(
+                                                    state.incident?.location ??
+                                                        "location",
+                                                    35),
+                                                maxLines: 2,
                                                 overflow: TextOverflow.ellipsis,
                                                 textAlign: TextAlign.left,
                                                 style: AppStyle

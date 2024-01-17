@@ -8,3 +8,4 @@ API_KEY = config("API_KEY")
 AWS_KEY = config("AWS_KEY")
 SECRET_KEY_AWS  = config("SECRET_KEY_AWS")
 S3_BUCKET_NAME = "railrakshak"
+GOOGLE_MAPS_API_KEY = config("GOOGLE_MAPS_API_KEY")

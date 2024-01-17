@@ -6,6 +6,7 @@ class Notification {
   String? station_name;
   String? user_id;
   String? created_at;
+  String? image;
 
   Notification({
     required this.id,
@@ -15,6 +16,7 @@ class Notification {
     required this.station_name,
     required this.user_id,
     required this.created_at,
+    required this.image,
   });
 
   Notification.fromJson(Map<String, dynamic> json) {
@@ -25,6 +27,7 @@ class Notification {
     station_name = json['station_name'];
     user_id = json['user_id'];
     created_at = json['created_at'];
+    image = json['image'];
   }
 
   Map<String, dynamic> toJson() {
@@ -51,6 +54,9 @@ class Notification {
     }
     if (this.created_at != null) {
       data['created_at'] = this.created_at;
+    }
+    if (this.image != null) {
+      data['image'] = this.image;
     }
     return data;
   }

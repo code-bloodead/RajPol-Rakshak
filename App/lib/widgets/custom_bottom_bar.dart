@@ -21,19 +21,19 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
     ),
     BottomMenuModel(
       icon: ImageConstant.imgAddReport,
-      title: "Add Report",
+      title: "lbl_add_report".tr,
       type: BottomBarEnum.Report,
     ),
     BottomMenuModel(
-      icon: ImageConstant.imgCall,
-      title: "Helpline",
-      type: BottomBarEnum.Helpline,
+      icon: ImageConstant.imgStar,
+      title: "lbl_rewards".tr,
+      type: BottomBarEnum.Rewards,
     ),
     BottomMenuModel(
       icon: ImageConstant.imgUser,
       title: "lbl_profile".tr,
       type: BottomBarEnum.Profile,
-    )
+    ),
   ];
 
   @override
@@ -149,7 +149,7 @@ enum BottomBarEnum {
   Home,
   Report,
   Profile,
-  Helpline,
+  Rewards,
 }
 
 class BottomMenuModel {
