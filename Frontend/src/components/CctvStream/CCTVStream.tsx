@@ -9,6 +9,7 @@ import { CctvDetails } from "@/apis/cctvs.types";
 import {
   ACCIDENT_COLOR,
   CLIMBER_COLOR,
+  CRACK_COLOR,
   FIRE_COLOR,
   getWeaponColor,
 } from "@/utils/pallete";
@@ -18,6 +19,7 @@ import { countLabels } from "@/utils/labels";
 import {
   AccidentDetection,
   AnomalyClassification,
+  CrackDetection,
   FightClassification,
   FireDetection,
   ObjectDetection,
@@ -26,6 +28,8 @@ import {
 } from "./detections.types";
 import { VIDEO_STREAM_SERVER } from "@/constants/config";
 import DangerTag from "./DangerTag";
+import { useNavigate } from "react-router-dom";
+import { BsExclamationCircle } from "react-icons/bs";
 
 interface CCTVStreamProps {
   cctv: CctvDetails;
@@ -35,6 +39,7 @@ interface CCTVStreamProps {
   weaponsMode?: boolean;
   accidentMode?: boolean;
   fireMode?: boolean;
+  crackMode?: boolean;
 }
 
 const CCTVStream: React.FC<CCTVStreamProps> = (props) => {
@@ -46,7 +51,10 @@ const CCTVStream: React.FC<CCTVStreamProps> = (props) => {
     weaponsMode,
     accidentMode,
     fireMode,
+    crackMode,
   } = props;
+
+  const navigate = useNavigate();
 
   const [, setCurrentObjectDetections] = useState<ObjectDetection[]>([]);
   const [currentWeaponDetections, setCurrentWeaponDetection] = useState<
@@ -54,6 +62,9 @@ const CCTVStream: React.FC<CCTVStreamProps> = (props) => {
   >([]);
   const [currentFireDetections, setCurrentFireDetection] = useState<
     FireDetection[]
+  >([]);
+  const [currentCrackDetections, setCurrentCrackDetection] = useState<
+    CrackDetection[]
   >([]);
   const [currentAccidentDetections, setCurrentAccidentDetection] = useState<
     AccidentDetection[]
@@ -63,17 +74,27 @@ const CCTVStream: React.FC<CCTVStreamProps> = (props) => {
   const [currentAnomalyClassification, setCurrentAnomalyClassification] =
     useState<AnomalyClassification | null>(null);
 
+  const reportInaccuracy = () =>
+    navigate("/station-admin/annotate", {
+      state: {
+        frameBuffer: frameBuffer.map((f) => "data:image/jpeg;base64," + f),
+      },
+    });
+
+  const [frameCount, setFrameCount] = useState(0);
+  const [frameBuffer, setFrameBuffer] = useState<string[]>([]);
   const [currentFrameData, setCurrentFrameData] = useState<string | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const voidFrameCountRef = useRef<number>(0);
   // const videoRef = useRef<HTMLVideoElement | null>(null);
 
+  // const cctv_type = cctv.cctv_type;
   const { lastJsonMessage, readyState } = useWebSocket<ReceivedMessageData>(
     `${VIDEO_STREAM_SERVER}/ws?stream_url=${cctv.streamUrl}` +
       `&cctv_id=${cctv.id}&cctv_type=${cctv.cctv_type}` +
       `&violence=${violenceMode}&climbing=${climbingMode}` +
       `&suspicious=${suspiciousMode}&weapons=${weaponsMode}` +
-      `&accidents=${accidentMode}&fire=${fireMode}`,
+      `&accidents=${accidentMode}&fire=${fireMode}&crack=${crackMode}`,
     {
       onOpen: () => console.log("connected socket for stream", cctv.streamUrl),
       // onMessage: (msg) => console.log("message received for stream", cctv.streamUrl, msg),
@@ -91,23 +112,32 @@ const CCTVStream: React.FC<CCTVStreamProps> = (props) => {
     if (ctx && newFrame) {
       voidFrameCountRef.current += 1;
       setCurrentFrameData(newFrame);
+      setFrameCount((prevFrameCount) => prevFrameCount + 1);
+      setFrameBuffer((prevFrameBuffer) => {
+        return [...prevFrameBuffer.slice(0, 30 - 1), newFrame];
+      });
 
       const receivedObjectDetections = filterDetections(
         lastJsonMessage.detections?.objects || [],
-        0.1
+        0
       );
       const receivedWeaponDetections = filterDetections(
         lastJsonMessage.detections?.weapons || [],
-        0.5
+        0
       );
       const receivedFireDetections = filterDetections(
         lastJsonMessage.detections?.fire || [],
-        0.4
+        0
+      );
+      const receivedCrackDetections = filterDetections(
+        lastJsonMessage.detections?.crack || [],
+        0
       );
       const receivedAccidentDetections = filterDetections(
         lastJsonMessage.detections?.accidents || [],
-        0.5
+        0
       );
+      console.log(receivedAccidentDetections);
 
       const receivedFightClassification =
         lastJsonMessage.detections?.fight || null;
@@ -116,6 +146,7 @@ const CCTVStream: React.FC<CCTVStreamProps> = (props) => {
       setCurrentObjectDetections(receivedObjectDetections);
       setCurrentWeaponDetection(receivedWeaponDetections);
       setCurrentFireDetection(receivedFireDetections);
+      setCurrentCrackDetection(receivedCrackDetections);
       setCurrentAccidentDetection(receivedAccidentDetections);
       setCurrentFightClassification(receivedFightClassification);
       setCurrentAnomalyClassification(receivedAnomalyClassification);
@@ -174,6 +205,27 @@ const CCTVStream: React.FC<CCTVStreamProps> = (props) => {
               yOffset: -5,
               font: LabelFont,
               backgroundColor: FIRE_COLOR,
+            },
+          });
+        });
+
+        receivedCrackDetections.forEach((crackDetection) => {
+          const { x, y, width, height } = bboxCoordsToCanvasCoords(
+            canvas,
+            crackDetection.bbox
+          );
+
+          drawRect(ctx, x, y, width, height, {
+            lineWidth: 2,
+            strokeStyle: CRACK_COLOR,
+            label: {
+              text: `${
+                crackDetection.label
+              } ${crackDetection.confidence.toFixed(2)}`,
+              xOffset: 0,
+              yOffset: -5,
+              font: LabelFont,
+              backgroundColor: CRACK_COLOR,
             },
           });
         });
@@ -237,57 +289,81 @@ const CCTVStream: React.FC<CCTVStreamProps> = (props) => {
 
   return (
     <Card extra="min-h-[40vh] " key={cctv.id}>
-      <div className="flex items-center justify-start">
-        <h1 className="ml-3 mt-3 text-xl font-bold text-navy-700 dark:text-white">
+      <div className="flex flex-row items-center justify-start">
+        <h1 className="mx-2 mt-3 text-xl font-bold text-navy-700 dark:text-white">
           {cctv.name}
+          {/* {" "}({frameCount}) */}
         </h1>
-        <div className="grow"></div>
+        <div className="flex grow justify-end">
+          <button
+            onClick={reportInaccuracy}
+            className={`m-1 mt-2 mr-2 flex items-center justify-center rounded-lg bg-red-500 p-[0.3rem] font-medium text-white transition duration-200
+   hover:cursor-pointer hover:bg-red-600 dark:bg-navy-500 dark:text-white dark:hover:bg-white/20 dark:active:bg-white/10`}
+          >
+            Report&nbsp;
+            <BsExclamationCircle />
+          </button>
+        </div>
       </div>
-      <div className="p-2 flex flex-row items-center justify-between">
+      <div className="py-2 flex flex-row items-center justify-between">
         <span className="mx-2">{cctv.description}</span>
-        {currentAnomalyClassification?.violence && (
-          <DangerTag>
-            Lstm: Violence{" "}
-            {currentAnomalyClassification.prediction.prediction_confidence.toFixed(
-              2
+        <div>
+          {(currentAnomalyClassification?.violence ||
+            (currentFightClassification &&
+              currentFightClassification.predicted_class == 1)) &&
+            frameCount < 500 && (
+              <DangerTag>
+                Violence❗{" "}
+                {currentAnomalyClassification.prediction.prediction_confidence.toFixed(
+                  2
+                )}
+                %
+              </DangerTag>
             )}
-            %
-          </DangerTag>
-        )}
-        {currentFightClassification &&
+          {/* {currentFightClassification &&
           currentFightClassification.predicted_class == 1 && (
             <DangerTag>
-              Vgg: Fight{" "}
-              {Math.round(
+              Fight
+              {" "} {Math.round(
                 currentFightClassification.prediction_confidence * 10000
               ) / 100}
               %
             </DangerTag>
-          )}
-        {currentAnomalyClassification?.suspicious && (
-          <DangerTag>
-            Suspicious{" "}
+          )} */}
+          {currentCrackDetections.length > 0 && (
+            <DangerTag>
+              Inra damage 🚧
+              {/* {" "}
             {currentAnomalyClassification.prediction.prediction_confidence.toFixed(
               2
             )}
-            %
-          </DangerTag>
-        )}
-        {currentFireDetections.length > 0 && (
-            <DangerTag>Fire </DangerTag>
+            % */}
+            </DangerTag>
           )}
-        {currentAnomalyClassification?.climbing && (
-          <DangerTag>
-            Climber{" "}
+          {currentAnomalyClassification?.suspicious && (
+            <DangerTag>
+              Suspicious 🤔
+              {/* {" "}
             {currentAnomalyClassification.prediction.prediction_confidence.toFixed(
               2
             )}
-            %
-          </DangerTag>
-        )}
-        {currentAccidentDetections.length > 0 && (
-          <DangerTag>Accident </DangerTag>
-        )}
+            % */}
+            </DangerTag>
+          )}
+          {currentFireDetections.length > 0 && <DangerTag>Fire </DangerTag>}
+          {currentAnomalyClassification?.climbing && (
+            <DangerTag>
+              Climber{" "}
+              {currentAnomalyClassification.prediction.prediction_confidence.toFixed(
+                2
+              )}
+              %
+            </DangerTag>
+          )}
+          {currentAccidentDetections.length > 0 && (
+            <DangerTag>Accident 🚗</DangerTag>
+          )}
+        </div>
       </div>
       <div>
         {/* <h2>
@@ -385,4 +461,5 @@ CCTVStream.defaultProps = {
   weaponsMode: false,
   accidentMode: false,
   fireMode: false,
+  crackMode: false,
 };

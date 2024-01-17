@@ -3,6 +3,7 @@ from ultralytics import YOLO
 
 from models.utils.yolo import parse_yolo_predictions
 from models.device import current_device
+from config import MIN_ACCIDENT_CONF
 
 accidentsYoloModel = YOLO(
     "models/weights/accident/accident_latest.pt").to(torch.device(current_device))
@@ -18,4 +19,5 @@ def detect_accident_dummy(frame):
 
 def detect_accident(frame):
     outputs = accidentsYoloModel.predict(source=frame, verbose=False)
-    return parse_yolo_predictions(outputs, 0.5)
+    # print(f"Detected {len(outputs)} accidents")
+    return parse_yolo_predictions(outputs, MIN_ACCIDENT_CONF)

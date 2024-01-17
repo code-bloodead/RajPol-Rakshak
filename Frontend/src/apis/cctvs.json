@@ -6,11 +6,23 @@
         "id": "cctv_c00",
         "cctv_type": "prison",
         "title": "Cell #1",
-        "description": "Amboli Prison, Andheri",
+        "description": "Prison, Jaipur",
         "kind": "default",
         "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1705470821/samples/prison_cell_fight_crack.mp4"
       },
-      "geometry": { "coordinates": [26.920830, 75.793044], "type": "Point" }
+      "geometry": { "coordinates": [75.801752,26.923884], "type": "Point" }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "cctv_c01",
+        "cctv_type": "prison",
+        "title": "Cell #2",
+        "description": "Prison, Jaipur",
+        "kind": "default",
+        "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1705482364/samples/prison_cell_phone_knife.mp4"
+      },
+      "geometry": { "coordinates": [75.801752,26.923884], "type": "Point" }
     },
     {
       "type": "Feature",
@@ -18,71 +30,59 @@
         "id": "cctv_p00",
         "cctv_type": "station_premises",
         "title": "Backyard",
-        "description": "Amboli prison, Andheri",
+        "description": "Prison, Jaipur",
         "kind": "default",
         "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1705472325/samples/prison_wall_climbing.mp4"
       },
-      "geometry": { "coordinates": [26.919835, 75.793968], "type": "Point" }
+      "geometry": { "coordinates": [75.801752,26.923884], "type": "Point" }
     },
     {
       "type": "Feature",
       "properties": {
         "id": "cctv_p03",
         "cctv_type": "public",
-        "title": "Lokhandwala Market, Andheri West",
-        "description": "Local market",
+        "title": "Station Road",
+        "description": "Gopalbari, Jaipur, Rajasthan",
         "kind": "default",
         "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1705471181/samples/public_accident_fire.mp4"
       },
-      "geometry": { "coordinates": [26.8670824, 75.8198607], "type": "Point" }
+      "geometry": { "coordinates": [75.793044, 26.920830], "type": "Point" }
     },
     {
       "type": "Feature",
       "properties": {
         "id": "cctv_p04",
         "cctv_type": "public",
-        "title": "Chota Kashmir, Goregaon East",
-        "description": "Feel Kashmir in your city",
-        "kind": "boat",
-        "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1704890971/samples/public_cam.mp4"
+        "title": "Jawahar Nagar",
+        "description": "Jaipur, Rajasthan 302004",
+        "kind": "default",
+        "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1705485743/samples/fire_sample.mp4"
       },
-      "geometry": { "coordinates": [26.918374, 75.800766], "type": "Point" }
+      "geometry": { "coordinates": [75.849222, 26.917390], "type": "Point" }
     },
     {
       "type": "Feature",
       "properties": {
         "id": "cctv_p05",
         "cctv_type": "public",
-        "title": "Versova Beach",
-        "description": "Bustling Beach in suburbs",
-        "kind": "beach",
-        "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1704614357/samples/gun_video.mp4"
+        "title": "Nirman Nagar",
+        "description": "Sushilpura, Jaipur",
+        "kind": "default",
+        "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1705485743/samples/fire_sample.mp4"
       },
-      "geometry": { "coordinates": [26.923884, 75.801752], "type": "Point" }
+      "geometry": { "coordinates": [75.831701, 26.885766], "type": "Point" }
     },
     {
       "type": "Feature",
       "properties": {
         "id": "cctv_p06",
         "cctv_type": "public",
-        "title": "Mahakali Caves, Andheri East",
-        "description": "Rock-cut monuments",
+        "title": "Jhalana Gram",
+        "description": "Malviya Nagar, Jaipur",
         "kind": "default",
-        "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1703605915/samples/market.mp4"
+        "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1704614357/samples/gun_video.mp4"
       },
-      "geometry": { "coordinates": [26.931843, 75.785003], "type": "Point" }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "id": "cctv_p07",
-        "cctv_type": "public",
-        "title": "Juhu Beach, Andheri West",
-        "description": "Longest beach in Mumbai",
-        "kind": "beach",
-        "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1703605906/samples/beach.mp4"
-      },
-      "geometry": { "coordinates": [26.921063, 75.784501], "type": "Point" }
+      "geometry": { "coordinates": [75.820325, 26.865715], "type": "Point" }
     }
   ],
   "type": "FeatureCollection"

@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { CCTV_TYPES, CctvDetails } from "@/apis/cctvs.types";
-import { NO_OF_DEFAULT_CCTVS } from "@/constants/config";
+import {
+  NO_OF_PREMISE_DEFAULT_CCTVS,
+  NO_OF_PRISON_DEFAULT_CCTVS,
+} from "@/constants/config";
 import { getCctvs } from "@/apis/cctvs";
 import CCTVStream from "@/components/CctvStream/CCTVStream";
 
@@ -19,7 +22,14 @@ const Footages = () => {
 
   useEffect(() => {
     getCctvs(TabToCctvTypeMapping[activeTab]).then((cctvs) =>
-      setShownCctvs(cctvs.slice(0, NO_OF_DEFAULT_CCTVS))
+      setShownCctvs(
+        cctvs.slice(
+          0,
+          activeTab === Tab.Prison_Footage
+            ? NO_OF_PRISON_DEFAULT_CCTVS
+            : NO_OF_PREMISE_DEFAULT_CCTVS
+        )
+      )
     );
   }, [activeTab]);
 
@@ -49,7 +59,17 @@ const Footages = () => {
 
       <div className="mx-3 mt-3 grid grid-cols-1 gap-5 md:grid-cols-2">
         {shownCctvs.map((cctv) => (
-          <CCTVStream cctv={cctv} key={cctv.id} climbingMode suspiciousMode violenceMode weaponsMode accidentMode fireMode />
+          <CCTVStream
+            cctv={cctv}
+            key={cctv.id}
+            climbingMode={cctv.cctv_type === CCTV_TYPES.STATION_PREMISES}
+            suspiciousMode
+            violenceMode={cctv.cctv_type === CCTV_TYPES.PRISON}
+            weaponsMode
+            accidentMode={false}
+            fireMode={false}
+            crackMode={cctv.cctv_type === CCTV_TYPES.PRISON}
+          />
         ))}
       </div>
     </div>

@@ -7,7 +7,7 @@ export function filterDetections<T extends ObjectDetection>(
 ) {
   if (!detections) return [];
   return detections.filter((detection) => {
-    return detection.confidence > minConfidence && !excludeLabels.includes(detection.label);
+    return detection.confidence >= minConfidence && !excludeLabels.includes(detection.label);
   });
 }
 export const bboxCoordsToCanvasCoords = (

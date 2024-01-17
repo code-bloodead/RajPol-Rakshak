@@ -28,6 +28,7 @@ class IncidentType():
     climber = 'climber'
     suspicious = 'suspicious'
     fire = 'fire'
+    crack = 'crack'
 
 
 incident_meta_data = {
@@ -52,6 +53,9 @@ incident_meta_data = {
     IncidentType.fire: {
         'title': "Fire detected",
     },
+    IncidentType.crack: {
+        'title': "Crack detected in prison wall",
+    },
 }
 
 if not os.path.exists("logs"):
@@ -71,6 +75,22 @@ class IncidentManager:
                     for cctv_id, (recorded_time_str, detection) in cctv_data.items():
                         data[detection_type][cctv_id] = (
                             datetime.fromisoformat(recorded_time_str), detection)
+                if IncidentType.weapons not in data:
+                    data[IncidentType.weapons] = {}
+                if IncidentType.violence not in data:
+                    data[IncidentType.violence] = {}
+                if IncidentType.overcrowd not in data:
+                    data[IncidentType.overcrowd] = {}
+                if IncidentType.accident not in data:
+                    data[IncidentType.accident] = {}
+                if IncidentType.climber not in data:
+                    data[IncidentType.climber] = {}
+                if IncidentType.suspicious not in data:
+                    data[IncidentType.suspicious] = {}
+                if IncidentType.fire not in data:
+                    data[IncidentType.fire] = {}
+                if IncidentType.crack not in data:
+                    data[IncidentType.crack] = {}
                 return data
         except FileNotFoundError:
             return {
@@ -81,6 +101,7 @@ class IncidentManager:
                 IncidentType.climber: {},
                 IncidentType.suspicious: {},
                 IncidentType.fire: {},
+                IncidentType.crack: {},
             }
 
     def save_data(self):
@@ -118,7 +139,6 @@ class IncidentManager:
         self.incident_map[detection_type][cctvId] = (
             current_time, detections)
 
-        # Otherwise, call the notify() function (dummy function in this example)
         self.notify(frame, cctvId, cctv_type, detection_type, detections)
 
         # Save the updated data to the JSON file
@@ -130,17 +150,17 @@ class IncidentManager:
             f"Notifying for {detection_type} detection on CCTV {cctvId}:", detections)
 
         incident = {
+            'image': "",
             'title': incident_meta_data[detection_type]['title'],
             'description': incident_meta_data[detection_type]['title'],
             'type': detection_type,
-            'cctv_id': cctvId,
-            'cctv_type': cctv_type,
-            'detections': detections,
-            'image': "",
             'station_name': "Andheri",
             'location': "Chakala street",
             'source': cctvId,
-            'status': "Pending"
+            'status': "Pending",
+            # 'cctv_type': cctv_type,
+            # 'cctv_id': cctvId,
+            # 'detections': detections,
         }
 
         # Draw detections on the frame & upload to S3
@@ -157,7 +177,7 @@ class IncidentManager:
 
         if REGISTER_INCIDENT:
             #  Save incident notification in DB
-            print("Save to DB -", incident)
+            # print("Save to DB -", incident)
             thread = threading.Thread(target=create_incident, args=(incident,))
             thread.start()
 

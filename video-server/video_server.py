@@ -1,3 +1,4 @@
+import sys
 import time
 import base64
 import uvicorn
@@ -23,7 +24,7 @@ def is_websocket_alive(websocket: WebSocket):
 # Note, we can't pass websocket to this fn as its pickled & passed to a completely new process
 
 
-def process_video_stream(url, cctv_id: str, cctv_type: str, output_queue: Queue, shutdown_event: Event, violence: bool, climbing: bool, weapons: bool, suspicious: bool, accidents: bool, fire: bool):
+def process_video_stream(url, cctv_id: str, cctv_type: str, output_queue: Queue, shutdown_event: Event, violence: bool, climbing: bool, weapons: bool, suspicious: bool, accidents: bool, fire: bool, crack: bool):
     # Importing here, coz this fn will be run in a separate process
     from models.yolo_objects import detect_objects, detect_objects_dummy
     from models.weapons import detect_weapons, detect_weapons_dummy
@@ -32,8 +33,9 @@ def process_video_stream(url, cctv_id: str, cctv_type: str, output_queue: Queue,
     from models.fight import detect_fight, detect_fight_dummy
     from models.anomaly_lstm import detect_anomaly, detect_anomaly_dummy
     from models.fire import detect_fire, detect_fire_dummy
+    from models.crack import detect_crack, detect_crack_dummy
     from incident_manager import IncidentManager, IncidentType
-    from config import MIN_ACCIDENT_REPORT_CONF, MIN_VIOLENCE_REPORT_CONF, MIN_WEAPON_REPORT_CONF
+    from config import MIN_ACCIDENT_REPORT_CONF, MIN_VIOLENCE_REPORT_CONF, MIN_WEAPON_REPORT_CONF, MIN_FIRE_REPORT_CONF, MIN_CRACK_REPORT_CONF
 
     cap = cv2.VideoCapture(url)
     incident_manager = IncidentManager(cctv_id)
@@ -48,6 +50,7 @@ def process_video_stream(url, cctv_id: str, cctv_type: str, output_queue: Queue,
         'weapons': None,
         'accidents': None,
         'fire': None,
+        'crack': None,
     }
 
     try:
@@ -71,6 +74,7 @@ def process_video_stream(url, cctv_id: str, cctv_type: str, output_queue: Queue,
                     objects_future = None
                     weapons_future = None
                     fire_future = None
+                    crack_future = None
                     accidents_future = None
 
                     # LSTM models
@@ -105,6 +109,11 @@ def process_video_stream(url, cctv_id: str, cctv_type: str, output_queue: Queue,
                             fire_future = executor.submit(
                                 detect_fire, frame)
                             # fire_future = executor.submit(detect_fire_dummy, frame)
+                        
+                        if crack:
+                            crack_future = executor.submit(
+                                detect_crack, frame)
+                            # crack_future = executor.submit(detect_crack_dummy, frame)
 
                         # climber_future = executor.submit(detect_climber, frame)
                         # # climber_future = executor.submit(detect_climber_dummy, frame)
@@ -116,6 +125,19 @@ def process_video_stream(url, cctv_id: str, cctv_type: str, output_queue: Queue,
                     if fire_future is not None:
                         detections['fire'] = fire_future.result()
 
+                        # Report incident for fire if applicable
+                        if detections['fire'] is not None and len(detections['fire']) > MIN_FIRE_REPORT_CONF:
+                            incident_manager.registerDetections(
+                                frame, cctv_id, cctv_type, IncidentType.fire, detections['fire'])
+
+                    if crack_future is not None:
+                        detections['crack'] = crack_future.result()
+
+                        # Report incident for crack if applicable
+                        if detections['crack'] is not None and len(detections['crack']) > MIN_CRACK_REPORT_CONF:
+                            incident_manager.registerDetections(
+                                frame, cctv_id, cctv_type, IncidentType.crack, detections['crack'])
+
                     if accidents_future is not None:
                         detections['accidents'] = accidents_future.result()
 
@@ -123,8 +145,8 @@ def process_video_stream(url, cctv_id: str, cctv_type: str, output_queue: Queue,
                         if detections['accidents'] is not None and len(detections['accidents']) > 0:
                             for prediction in detections['accidents']:
                                 if prediction['label'] == "Accident" and prediction['confidence'] >= MIN_ACCIDENT_REPORT_CONF:
-                                    # incident_manager.registerDetections(
-                                    #     frame, cctv_id, cctv_type, IncidentType.accident, detections['accidents'])
+                                    incident_manager.registerDetections(
+                                        frame, cctv_id, cctv_type, IncidentType.accident, detections['accidents'])
                                     break
 
                     if weapons_future is not None:
@@ -175,16 +197,18 @@ def process_video_stream(url, cctv_id: str, cctv_type: str, output_queue: Queue,
                     if consecutiveFrameFailures >= MAX_CONSECUTIVE_FRAME_FAILURES:
                         print("Max consecutive frame failures reached, exiting")
                         break
-            print("Wrap up due to shutdown event")
+            print(f"Wrap up due to shutdown event for {cctv_id}")
     finally:
         cap.release()
         output_queue.put(-1)
+        sys.exit()
+
 
 # WebSocket endpoint to handle communication with the React client
 
 
 @app.websocket("/ws")
-async def websocket_endpoint(websocket: WebSocket, stream_url: str, cctv_id: str, cctv_type: str, violence: bool, climbing: bool, weapons: bool, suspicious: bool, accidents: bool, fire: bool):
+async def websocket_endpoint(websocket: WebSocket, stream_url: str, cctv_id: str, cctv_type: str, violence: bool, climbing: bool, weapons: bool, suspicious: bool, accidents: bool, fire: bool, crack: bool):
     print("Websocket connection initiated", {
         "stream_url": stream_url,
         "cctv_id": cctv_id,
@@ -197,10 +221,10 @@ async def websocket_endpoint(websocket: WebSocket, stream_url: str, cctv_id: str
         "fire": fire,
     })
     try:
-        print("Wait for connection acceptance", stream_url)
+        print("Wait for connection acceptance", cctv_id)
         # Set your desired timeout value in seconds
         await asyncio.wait_for(websocket.accept(), timeout=10)
-        print("Connection accepted for", stream_url)
+        print("Connection accepted for", cctv_id)
     except asyncio.TimeoutError:
         print("Timeout waiting for connection acceptance")
         return
@@ -229,7 +253,7 @@ async def websocket_endpoint(websocket: WebSocket, stream_url: str, cctv_id: str
 
     # Start the video processing in a separate process
     video_process = Process(target=process_video_stream, args=(
-        stream_url, cctv_id, cctv_type, output_queue, shutdown_event, violence, climbing, weapons, suspicious, accidents, fire))
+        stream_url, cctv_id, cctv_type, output_queue, shutdown_event, violence, climbing, weapons, suspicious, accidents, fire, crack))
     video_process.start()
 
     print(f"Started process {video_process._identity} for", stream_url)
@@ -249,6 +273,7 @@ async def websocket_endpoint(websocket: WebSocket, stream_url: str, cctv_id: str
                 print("Received -1 from queue, exiting")
                 break
 
+            # print(f"{cctv_id} >> Sending frame to client")
             # Send message with detections to the client
             await websocket.send_json(result)
 
@@ -257,7 +282,7 @@ async def websocket_endpoint(websocket: WebSocket, stream_url: str, cctv_id: str
 
         print("Websocket is died")
     except WebSocketDisconnect:
-        print("Client disconnected")
+        print(f"Client disconnected for {cctv_id}")
     except Exception as e:
         print("Error Managing socket", e)
         pass

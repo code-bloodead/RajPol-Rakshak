@@ -8,18 +8,19 @@ import { useAppSelector } from "@/app/store";
 import TableSkeleton from "./components/TableSkeleton";
 import IncidentTable from "./components/IncidentTable";
 import { FaTasks } from "react-icons/fa";
+import { SOURCES, getSource } from "../../../constants/validations";
 
 const Dashboard = () => {
   const staff = useAppSelector((state) => state.staff.data);
   const incidents = useAppSelector((state) => state.incidents.data);
-  
-  const detectedIncidents = incidents.filter(
-    (obj) => obj.source === "CCTV"
-  ).sort((a, b) => (a.status > b.status) ? 1 : -1);
-  
-  const reportedIncidents = incidents.filter(
-    (obj) => obj.source !== "CCTV" 
-  ).sort((a, b) => (a.status > b.status) ? 1 : -1);
+
+  const detectedIncidents = incidents
+    .filter((obj) => getSource(obj.source) === SOURCES.CCTV)
+    .sort((a, b) => (a.status > b.status ? 1 : -1));
+
+  const reportedIncidents = incidents
+    .filter((obj) => getSource(obj.source) === SOURCES.USER)
+    .sort((a, b) => (a.status > b.status ? 1 : -1));
 
   const resolvedIncidents = incidents.filter(
     (obj) => obj.status === "Resolved"
@@ -33,12 +34,16 @@ const Dashboard = () => {
         <Widget
           icon={<TbReport className="h-7 w-7" />}
           title={"Reported Incidents"}
-          subtitle={reportedIncidents.filter((obj) => obj.status === "Pending").length.toString()}
+          subtitle={reportedIncidents
+            .filter((obj) => obj.status === "Pending")
+            .length.toString()}
         />
         <Widget
           icon={<MdReport className="h-7 w-7" />}
           title={"Detected Incidents"}
-          subtitle={detectedIncidents.filter((obj) => obj.status === "Pending").length.toString()}
+          subtitle={detectedIncidents
+            .filter((obj) => obj.status === "Pending")
+            .length.toString()}
         />
         <Widget
           icon={<FaTasks className="h-6 w-6" />}
@@ -53,7 +58,10 @@ const Dashboard = () => {
         <WeeklyIncidents />
 
         {detectedIncidents?.length > 0 ? (
-          <IncidentTable title="Detected Incidents" tableData={detectedIncidents} />
+          <IncidentTable
+            title="Detected Incidents"
+            tableData={detectedIncidents}
+          />
         ) : (
           <TableSkeleton type="recentIncident" />
         )}
@@ -64,11 +72,14 @@ const Dashboard = () => {
       <div className="col-span-2 mt-5 grid grid-cols-2 gap-5 md:grid-cols-5 ">
         {/* Reported Incidents */}
         <div className="col-span-2 md:col-span-3">
-        {reportedIncidents?.length > 0 ? (
-          <IncidentTable title="Reported Incidents" tableData={reportedIncidents} />
-        ) : (
-          <TableSkeleton type="recentIncident" />
-        )}
+          {reportedIncidents?.length > 0 ? (
+            <IncidentTable
+              title="Reported Incidents"
+              tableData={reportedIncidents}
+            />
+          ) : (
+            <TableSkeleton type="recentIncident" />
+          )}
         </div>
 
         {staff?.length > 0 ? (

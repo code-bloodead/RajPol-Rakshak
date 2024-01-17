@@ -7,6 +7,7 @@ export interface ReceivedMessageData {
     weapons: WeaponDetection[];
     accidents: AccidentDetection[];
     fire: FireDetection[];
+    crack: CrackDetection[];
   };
 }
 
@@ -22,6 +23,9 @@ export interface WeaponDetection extends ObjectDetection {
 }
 export interface FireDetection extends ObjectDetection {
   label: "fire";
+}
+export interface CrackDetection extends ObjectDetection {
+  label: "severe_crack" | "normal_crack";
 }
 export interface AccidentDetection extends ObjectDetection {
   label: "Accident";

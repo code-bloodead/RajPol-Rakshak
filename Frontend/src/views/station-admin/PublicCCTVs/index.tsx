@@ -6,7 +6,7 @@ import { CCTV_TYPES, CctvDetails } from "@/apis/cctvs.types";
 import { getCctvs } from "@/apis/cctvs";
 import MapWithSearch from "./MapWithSearch";
 import PublicCctvFootages from "./PublicCctvFootages";
-import { NO_OF_DEFAULT_CCTVS } from "@/constants/config";
+import { NO_OF_PUBLIC_DEFAULT_CCTVS } from "@/constants/config";
 
 import "./publicctvs.css";
 
@@ -35,7 +35,7 @@ const PublicCCTVs = () => {
   // Dev mode
   useEffect(() => {
     getCctvs(CCTV_TYPES.PUBLIC).then((cctvs) =>
-      setShownCctvs(cctvs.slice(0, NO_OF_DEFAULT_CCTVS))
+      setShownCctvs(cctvs.slice(0, NO_OF_PUBLIC_DEFAULT_CCTVS))
     );
   }, []);
 

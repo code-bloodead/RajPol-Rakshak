@@ -3,6 +3,7 @@ import ReportTable from "./components/ReportTable";
 import { useAppSelector } from "@/app/store";
 import TableSkeleton from "@/components/skeleton/TableSkeleton";
 import { useEffect, useState } from "react";
+import { SOURCES, getSource } from "../../../constants/validations";
 
 const Reports = () => {
   const incidents = useAppSelector((state) => state.incidents.data);
@@ -10,7 +11,7 @@ const Reports = () => {
 
   useEffect(() => {
     setFilteredIncidents(
-      incidents.filter((obj: Incident) => obj.source !== "CCTV")
+      incidents.filter((obj: Incident) => getSource(obj.source) === SOURCES.USER)
     );
   }, [incidents]);
 
