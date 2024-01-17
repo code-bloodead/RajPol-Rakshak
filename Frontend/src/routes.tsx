@@ -5,6 +5,7 @@ import Incidents from "@/views/station-admin/Incidents";
 import Footages from "@/views/station-admin/Footages";
 import Staff from "@/views/station-admin/Staff";
 import PublicCCTvs from "@/views/station-admin/PublicCCTVs";
+import Annotate from "@/views/station-admin/Annotate";
 
 // Auth Imports
 import SignIn from "@/views/auth/SignIn";
@@ -57,6 +58,13 @@ const routes = [
     path: "staff",
     icon: <BsFillPeopleFill className="h-6 w-6" />,
     component: <Staff />,
+  },
+  {
+    name: "Annotate",
+    layout: "/station-admin",
+    path: "annotate",
+    icon: <BsFillPeopleFill className="h-6 w-6" />,
+    component: <Annotate />,
   },
   {
     name: "Sign In",

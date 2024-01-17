@@ -3,6 +3,7 @@ from ultralytics import YOLO
 
 from models.utils.yolo import parse_yolo_predictions
 from models.device import current_device
+from config import MIN_FIRE_CONF
 
 fireYoloModel = YOLO(
     "models/weights/fire_explosion/fire_optimal.pt").to(torch.device(current_device))
@@ -18,4 +19,4 @@ def detect_fire_dummy(frame):
 
 def detect_fire(frame):
     outputs = fireYoloModel.predict(source=frame, verbose=False)
-    return parse_yolo_predictions(outputs, 0.3)
+    return parse_yolo_predictions(outputs, MIN_FIRE_CONF)

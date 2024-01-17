@@ -105,12 +105,13 @@ const PublicCctvFootages = (props: PublicCctvFootagesProps) => {
             <CCTVStream
               cctv={cctv}
               key={cctv.id}
-              climbingMode
-              suspiciousMode
-              violenceMode
-              weaponsMode
-              accidentMode
+              climbingMode={false}
+              suspiciousMode={false}
+              violenceMode={false}
+              weaponsMode={false}
               fireMode
+              accidentMode
+              crackMode={false}
             />
           ))}
         </div>

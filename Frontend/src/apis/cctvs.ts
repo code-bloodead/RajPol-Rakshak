@@ -23,8 +23,8 @@ export function getDefaultMapCenter(): {
   lon: number;
 } {
   return {
-    lat: 19.116625,
-    lon: 72.862358,
+    lat: 26.8868664,
+    lon: 75.8190989,
   };
 }
 

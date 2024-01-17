@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Dropdown from "@/components/dropdown";
 import { FiAlignJustify } from "react-icons/fi";
-import { Link, NavigateFunction, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { FiSearch } from "react-icons/fi";
 import { RiMoonFill, RiSunFill } from "react-icons/ri";
 import { IoMdNotificationsOutline } from "react-icons/io";
@@ -26,7 +26,6 @@ const Navbar = (props: {
   const dispatch = useAppDispatch();
   const { onOpenSidenav, brandText, currentRoute } = props;
   const [darkmode, setDarkmode] = useState(false);
-  const navigate: NavigateFunction = useNavigate();
   const admin = useAppSelector((state) => state.admin.data);
   const notifications = useAppSelector((state) => state.notifications.data);
   const isSearchVisible =

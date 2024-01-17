@@ -17,6 +17,7 @@ import { LiaUserShieldSolid } from "react-icons/lia";
 import { useAppDispatch } from "@/app/store";
 import { deleteIncident } from "@/app/features/IncidentSlice";
 import { IoMdClose } from "react-icons/io";
+import { SOURCES, getSource } from "../../constants/validations";
 
 type Incident = {
   id: string;
@@ -204,14 +205,14 @@ const IncidentModal = ({
                       id="source"
                       className=" relative mt-2 flex h-12 w-full items-center rounded-xl border bg-white/0 p-3 text-sm outline-none !border-none !bg-gray-50 dark:!bg-white/5 dark:placeholder:!text-[rgba(255,255,255,0.15)] mr-3"
                     >
-                      {incident?.source === "CCTV" ? (
+                      {getSource(incident?.source) === SOURCES.CCTV ? (
                         <BiCctv className="h-5 w-5 text-navy-700 dark:text-white mr-2" />
                       ) : (
                         <LiaUserShieldSolid className="h-5 w-5 text-navy-700 dark:text-white mr-2" />
                       )}
 
                       <p>
-                        {incident?.source != "CCTV" ? "User Report" : incident?.source}
+                        {getSource(incident?.source) === SOURCES.USER ? "User Report" : incident?.source}
                       </p>
                     </div>
                   </div>

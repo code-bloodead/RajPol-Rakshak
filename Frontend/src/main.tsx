@@ -8,6 +8,7 @@ import App from "./App.tsx";
 
 import "mapbox-gl/dist/mapbox-gl.css";
 import "react-toastify/dist/ReactToastify.css";
+import "allotment/dist/style.css";
 import "./index.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
