@@ -113,10 +113,10 @@ List<Incident> userReports = [
   Incident(
       id: "MNOP3456",
       image:
-          "https://st3.depositphotos.com/23594922/31822/v/450/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg",
-      title: "IncidentD3",
-      description: "Incident3",
-      type: "Vandalism",
+          "https://blog.ipleaders.in/wp-content/uploads/2018/06/BV-Acharya-19.jpg",
+      title: "Beating single person",
+      description: "Four Persons fighting with one person very badly in public",
+      type: "Crime",
       station_name: "Jaipur",
       location:
           "23A, Nahar Garh Rasta, Purani Basti, Jaipur, Rajasthan 302001, India",
@@ -128,10 +128,11 @@ List<Incident> userReports = [
   Incident(
       id: "QRST7890",
       image:
-          "https://st3.depositphotos.com/23594922/31822/v/450/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg",
-      title: "IncidentE4",
-      description: "Incident4",
-      type: "Missing Person",
+          "https://i0.wp.com/www.rvcj.com/wp-content/uploads/2015/03/maxresdefault1.jpg",
+      title: "Fighting in Public",
+      description:
+          "People fighting with each other, trying to hurt random people",
+      type: "Crime",
       station_name: "Jaipur",
       location:
           "C-64 A, Sarojini Marg, Panch Batti, C Scheme, Ashok Nagar, Jaipur, Rajasthan 302001, India",
@@ -143,10 +144,10 @@ List<Incident> userReports = [
   Incident(
       id: "UVWX1234",
       image:
-          "https://st3.depositphotos.com/23594922/31822/v/450/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg",
-      title: "IncidentF5",
-      description: "Incident5",
-      type: "Traffic Violation",
+          "https://static.toiimg.com/thumb/msid-65765549,width-400,resizemode-4/65765549.jpg",
+      title: "Car & Truck Accident",
+      description: "A Car collided with a truck, 2 people injured",
+      type: "Accident",
       station_name: "Jaipur",
       location:
           "Hatwara Rd, Adarsh Nawal Colony, Lakshmi Nagar, Jaipur, Rajasthan 302007, India",
@@ -158,10 +159,10 @@ List<Incident> userReports = [
   Incident(
       id: "YZAB5678",
       image:
-          "https://st3.depositphotos.com/23594922/31822/v/450/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg",
-      title: "IncidentG6",
-      description: "Incident6",
-      type: "Fire",
+          "https://c8.alamy.com/comp/HWGJWR/road-traffic-accident-between-two-cars-in-retail-park-in-spain-HWGJWR.jpg",
+      title: "Two Cars Collided",
+      description: "Accident Between Two cars, driver in both cars injured",
+      type: "Accident",
       station_name: "Jaipur",
       location: "Hasanpura, Jaipur, Rajasthan 302006, India",
       source: "9324326404",
@@ -172,10 +173,10 @@ List<Incident> userReports = [
   Incident(
       id: "CDEF9012",
       image:
-          "https://st3.depositphotos.com/23594922/31822/v/450/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg",
-      title: "IncidentHZ",
-      description: "Incident7",
-      type: "Suspicious Activity",
+          "https://i0.wp.com/english.publictv.in/wp-content/uploads/2023/12/Nelamangala-car-catches-fire.jpg",
+      title: "Car on Fire",
+      description: "A car caught fire suddenly, everyone is safe",
+      type: "Accident",
       station_name: "Jaipur",
       location:
           "S-5/B, Keshav Nagar, Civil Lines, Jaipur, Rajasthan 302006, India",
@@ -187,10 +188,10 @@ List<Incident> userReports = [
   Incident(
       id: "CDEF9013",
       image:
-          "https://st3.depositphotos.com/23594922/31822/v/450/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg",
-      title: "IncidentHA",
-      description: "Incident7",
-      type: "Suspicious Activity",
+          "https://as2.ftcdn.net/v2/jpg/02/15/94/73/500_F_215947395_pqKBrx39ML0S1LUmKxQZYdCbb1SVRXj7.jpg",
+      title: "Person stole bag",
+      description: "A theif threatened a person and stole his bag",
+      type: "Assault",
       station_name: "Jaipur",
       location: "4-9, Sector 4, Jawahar Nagar, Jaipur, Rajasthan 302004, India",
       source: "9324326404",
@@ -200,11 +201,11 @@ List<Incident> userReports = [
       long: "75.831701"),
   Incident(
       id: "CDEF9000",
-      image:
-          "https://st3.depositphotos.com/23594922/31822/v/450/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg",
-      title: "IncidentGH7",
-      description: "Incident7",
-      type: "Suspicious Activity",
+       image:
+          "https://blog.ipleaders.in/wp-content/uploads/2018/06/BV-Acharya-19.jpg",
+      title: "Beating single person",
+      description: "Four Persons fighting with one person very badly in public",
+      type: "Crime",
       station_name: "Jaipur",
       location: "Jamdoli, Jaipur, Rajasthan 302031, India",
       source: "9324326404",
@@ -214,11 +215,12 @@ List<Incident> userReports = [
       long: "75.890008"),
   Incident(
       id: "CDEF7000",
-      image:
-          "https://st3.depositphotos.com/23594922/31822/v/450/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg",
-      title: "Incident37",
-      description: "Incident7",
-      type: "Suspicious Activity",
+       image:
+          "https://i0.wp.com/www.rvcj.com/wp-content/uploads/2015/03/maxresdefault1.jpg",
+      title: "Fighting in Public",
+      description:
+          "People fighting with each other, trying to hurt random people",
+      type: "Crime",
       station_name: "Jaipur",
       location:
           "256, Nirman Nagar, Sushilpura, Jaipur, Rajasthan 302019, India",
@@ -230,10 +232,10 @@ List<Incident> userReports = [
   Incident(
       id: "CDEF6000",
       image:
-          "https://st3.depositphotos.com/23594922/31822/v/450/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg",
-      title: "Incident67",
-      description: "Incident7",
-      type: "Suspicious Activity",
+          "https://static.toiimg.com/thumb/msid-65765549,width-400,resizemode-4/65765549.jpg",
+      title: "Car & Truck Accident",
+      description: "A Car collided with a truck, 2 people injured",
+      type: "Accident",
       station_name: "Jaipur",
       location:
           "Galta Rd, near Ramganj choupad, Hida Ki Mori, Laxmi Narayan Puri, Jaipur, Rajasthan 302002, India",
@@ -244,11 +246,11 @@ List<Incident> userReports = [
       long: "75.835651"),
   Incident(
       id: "CDEF5000",
-      image:
-          "https://st3.depositphotos.com/23594922/31822/v/450/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg",
-      title: "IncidentHA",
-      description: "Incident7",
-      type: "Suspicious Activity",
+       image:
+          "https://c8.alamy.com/comp/HWGJWR/road-traffic-accident-between-two-cars-in-retail-park-in-spain-HWGJWR.jpg",
+      title: "Two Cars Collided",
+      description: "Accident Between Two cars, driver in both cars injured",
+      type: "Accident",
       station_name: "Jaipur",
       location:
           "68, Talkatora Colony, J.D.A. Market, Kanwar Nagar, Jaipur, Rajasthan 302002, India",
@@ -260,10 +262,10 @@ List<Incident> userReports = [
   Incident(
       id: "CAEF5000",
       image:
-          "https://st3.depositphotos.com/23594922/31822/v/450/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg",
-      title: "IncidentHH",
-      description: "Incident7",
-      type: "Suspicious Activity",
+          "https://i0.wp.com/english.publictv.in/wp-content/uploads/2023/12/Nelamangala-car-catches-fire.jpg",
+      title: "Car on Fire",
+      description: "A car caught fire suddenly, everyone is safe",
+      type: "Accident",
       station_name: "Jaipur",
       location:
           "137, Galta Rd, Goverdhan Puri, Lal Dungri, Jaipur, Rajasthan 302003, India",
