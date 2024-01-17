@@ -110,9 +110,10 @@ const PublicCctvFootages = (props: PublicCctvFootagesProps) => {
               violenceMode={false}
               weaponsMode={true}
               fireMode
-              accidentMode
+              accidentMode={cctv.id !== "cctv_p05"}
               crackMode={false}
               tamperMode={false}
+              faceMode={true}
             />
           ))}
         </div>

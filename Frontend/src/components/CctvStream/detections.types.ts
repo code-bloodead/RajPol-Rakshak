@@ -9,6 +9,7 @@ export interface ReceivedMessageData {
     fire: FireDetection[];
     crack: CrackDetection[];
     tamper: Tamper | null;
+    face: FaceDetection[];
   };
 }
 
@@ -20,7 +21,7 @@ export interface ObjectDetection {
   orig_shape: number[];
 }
 export interface Tamper {
-  tamper: boolean
+  tamper: boolean;
 }
 export interface WeaponDetection extends ObjectDetection {
   label: "gun" | "knife" | "Pistol";
@@ -34,6 +35,7 @@ export interface CrackDetection extends ObjectDetection {
 export interface AccidentDetection extends ObjectDetection {
   label: "Accident";
 }
+export interface FaceDetection extends ObjectDetection {}
 export interface Classification {
   predicted_class: number;
   prediction_confidence: number;

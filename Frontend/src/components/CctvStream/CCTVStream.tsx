@@ -10,6 +10,7 @@ import {
   ACCIDENT_COLOR,
   CLIMBER_COLOR,
   CRACK_COLOR,
+  FACE_COLOR,
   FIRE_COLOR,
   PHONE_IN_JAIL,
   getWeaponColor,
@@ -20,6 +21,7 @@ import {
   AccidentDetection,
   AnomalyClassification,
   CrackDetection,
+  FaceDetection,
   FightClassification,
   FireDetection,
   ObjectDetection,
@@ -42,7 +44,10 @@ interface CCTVStreamProps {
   fireMode?: boolean;
   crackMode?: boolean;
   tamperMode?: boolean;
+  faceMode?: boolean;
 }
+
+const WANTED_PEOPLE = ["kenneth"];
 
 const CCTVStream: React.FC<CCTVStreamProps> = (props) => {
   const {
@@ -55,10 +60,14 @@ const CCTVStream: React.FC<CCTVStreamProps> = (props) => {
     fireMode,
     crackMode,
     tamperMode,
+    faceMode,
   } = props;
 
   const navigate = useNavigate();
 
+  const [currentFaceDetections, setCurrentFaceDetections] = useState<
+    FaceDetection[]
+  >([]);
   const [, setCurrentObjectDetections] = useState<ObjectDetection[]>([]);
   const [, setCurrentTamperStatus] = useState(false);
   const [, setCurrentWeaponDetection] = useState<WeaponDetection[]>([]);
@@ -98,7 +107,8 @@ const CCTVStream: React.FC<CCTVStreamProps> = (props) => {
       `&cctv_id=${cctv.id}&cctv_type=${cctv.cctv_type}` +
       `&violence=${violenceMode}&climbing=${climbingMode}` +
       `&suspicious=${suspiciousMode}&weapons=${weaponsMode}` +
-      `&accidents=${accidentMode}&fire=${fireMode}&crack=${crackMode}&tamper=${tamperMode}`,
+      `&accidents=${accidentMode}&fire=${fireMode}` +
+      `&crack=${crackMode}&tamper=${tamperMode}&face=${faceMode}`,
     {
       onOpen: () => console.log("connected socket for stream", cctv.streamUrl),
       // onMessage: (msg) => console.log("message received for stream", cctv.streamUrl, msg),
@@ -134,6 +144,10 @@ const CCTVStream: React.FC<CCTVStreamProps> = (props) => {
         lastJsonMessage.detections?.objects || [],
         0
       );
+      const receivedFaceDetections = filterDetections(
+        lastJsonMessage.detections?.face || [],
+        0
+      );
       const receivedWeaponDetections = filterDetections(
         lastJsonMessage.detections?.weapons || [],
         0
@@ -165,6 +179,7 @@ const CCTVStream: React.FC<CCTVStreamProps> = (props) => {
       const receivedAnomalyClassification =
         lastJsonMessage.detections?.anomalies || null;
       setCurrentObjectDetections(receivedObjectDetections);
+      setCurrentFaceDetections(receivedFaceDetections);
       setCurrentWeaponDetection(receivedWeaponDetections);
       setCurrentFireDetection(receivedFireDetections);
       setCurrentCrackDetection(receivedCrackDetections);
@@ -174,6 +189,7 @@ const CCTVStream: React.FC<CCTVStreamProps> = (props) => {
 
       // console.log(`Received ${receivedFireDetections.length} fires`, {
       //   receivedObjectDetections,
+      //   receivedFaceDetections,
       //   receivedWeaponDetections,
       //   receivedAccidentDetections,
       //   receivedFireDetections,
@@ -208,6 +224,36 @@ const CCTVStream: React.FC<CCTVStreamProps> = (props) => {
               yOffset: -5,
               font: LabelFont,
               backgroundColor: weaponColor,
+            },
+          });
+        });
+
+        receivedFaceDetections.forEach((faceDetection) => {
+          const label = (faceDetection.label || "").toLowerCase();
+          const { x, y, width, height } = bboxCoordsToCanvasCoords(
+            canvas,
+            faceDetection.bbox
+          );
+          let bgColor = FACE_COLOR;
+          let labelColor = "black";
+
+          if (WANTED_PEOPLE.includes(label)) {
+            bgColor = "red";
+            labelColor = "white";
+          }
+          drawRect(ctx, x, y, width, height, {
+            lineWidth: 2,
+            strokeStyle: bgColor,
+            label: {
+              // text: `${
+              //   label
+              // } ${weaponDetection.confidence.toFixed(2)}`,
+              text: label,
+              fillStyle: labelColor,
+              xOffset: 0,
+              yOffset: -5,
+              font: LabelFont,
+              backgroundColor: bgColor,
             },
           });
         });
@@ -393,6 +439,18 @@ const CCTVStream: React.FC<CCTVStreamProps> = (props) => {
               %
             </DangerTag>
           )} */}
+          {currentFaceDetections.filter((face) =>
+            WANTED_PEOPLE.includes(face.label.toLowerCase())
+          ).length > 0 && (
+            <DangerTag>
+              Wanted criminal spotted 🚨
+              {/* {" "}
+            {currentAnomalyClassification.prediction.prediction_confidence.toFixed(
+              2
+            )}
+            % */}
+            </DangerTag>
+          )}
           {currentCrackDetections.length > 0 && (
             <DangerTag>
               Infra damage 🚧
@@ -469,18 +527,19 @@ const CCTVStream: React.FC<CCTVStreamProps> = (props) => {
             </button>
           </div>
         ) : readyState === ReadyState.CLOSED ? (
-          <div> Closed !</div>
+          currentFrameData?.length ? (
+            <img
+              src={"data:image/jpeg;base64, " + currentFrameData}
+              alt="CCTV Frame"
+            />
+          ) : (
+            <div> Closed !</div>
+          )
         ) : (
           <></>
         )}
-        {currentFrameData && currentFrameData && (
-          <>
-            {/* <img
-            src={"data:image/jpeg;base64, " + currentFrameData}
-            alt="CCTV Frame"
-          /> */}
-          </>
-        )}
+
+        {currentFrameData && currentFrameData && <></>}
         {/* <video ref={videoRef} controls className="w-full" /> */}
         {/* {currentWeaponDetections.length > 0 && (
           <h2>
@@ -527,4 +586,5 @@ CCTVStream.defaultProps = {
   fireMode: false,
   crackMode: false,
   tamperMode: false,
+  faceMode: false,
 };

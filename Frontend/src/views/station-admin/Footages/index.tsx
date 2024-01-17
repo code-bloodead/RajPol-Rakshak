@@ -72,6 +72,7 @@ const Footages = () => {
               cctv.cctv_type === CCTV_TYPES.PRISON && cctv.id === "cctv_c00"
             }
             tamperMode={false}
+            faceMode={false}
             // tamperMode={
             //   cctv.cctv_type === CCTV_TYPES.PRISON && cctv.id === "cctv_c01"
             // }

@@ -29,4 +29,9 @@ def detect_weapons_dummy(frame):
 def detect_weapons(frame):
     outputs = weaponsYoloModel.predict(source=frame, verbose=False)
     # print(len(outputs[0].boxes), "weapons, labels => ", outputs[0].names)
-    return parse_yolo_predictions(outputs)
+    result = parse_yolo_predictions(outputs)
+    filtered = []
+    for detection in result:
+        if detection['label'] != 'Missile':
+            filtered.append(detection)
+    return filtered
