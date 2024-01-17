@@ -43,7 +43,7 @@ cctv_json = {
         "kind": "default",
         "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1704612681/samples/prison_escape.mp4"
       },
-      "geometry": { "coordinates": [72.829, 19.138], "type": "Point" }
+      "geometry": { "coordinates": [26.920830, 75.793044], "type": "Point" }
     },
     {
       "type": "Feature",
@@ -55,7 +55,7 @@ cctv_json = {
         "kind": "default",
         "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1704612681/samples/prison_escape.mp4"
       },
-      "geometry": { "coordinates": [72.829, 19.138], "type": "Point" }
+      "geometry": { "coordinates": [26.919835, 75.793968], "type": "Point" }
     },
     {
       "type": "Feature",
@@ -67,7 +67,7 @@ cctv_json = {
         "kind": "default",
         "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1704612681/samples/prison_escape.mp4"
       },
-      "geometry": { "coordinates": [72.829, 19.138], "type": "Point" }
+      "geometry": { "coordinates": [26.8670824, 75.8198607], "type": "Point" }
     },
     {
       "type": "Feature",
@@ -79,7 +79,7 @@ cctv_json = {
         "kind": "default",
         "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1704612681/samples/prison_escape.mp4"
       },
-      "geometry": { "coordinates": [72.829, 19.138], "type": "Point" }
+      "geometry": { "coordinates": [26.918374, 75.800766], "type": "Point" }
     },
     {
       "type": "Feature",
@@ -91,7 +91,7 @@ cctv_json = {
         "kind": "default",
         "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1705171052/samples/fire_sample.mp4"
       },
-      "geometry": { "coordinates": [72.829, 19.138], "type": "Point" }
+      "geometry": { "coordinates": [26.8670824, 75.8198607], "type": "Point" }
     },
     {
       "type": "Feature",
@@ -103,7 +103,7 @@ cctv_json = {
         "kind": "boat",
         "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1704890971/samples/public_cam.mp4"
       },
-      "geometry": { "coordinates": [72.857, 19.155], "type": "Point" }
+      "geometry": { "coordinates": [26.923884, 75.801752], "type": "Point" }
     },
     {
       "type": "Feature",
@@ -115,7 +115,7 @@ cctv_json = {
         "kind": "beach",
         "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1704614357/samples/gun_video.mp4"
       },
-      "geometry": { "coordinates": [72.814, 19.125], "type": "Point" }
+      "geometry": { "coordinates":  [26.931843, 75.785003], "type": "Point" }
     },
     {
       "type": "Feature",
@@ -127,7 +127,7 @@ cctv_json = {
         "kind": "default",
         "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1703605915/samples/market.mp4"
       },
-      "geometry": { "coordinates": [72.867, 19.13], "type": "Point" }
+      "geometry": { "coordinates":  [26.921063, 75.784501], "type": "Point" }
     },
     {
       "type": "Feature",
@@ -139,7 +139,7 @@ cctv_json = {
         "kind": "beach",
         "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1703605906/samples/beach.mp4"
       },
-      "geometry": { "coordinates": [72.826, 19.107], "type": "Point" }
+      "geometry": { "coordinates":  [26.941063, 75.785501], "type": "Point" }
     }
   ],
   "type": "FeatureCollection"

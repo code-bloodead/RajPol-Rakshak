@@ -34,7 +34,7 @@
         "kind": "default",
         "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1705471181/samples/public_accident_fire.mp4"
       },
-      "geometry": { "coordinates": [26.917601, 75.795642], "type": "Point" }
+      "geometry": { "coordinates": [26.8670824, 75.8198607], "type": "Point" }
     },
     {
       "type": "Feature",
