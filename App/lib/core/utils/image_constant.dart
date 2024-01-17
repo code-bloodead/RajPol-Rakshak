@@ -302,6 +302,8 @@ class ImageConstant {
 
   static String imgAvatar33x33 = 'assets/images/img_avatar_33x33.png';
 
+  static String imgPoliceMarker = 'assets/images/image_police_marker.jpg';
+
   static String imgImg180x3272 = 'assets/images/img_img_180x327_2.png';
 
   static String imgTicket = 'assets/images/img_ticket.svg';

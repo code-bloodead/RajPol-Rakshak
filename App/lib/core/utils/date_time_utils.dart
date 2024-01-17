@@ -74,3 +74,28 @@ String getTimePast(String inputTime) {
     return '${difference.inDays} days';
   }
 }
+
+String getMonthAbbreviation(int month) {
+  // List of month abbreviations
+  List<String> monthsAbbreviation = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec"
+  ];
+
+  // Ensure that the month value is within valid range
+  if (month >= 1 && month <= 12) {
+    return monthsAbbreviation[month - 1];
+  } else {
+    throw ArgumentError("Invalid month value");
+  }
+}

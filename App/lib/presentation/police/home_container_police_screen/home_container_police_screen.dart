@@ -5,6 +5,7 @@ import 'package:rakshak/core/app_export.dart';
 import 'package:rakshak/presentation/police/dashboard_police_page/dashboard_police_page.dart';
 import 'package:rakshak/presentation/police/incidents_police_page/incidents_police_page.dart';
 import 'package:rakshak/presentation/police/profile_police_page/profile_police_page.dart';
+import 'package:rakshak/presentation/police/map_police_page/map_police_page.dart';
 import 'package:rakshak/widgets/custom_police_bottom_bar.dart';
 
 // ignore_for_file: must_be_immutable
@@ -56,7 +57,7 @@ class HomeContainerPoliceScreen extends StatelessWidget {
       case BottomBarEnum.Incidents:
         return AppRoutes.incidentsPolicePage;
       case BottomBarEnum.Map:
-        return AppRoutes.profilePolicePage;
+        return AppRoutes.mapPolicePage;
       default:
         return "/";
     }
@@ -74,8 +75,8 @@ class HomeContainerPoliceScreen extends StatelessWidget {
         return ProfilePolicePage.builder(context);
       case AppRoutes.incidentsPolicePage:
         return IncidentsPolicePage.builder(context);
-      // case AppRoutes.profilePage:
-      //   return ProfilePage.builder(context);
+      case AppRoutes.mapPolicePage:
+        return MapPolicePage.builder(context);
       default:
         return DefaultWidget();
     }
