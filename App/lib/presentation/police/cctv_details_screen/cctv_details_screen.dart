@@ -2,6 +2,7 @@ import 'bloc/cctv_details_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:rakshak/core/app_export.dart';
 import 'package:rakshak/widgets/custom_icon_button.dart';
+import 'package:appinio_video_player/appinio_video_player.dart';
 
 class CctvDetailsScreen extends StatelessWidget {
   static Widget builder(BuildContext context) {
@@ -12,7 +13,7 @@ class CctvDetailsScreen extends StatelessWidget {
         return CctvDetailsBloc(CctvDetailsState(
           cctv: arg["cctv"],
         ))
-          ..add(CctvDetailsInitialEvent());
+          ..add(CctvDetailsInitialEvent(cctv: arg["cctv"]));
       },
       child: CctvDetailsScreen(),
     );
@@ -61,6 +62,15 @@ class CctvDetailsScreen extends StatelessWidget {
                             ),
                           ],
                         ),
+                        BlocBuilder<CctvDetailsBloc, CctvDetailsState>(
+                          builder: (context, state) {
+                            return state.videoPlayerController == null
+                                ? Container()
+                                : CustomVideoPlayer(
+                                    customVideoPlayerController:
+                                        state.videoPlayerController!);
+                          },
+                        )
                       ])))),
     ));
   }
