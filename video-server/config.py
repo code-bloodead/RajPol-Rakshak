@@ -19,14 +19,15 @@ PREVENT_FRAME_OVERFLOW = 1200
 # Whether to register incident in the database & at what speed
 # Toggle this to prevent unnecessary incidents from being registered during development
 REGISTER_INCIDENT = True
-THROTTLE_INCIDENT_REPORT_TIME = 50
+
+THROTTLE_INCIDENT_REPORT_TIME = 120
 
 MIN_TAMPER_CONF = 40
-MIN_CRACK_CONF = 0.4
+MIN_CRACK_CONF = 0.43
 MIN_FIRE_CONF = 0.3
 MIN_ACCIDENT_CONF = 0.3
 MIN_VIOLENCE_CONF = 0.5
-MIN_WEAPON_CONF = 0.5
+MIN_WEAPON_CONF = 0
 
 MIN_CRACK_REPORT_CONF = 0.4
 MIN_ACCIDENT_REPORT_CONF = 0.3

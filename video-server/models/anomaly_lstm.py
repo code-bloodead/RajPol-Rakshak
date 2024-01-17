@@ -20,7 +20,7 @@ with open(filepath_class_names, 'r') as fh:
     class_names = fh.read().strip().split('\n')
 
 # Note - 'climbing tree' & 'bungee jumping' gives false positives
-climbing_labels = ['abseiling', 'climbing a rope', 'climbing ladder', 'hopscotch',
+climbing_labels = ['abseiling', 'climbing a rope', 'climbing ladder',
                    'ice climbing', 'parkour', 'rock climbing', 'cleaning windows']
 violence_labels = ['capoeira', 'drop kicking', 'high kick',
                    'punching person (boxing)', 'side kick', 'slapping', 'sword fighting', 'wrestling']

@@ -24,7 +24,7 @@ def is_websocket_alive(websocket: WebSocket):
 # Note, we can't pass websocket to this fn as its pickled & passed to a completely new process
 
 
-def process_video_stream(url, cctv_id: str, cctv_type: str, output_queue: Queue, shutdown_event: Event, violence: bool, climbing: bool, weapons: bool, suspicious: bool, accidents: bool, fire: bool, crack: bool):
+def process_video_stream(url, cctv_id: str, cctv_type: str, output_queue: Queue, shutdown_event: Event, violence: bool, climbing: bool, weapons: bool, suspicious: bool, accidents: bool, fire: bool, crack: bool, tamper: bool):
     # Importing here, coz this fn will be run in a separate process
     from models.yolo_objects import detect_objects, detect_objects_dummy
     from models.weapons import detect_weapons, detect_weapons_dummy
@@ -34,6 +34,7 @@ def process_video_stream(url, cctv_id: str, cctv_type: str, output_queue: Queue,
     from models.anomaly_lstm import detect_anomaly, detect_anomaly_dummy
     from models.fire import detect_fire, detect_fire_dummy
     from models.crack import detect_crack, detect_crack_dummy
+    from models.tamper import detect_tamper, detect_temper_dummy
     from incident_manager import IncidentManager, IncidentType
     from config import MIN_ACCIDENT_REPORT_CONF, MIN_VIOLENCE_REPORT_CONF, MIN_WEAPON_REPORT_CONF, MIN_FIRE_REPORT_CONF, MIN_CRACK_REPORT_CONF
 
@@ -51,6 +52,7 @@ def process_video_stream(url, cctv_id: str, cctv_type: str, output_queue: Queue,
         'accidents': None,
         'fire': None,
         'crack': None,
+        'tamper': None,
     }
 
     try:
@@ -76,6 +78,7 @@ def process_video_stream(url, cctv_id: str, cctv_type: str, output_queue: Queue,
                     fire_future = None
                     crack_future = None
                     accidents_future = None
+                    tamper_future = None
 
                     # LSTM models
                     # Some Model need continuous frames (@TODO - control it using time.time())
@@ -95,6 +98,9 @@ def process_video_stream(url, cctv_id: str, cctv_type: str, output_queue: Queue,
                         # Use threads to parallelize detection tasks
                         objects_future = executor.submit(detect_objects, frame)
                         # objects_future = executor.submit(detect_objects_dummy, frame)
+
+                        if tamper:
+                            tamper_future = executor.submit(detect_tamper, frame)
 
                         if accidents:
                             accidents_future = executor.submit(
@@ -119,6 +125,14 @@ def process_video_stream(url, cctv_id: str, cctv_type: str, output_queue: Queue,
                         # # climber_future = executor.submit(detect_climber_dummy, frame)
 
                     # Wait for all frame-independent threads to complete
+                    if tamper_future is not None:
+                        detections['tamper'] = tamper_future.result()
+
+                        # Report incident for fire if applicable
+                        if detections['tamper'] is not None and 'tamper' in detections['tamper'] and detections['tamper']['tamper']:
+                            incident_manager.registerDetections(
+                                frame, cctv_id, cctv_type, IncidentType.fire, detections['tamper'])
+
                     if objects_future is not None:
                         detections['objects'] = objects_future.result()
 
@@ -208,7 +222,7 @@ def process_video_stream(url, cctv_id: str, cctv_type: str, output_queue: Queue,
 
 
 @app.websocket("/ws")
-async def websocket_endpoint(websocket: WebSocket, stream_url: str, cctv_id: str, cctv_type: str, violence: bool, climbing: bool, weapons: bool, suspicious: bool, accidents: bool, fire: bool, crack: bool):
+async def websocket_endpoint(websocket: WebSocket, stream_url: str, cctv_id: str, cctv_type: str, violence: bool, climbing: bool, weapons: bool, suspicious: bool, accidents: bool, fire: bool, crack: bool, tamper: bool):
     print("Websocket connection initiated", {
         "stream_url": stream_url,
         "cctv_id": cctv_id,
@@ -253,7 +267,7 @@ async def websocket_endpoint(websocket: WebSocket, stream_url: str, cctv_id: str
 
     # Start the video processing in a separate process
     video_process = Process(target=process_video_stream, args=(
-        stream_url, cctv_id, cctv_type, output_queue, shutdown_event, violence, climbing, weapons, suspicious, accidents, fire, crack))
+        stream_url, cctv_id, cctv_type, output_queue, shutdown_event, violence, climbing, weapons, suspicious, accidents, fire, crack, tamper))
     video_process.start()
 
     print(f"Started process {video_process._identity} for", stream_url)
