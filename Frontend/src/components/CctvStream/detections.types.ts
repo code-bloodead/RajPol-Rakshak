@@ -8,6 +8,7 @@ export interface ReceivedMessageData {
     accidents: AccidentDetection[];
     fire: FireDetection[];
     crack: CrackDetection[];
+    tamper: Tamper | null;
   };
 }
 
@@ -18,8 +19,11 @@ export interface ObjectDetection {
   bbox_std: number[];
   orig_shape: number[];
 }
+export interface Tamper {
+  tamper: boolean
+}
 export interface WeaponDetection extends ObjectDetection {
-  label: "gun" | "knife";
+  label: "gun" | "knife" | "Pistol";
 }
 export interface FireDetection extends ObjectDetection {
   label: "fire";

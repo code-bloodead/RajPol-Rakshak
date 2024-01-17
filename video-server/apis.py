@@ -1,9 +1,7 @@
 import json
-import threading
-import time
 import requests
 SERVER_URL = "https://rajpol-backend-staging.onrender.com"
-SERVER_URL = "https://c157-103-23-239-46.ngrok-free.app"
+# SERVER_URL = "https://c157-103-23-239-46.ngrok-free.app"
 
 def create_incident(incident):
 

@@ -29,6 +29,7 @@ class IncidentType():
     suspicious = 'suspicious'
     fire = 'fire'
     crack = 'crack'
+    tamper = 'tamper'
 
 
 incident_meta_data = {
@@ -55,6 +56,9 @@ incident_meta_data = {
     },
     IncidentType.crack: {
         'title': "Crack detected in prison wall",
+    },
+    IncidentType.tamper: {
+        'title': "Tampering detected with CCTV",
     },
 }
 
@@ -91,6 +95,8 @@ class IncidentManager:
                     data[IncidentType.fire] = {}
                 if IncidentType.crack not in data:
                     data[IncidentType.crack] = {}
+                if IncidentType.tamper not in data:
+                    data[IncidentType.tamper] = {}
                 return data
         except FileNotFoundError:
             return {
@@ -102,6 +108,7 @@ class IncidentManager:
                 IncidentType.suspicious: {},
                 IncidentType.fire: {},
                 IncidentType.crack: {},
+                IncidentType.tamper: {},
             }
 
     def save_data(self):
