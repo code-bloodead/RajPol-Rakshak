@@ -293,7 +293,7 @@ List<Cctv> cctvConstants = [
       address:
           "6, Vivek Nagar, Kanti Nagar, Sindhi Camp, Jaipur, Rajasthan 302016, India",
       streamUrl:
-          "https://res.cloudinary.com/dp0ayty6p/video/upload/v1705171052/samples/fire_sample.mp4"),
+          "https://res.cloudinary.com/dp0ayty6p/video/upload/v1705471181/samples/public_accident_fire.mp4"),
   Cctv(
       id: "cctv_222",
       lat: "26.920830",
@@ -302,7 +302,7 @@ List<Cctv> cctvConstants = [
       address:
           "Station Road, Metro Pillor No. 167 Hanumant Kunj, Barodia Scheme, Gopalbari, Jaipur, Rajasthan 302001, India",
       streamUrl:
-          "https://res.cloudinary.com/dp0ayty6p/video/upload/v1704890971/samples/public_cam.mp4"),
+          "https://res.cloudinary.com/dp0ayty6p/video/upload/v1705485743/samples/fire_sample.mp4"),
   Cctv(
       id: "cctv_333",
       lat: "26.917390",
@@ -311,7 +311,7 @@ List<Cctv> cctvConstants = [
       address:
           "137, Galta Rd, Goverdhan Puri, Lal Dungri, Jaipur, Rajasthan 302003, India",
       streamUrl:
-          "https://res.cloudinary.com/dp0ayty6p/video/upload/v1705415782/samples/prison_fight.mp4"),
+          "https://res.cloudinary.com/dp0ayty6p/video/upload/v1704614357/samples/gun_video.mp4"),
   Cctv(
       id: "cctv_444",
       lat: "26.885766",

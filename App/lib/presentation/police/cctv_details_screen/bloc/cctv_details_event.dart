@@ -7,7 +7,8 @@ abstract class CctvDetailsEvent extends Equatable {}
 
 class CctvDetailsInitialEvent extends CctvDetailsEvent {
   @override
-  CctvDetailsInitialEvent({required this.cctv});
+  CctvDetailsInitialEvent({required this.cctv, required this.context});
   Cctv cctv;
-  List<Object?> get props => [cctv];
+  BuildContext context;
+  List<Object?> get props => [cctv, context];
 }

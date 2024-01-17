@@ -13,7 +13,7 @@ class CctvDetailsScreen extends StatelessWidget {
         return CctvDetailsBloc(CctvDetailsState(
           cctv: arg["cctv"],
         ))
-          ..add(CctvDetailsInitialEvent(cctv: arg["cctv"]));
+          ..add(CctvDetailsInitialEvent(cctv: arg["cctv"], context: context));
       },
       child: CctvDetailsScreen(),
     );

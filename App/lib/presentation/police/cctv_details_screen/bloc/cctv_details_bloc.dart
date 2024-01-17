@@ -10,6 +10,8 @@ class CctvDetailsBloc extends Bloc<CctvDetailsEvent, CctvDetailsState> {
     on<CctvDetailsInitialEvent>(_onInitialize);
   }
 
+  CustomVideoPlayerController? customVideoPlayerController;
+
   Cctv cctv = Cctv(
       id: "CCTV_999",
       lat: "26.923884",
@@ -19,11 +21,14 @@ class CctvDetailsBloc extends Bloc<CctvDetailsEvent, CctvDetailsState> {
       title: "CCTV 5",
       address:
           "6, Vivek Nagar, Kanti Nagar, Sindhi Camp, Jaipur, Rajasthan 302016, India");
-  void initializeVideoPlayer(Cctv cctv) async {
+  void initializeVideoPlayer(Cctv cctv, BuildContext context) async {
     VideoPlayerController videoPlayerController;
     videoPlayerController =
-        VideoPlayerController.networkUrl(Uri.parse(cctv.streamUrl));
+        VideoPlayerController.asset("assets/public_accident_fire.mp4");
     await videoPlayerController.initialize();
+
+    customVideoPlayerController = CustomVideoPlayerController(
+        context: context, videoPlayerController: videoPlayerController);
   }
 
   _onInitialize(
@@ -31,7 +36,9 @@ class CctvDetailsBloc extends Bloc<CctvDetailsEvent, CctvDetailsState> {
     Emitter<CctvDetailsState> emit,
   ) async {
     cctv = event.cctv;
-    initializeVideoPlayer(cctv);
-    emit(state.copyWith());
+    initializeVideoPlayer(cctv, event.context);
+    emit(state.copyWith(
+      videoPlayerController: customVideoPlayerController,
+    ));
   }
 }
