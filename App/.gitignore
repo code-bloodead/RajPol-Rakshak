@@ -10,7 +10,4 @@
 
 *.env
 
-
-/lib/presentation/random
-/lib/routes
 /assets

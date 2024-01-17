@@ -41,6 +41,7 @@ class MyApp extends StatelessWidget {
       //for setting localization strings
       supportedLocales: const [
         Locale('en', ''),
+        Locale('hi', ''),
       ],
       localizationsDelegates: const [
         AppLocalizationDelegate(),

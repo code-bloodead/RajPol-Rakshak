@@ -54,7 +54,7 @@ class SetRoleScreen extends StatelessWidget {
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 10), // Adjust as needed
                                 child: Text(
-                                  'Citizen',
+                                  'lbl_citizen'.tr,
                                   style: TextStyle(
                                       fontSize: 22, color: Colors.black),
                                   textAlign: TextAlign.center,
@@ -96,7 +96,7 @@ class SetRoleScreen extends StatelessWidget {
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 10), // Adjust as needed
                                 child: Text(
-                                  'Police',
+                                  'lbl_police'.tr,
                                   style: TextStyle(
                                       fontSize: 22, color: Colors.black),
                                   textAlign: TextAlign.center,

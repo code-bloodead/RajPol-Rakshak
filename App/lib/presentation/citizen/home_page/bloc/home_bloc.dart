@@ -48,14 +48,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   Future<List<Incident>> fillIncidentList() async {
-    // List<Incident> userReports = [];
+    List<Incident> userReports = [];
 
-    // try {
-    // getIncidentResp = await _repository.getIncident(PrefUtils().getMobile());
-    //   userReports = getIncidentResp.dataList!;
-    // } catch (error) {
-    //   print(error);
-    // }
+    try {
+      getIncidentResp = await _repository.getIncident(PrefUtils().getMobile());
+      userReports = getIncidentResp.dataList!;
+    } catch (error) {
+      print(error);
+    }
 
     return userReports;
   }

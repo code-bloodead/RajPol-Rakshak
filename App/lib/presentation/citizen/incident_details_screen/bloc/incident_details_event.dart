@@ -9,15 +9,3 @@ class IncidentDetailsInitialEvent extends IncidentDetailsEvent {
   @override
   List<Object?> get props => [];
 }
-
-///event for change radio button
-class ChangeRadioButtonEvent extends IncidentDetailsEvent {
-  ChangeRadioButtonEvent({required this.value});
-
-  String value;
-
-  @override
-  List<Object?> get props => [
-        value,
-      ];
-}
