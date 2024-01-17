@@ -9,3 +9,14 @@ class MapPoliceInitialEvent extends MapPoliceEvent {
   @override
   List<Object?> get props => [];
 }
+
+class PlotTypeChangeEvent extends MapPoliceEvent {
+  PlotTypeChangeEvent({required this.plotType});
+
+  String plotType;
+
+  @override
+  List<Object?> get props => [
+        plotType,
+      ];
+}

@@ -27,6 +27,16 @@ class DashboardPoliceBloc
     BarData(ColorConstant.blue500, 2, 2),
     BarData(ColorConstant.blue500, 10, 15),
   ];
+
+  List<String> weekDays = [
+    'M',
+    'T',
+    'W',
+    'T',
+    'F',
+    'S',
+    'S',
+  ];
   Incident? recentIncident;
 
   var getIncidentResp = GetIncidentResp();
@@ -73,6 +83,7 @@ class DashboardPoliceBloc
 
     await Future.delayed(Duration(milliseconds: 50), () {
       dataList = [];
+      weekDays = [];
       int reports = 0;
       int detects = 0;
       incidentsByDate.forEach((date, incidents) {
@@ -80,12 +91,13 @@ class DashboardPoliceBloc
         detects = incidents.length - reports;
         dataList.add(BarData(
             ColorConstant.blue500, reports.toDouble(), detects.toDouble()));
+        weekDays.add(date);
       });
     });
 
     emit(state.copyWith(
       dashboardPoliceModelObj: DashboardPoliceModel(),
-      barChartConstants: BarChartConstants(-1, dataList),
+      barChartConstants: BarChartConstants(-1, dataList, weekDays),
       recentIncident: recentIncident,
       isNotificationPresent: count != 0 ? true : false,
     ));
@@ -103,7 +115,7 @@ class DashboardPoliceBloc
   ) async {
     emit(state.copyWith(
       dashboardPoliceModelObj: DashboardPoliceModel(),
-      barChartConstants: BarChartConstants(event.value, dataList),
+      barChartConstants: BarChartConstants(event.value, dataList, weekDays),
       recentIncident: recentIncident,
     ));
     emit(state.copyWith(

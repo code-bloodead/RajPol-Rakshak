@@ -59,6 +59,7 @@ final Map<String, String> enUs = {
   "msg_your_identity_b": " your identity before schedule the tour",
   "msg_28_hot_days_exp": "28 hot days expected in 2050",
   "msg_verify_phone_number": "Verify Phone Number",
+  "lbl_surveillance": "Surveillance",
   "lbl_reported": "Reported",
   "lbl_detected": "Detected",
   "lbl_bedroom2": "Bedroom",

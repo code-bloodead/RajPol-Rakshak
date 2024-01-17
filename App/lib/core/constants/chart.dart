@@ -3,14 +3,17 @@ import 'package:flutter/material.dart';
 import '/core/app_export.dart';
 
 class BarChartConstants {
-  BarChartConstants(int showingTooltip, List<BarData> dataList) {
+  BarChartConstants(
+      int showingTooltip, List<BarData> dataList, List<String> weekDays) {
     this.showingTooltip = showingTooltip;
     this.dataList = dataList;
+    this.weekDays = weekDays;
   }
 
   static final shadowColor = const Color(0xFFCCCCCC);
   int showingTooltip = -1;
   List<BarData> dataList = [];
+  List<String> weekDays = [];
 
   BarChartGroupData generateBarGroup(
     int x,
@@ -39,34 +42,34 @@ class BarChartConstants {
   Widget getTitles(double value, TitleMeta meta) {
     const style = TextStyle(
       color: Colors.black,
-      fontWeight: FontWeight.bold,
-      fontSize: 12,
+      // fontWeight: FontWeight.bold,
+      fontSize: 10,
     );
     Widget text;
     switch (value.toInt()) {
       case 0:
-        text = const Text('M', style: style);
+        text = Text(weekDays[0], style: style);
         break;
       case 1:
-        text = const Text('T', style: style);
+        text = Text(weekDays[1], style: style);
         break;
       case 2:
-        text = const Text('W', style: style);
+        text = Text(weekDays[2], style: style);
         break;
       case 3:
-        text = const Text('T', style: style);
+        text = Text(weekDays[3], style: style);
         break;
       case 4:
-        text = const Text('F', style: style);
+        text = Text(weekDays[4], style: style);
         break;
       case 5:
-        text = const Text('S', style: style);
+        text = Text(weekDays[5], style: style);
         break;
       case 6:
-        text = const Text('S', style: style);
+        text = Text(weekDays[6], style: style);
         break;
       default:
-        text = const Text('', style: style);
+        text = Text(weekDays[6], style: style);
         break;
     }
     return SideTitleWidget(

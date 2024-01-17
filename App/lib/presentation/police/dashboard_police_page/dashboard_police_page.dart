@@ -15,7 +15,8 @@ class DashboardPolicePage extends StatelessWidget {
   static Widget builder(BuildContext context) {
     return BlocProvider<DashboardPoliceBloc>(
         create: (context) => DashboardPoliceBloc(DashboardPoliceState(
-            barChartConstants: BarChartConstants(0, dataListConstants),
+            barChartConstants:
+                BarChartConstants(0, dataListConstants, weekDaysConstants),
             dashboardPoliceModelObj: DashboardPoliceModel()))
           ..add(DashboardPoliceInitialEvent()),
         child: DashboardPolicePage());
@@ -597,7 +598,7 @@ class DashboardPolicePage extends StatelessWidget {
 
   onTapNotification(BuildContext context) {
     NavigatorService.pushNamed(
-      AppRoutes.notificationScreen,
+      AppRoutes.notificationPoliceScreen,
     );
   }
 }
