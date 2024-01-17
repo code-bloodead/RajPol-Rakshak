@@ -29,8 +29,9 @@ List<Incident> userReports = [
       description:
           "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
       type: "Crime",
-      station_name: "Andheri",
-      location: "Chakala street",
+      station_name: "Jaipur",
+      location:
+          "Station Road, Metro Pillor No. 167 Hanumant Kunj, Barodia Scheme, Gopalbari, Jaipur, Rajasthan 302001, India",
       source: "9324326404",
       status: "Closed",
       created_at: "2024-01-11T00:21:12.102+00:00",
@@ -44,28 +45,29 @@ List<Incident> userReports = [
       description:
           "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
       type: "Crime",
-      station_name: "Andheri",
-      location: "Chakala street",
+      station_name: "Jaipur",
+      location: "Jhalana Gram, Malviya Nagar, Jaipur, Rajasthan 302017, India",
       source: "9324326404",
       status: "Closed",
       created_at: "2024-01-15T00:21:12.102+00:00",
-      lat: "26.919835",
-      long: "75.793968"),
+      lat: "26.865715",
+      long: "75.820325"),
   Incident(
-      id: "BBCB1234",
-      image:
-          "https://st3.depositphotos.com/23594922/31822/v/450/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg",
-      title: "IncidentA98",
-      description:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
-      type: "Crime",
-      station_name: "Andheri",
-      location: "Chakala street",
-      source: "CCTV",
-      status: "Closed",
-      created_at: "2024-01-15T00:21:12.102+00:00",
-      lat: "26.917601",
-      long: "75.795642"),
+    id: "BBCB1234",
+    image:
+        "https://st3.depositphotos.com/23594922/31822/v/450/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg",
+    title: "IncidentA98",
+    description:
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
+    type: "Crime",
+    station_name: "Jaipur",
+    location: "256, Nirman Nagar, Sushilpura, Jaipur, Rajasthan 302019, India",
+    lat: "26.889263",
+    long: "75.748453",
+    source: "CCTV",
+    status: "Closed",
+    created_at: "2024-01-15T00:21:12.102+00:00",
+  ),
   Incident(
       id: "DBCB1234",
       image:
@@ -74,7 +76,7 @@ List<Incident> userReports = [
       description:
           "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
       type: "Crime",
-      station_name: "Andheri",
+      station_name: "Jaipur",
       location: "Chakala street",
       source: "CCTV",
       status: "Closed",
@@ -88,8 +90,9 @@ List<Incident> userReports = [
       title: "IncidentB1",
       description: "Incident1",
       type: "Robbery",
-      station_name: "Colaba",
-      location: "Gateway of India",
+      station_name: "Jaipur",
+      location:
+          "6, Vivek Nagar, Kanti Nagar, Sindhi Camp, Jaipur, Rajasthan 302016, India",
       source: "CCTV",
       status: "Pending",
       created_at: "2024-01-12T08:45:30.512+00:00",
@@ -102,8 +105,9 @@ List<Incident> userReports = [
       title: "IncidentC2",
       description: "Incident2",
       type: "Assault",
-      station_name: "Bandra",
-      location: "Linking Road",
+      station_name: "Jaipur",
+      location:
+          "Chinkara, Military Containment, Jhotwara, Jaipur, Rajasthan 302032, India",
       source: "9324326404",
       status: "Resolved",
       created_at: "2024-01-12T14:10:05.721+00:00",
@@ -116,8 +120,9 @@ List<Incident> userReports = [
       title: "IncidentD3",
       description: "Incident3",
       type: "Vandalism",
-      station_name: "Dadar",
-      location: "Shivaji Park",
+      station_name: "Jaipur",
+      location:
+          "23A, Nahar Garh Rasta, Purani Basti, Jaipur, Rajasthan 302001, India",
       source: "CCTV",
       status: "Pending",
       created_at: "2024-01-13T18:30:40.901+00:00",
@@ -130,10 +135,11 @@ List<Incident> userReports = [
       title: "IncidentE4",
       description: "Incident4",
       type: "Missing Person",
-      station_name: "Worli",
-      location: "Sea Face",
+      station_name: "Jaipur",
+      location:
+          "C-64 A, Sarojini Marg, Panch Batti, C Scheme, Ashok Nagar, Jaipur, Rajasthan 302001, India",
       source: "9324326404",
-      status: "Open",
+      status: "Pending",
       created_at: "2024-01-14T09:15:22.623+00:00",
       lat: "26.909933",
       long: "75.804533"),
@@ -144,11 +150,12 @@ List<Incident> userReports = [
       title: "IncidentF5",
       description: "Incident5",
       type: "Traffic Violation",
-      station_name: "Vile Parle",
-      location: "Western Express Highway",
+      station_name: "Jaipur",
+      location:
+          "Hatwara Rd, Adarsh Nawal Colony, Lakshmi Nagar, Jaipur, Rajasthan 302007, India",
       source: "CCTV",
       status: "Closed",
-      created_at: "2024-01-15T12:45:55.321+00:00",
+      created_at: "2024-01-16T12:45:55.321+00:00",
       lat: "26.915980",
       long: "75.772926"),
   Incident(
@@ -158,8 +165,8 @@ List<Incident> userReports = [
       title: "IncidentG6",
       description: "Incident6",
       type: "Fire",
-      station_name: "Mumbai Central",
-      location: "Local Market",
+      station_name: "Jaipur",
+      location: "Hasanpura, Jaipur, Rajasthan 302006, India",
       source: "9324326404",
       status: "Resolved",
       created_at: "2024-01-04T16:20:30.430+00:00",
@@ -172,8 +179,9 @@ List<Incident> userReports = [
       title: "IncidentHZ",
       description: "Incident7",
       type: "Suspicious Activity",
-      station_name: "Fort",
-      location: "CST Station",
+      station_name: "Jaipur",
+      location:
+          "S-5/B, Keshav Nagar, Civil Lines, Jaipur, Rajasthan 302006, India",
       source: "9324326404",
       status: "Pending",
       created_at: "2024-01-15T21:05:15.812+00:00",
@@ -186,11 +194,11 @@ List<Incident> userReports = [
       title: "IncidentHA",
       description: "Incident7",
       type: "Suspicious Activity",
-      station_name: "Fort",
-      location: "CST Station",
+      station_name: "Jaipur",
+      location: "4-9, Sector 4, Jawahar Nagar, Jaipur, Rajasthan 302004, India",
       source: "9324326404",
       status: "Pending",
-      created_at: "2024-01-10T21:05:15.812+00:00",
+      created_at: "2024-01-17T21:05:15.812+00:00",
       lat: "26.885766",
       long: "75.831701"),
   Incident(
@@ -200,11 +208,11 @@ List<Incident> userReports = [
       title: "IncidentGH7",
       description: "Incident7",
       type: "Suspicious Activity",
-      station_name: "Fort",
-      location: "CST Station",
-      source: "User Report",
+      station_name: "Jaipur",
+      location: "Jamdoli, Jaipur, Rajasthan 302031, India",
+      source: "9324326404",
       status: "Pending",
-      created_at: "2024-01-10T21:05:15.812+00:00",
+      created_at: "2024-01-17T21:05:15.812+00:00",
       lat: "26.906409",
       long: "75.890008"),
   Incident(
@@ -214,11 +222,12 @@ List<Incident> userReports = [
       title: "Incident37",
       description: "Incident7",
       type: "Suspicious Activity",
-      station_name: "Fort",
-      location: "CST Station",
+      station_name: "Jaipur",
+      location:
+          "256, Nirman Nagar, Sushilpura, Jaipur, Rajasthan 302019, India",
       source: "User Report",
       status: "Pending",
-      created_at: "2024-01-09T21:05:15.812+00:00",
+      created_at: "2024-01-16T21:05:15.812+00:00",
       lat: "26.889263",
       long: "75.748453"),
   Incident(
@@ -228,11 +237,12 @@ List<Incident> userReports = [
       title: "Incident67",
       description: "Incident7",
       type: "Suspicious Activity",
-      station_name: "Fort",
-      location: "CST Station",
+      station_name: "Jaipur",
+      location:
+          "Galta Rd, near Ramganj choupad, Hida Ki Mori, Laxmi Narayan Puri, Jaipur, Rajasthan 302002, India",
       source: "9324326404",
       status: "Pending",
-      created_at: "2024-01-09T21:05:15.812+00:00",
+      created_at: "2024-01-17T21:05:15.812+00:00",
       lat: "26.921369",
       long: "75.835651"),
   Incident(
@@ -242,11 +252,12 @@ List<Incident> userReports = [
       title: "IncidentHA",
       description: "Incident7",
       type: "Suspicious Activity",
-      station_name: "Fort",
-      location: "CST Station",
+      station_name: "Jaipur",
+      location:
+          "68, Talkatora Colony, J.D.A. Market, Kanwar Nagar, Jaipur, Rajasthan 302002, India",
       source: "9324326404",
       status: "Pending",
-      created_at: "2024-01-08T21:05:15.812+00:00",
+      created_at: "2024-01-16T21:05:15.812+00:00",
       lat: "26.932083",
       long: "75.826032"),
   Incident(
@@ -256,11 +267,12 @@ List<Incident> userReports = [
       title: "IncidentHH",
       description: "Incident7",
       type: "Suspicious Activity",
-      station_name: "Fort",
-      location: "CST Station",
-      source: "9324326404",
+      station_name: "Jaipur",
+      location:
+          "137, Galta Rd, Goverdhan Puri, Lal Dungri, Jaipur, Rajasthan 302003, India",
+      source: "CCTV",
       status: "Pending",
-      created_at: "2024-01-07T21:05:15.812+00:00",
+      created_at: "2024-01-17T21:05:15.812+00:00",
       lat: "26.917390",
       long: "75.849222"),
 ];
@@ -281,7 +293,8 @@ List<Cctv> cctvConstants = [
       lat: "26.923884",
       long: "75.801752",
       title: "CCTV 1",
-      address: "Address 1",
+      address:
+          "6, Vivek Nagar, Kanti Nagar, Sindhi Camp, Jaipur, Rajasthan 302016, India",
       streamUrl:
           "https://res.cloudinary.com/dp0ayty6p/video/upload/v1705171052/samples/fire_sample.mp4"),
   Cctv(
@@ -289,7 +302,8 @@ List<Cctv> cctvConstants = [
       lat: "26.920830",
       long: "75.793044",
       title: "CCTV 2",
-      address: "Address 2",
+      address:
+          "Station Road, Metro Pillor No. 167 Hanumant Kunj, Barodia Scheme, Gopalbari, Jaipur, Rajasthan 302001, India",
       streamUrl:
           "https://res.cloudinary.com/dp0ayty6p/video/upload/v1704890971/samples/public_cam.mp4"),
   Cctv(
@@ -297,7 +311,8 @@ List<Cctv> cctvConstants = [
       lat: "26.917390",
       long: "75.849222",
       title: "CCTV 3",
-      address: "Address 3",
+      address:
+          "137, Galta Rd, Goverdhan Puri, Lal Dungri, Jaipur, Rajasthan 302003, India",
       streamUrl:
           "https://res.cloudinary.com/dp0ayty6p/video/upload/v1705415782/samples/prison_fight.mp4"),
   Cctv(
@@ -305,9 +320,9 @@ List<Cctv> cctvConstants = [
       lat: "26.885766",
       long: "75.831701",
       title: "CCTV 4",
-      address: "Address 4",
+      address: "4-9, Sector 4, Jawahar Nagar, Jaipur, Rajasthan 302004, India",
       streamUrl:
-          "https://res.cloudinary.com/dp0ayty6p/video/upload/v1696664485/samples/sample-video.mp4"),
+          "https://res.cloudinary.com/dp0ayty6p/video/upload/v1705471181/samples/public_accident_fire.mp4"),
 ];
 
 List<String> weekDaysConstants = [
@@ -371,13 +386,7 @@ List<ValueItem> incidentDistrictConst = [
   ValueItem(label: "Grp Ajmer", value: "Grp Ajmer"),
   ValueItem(label: "Grp Jodhpur", value: "Grp Jodhpur"),
   ValueItem(label: "Hanumangarh", value: "Hanumangarh"),
-  ValueItem(label: "Jaipur  Metro", value: "Jaipur  Metro"),
-  ValueItem(label: "Jaipur East", value: "Jaipur East"),
-  ValueItem(label: "Jaipur North", value: "Jaipur North"),
-  ValueItem(label: "Jaipur Rural", value: "Jaipur Rural"),
-  ValueItem(label: "Jaipur South", value: "Jaipur South"),
-  ValueItem(label: "Jaipur West", value: "Jaipur West"),
-  ValueItem(label: "Jaisalmer", value: "Jaisalmer"),
+  ValueItem(label: "Jaipur", value: "Jaipur"),
   ValueItem(label: "Jalore", value: "Jalore"),
   ValueItem(label: "Jhalawar", value: "Jhalawar"),
   ValueItem(label: "Jhunjhunu", value: "Jhunjhunu"),
@@ -463,18 +472,8 @@ List<ValueItem> getIncidentStationList(String district) {
       return grpJodhpurStationList;
     case "Hanumangarh":
       return hanumangarhStationList;
-    case "Jaipur  Metro":
-      return jaipurMetroStationList;
-    case "Jaipur East":
-      return jaipurEastStationList;
-    case "Jaipur North":
-      return jaipurNorthStationList;
-    case "Jaipur Rural":
-      return jaipurRuralStationList;
-    case "Jaipur South":
-      return jaipurSouthStationList;
-    case "Jaipur West":
-      return jaipurWestStationList;
+    case "Jaipur":
+      return jaipurStationList;
     case "Jaisalmer":
       return jaisalmerStationList;
     case "Jalore":
@@ -722,12 +721,112 @@ List<ValueItem> gangapurCityStationList = [];
 List<ValueItem> grpAjmerStationList = [];
 List<ValueItem> grpJodhpurStationList = [];
 List<ValueItem> hanumangarhStationList = [];
-List<ValueItem> jaipurMetroStationList = [];
-List<ValueItem> jaipurEastStationList = [];
-List<ValueItem> jaipurNorthStationList = [];
-List<ValueItem> jaipurRuralStationList = [];
-List<ValueItem> jaipurSouthStationList = [];
-List<ValueItem> jaipurWestStationList = [];
+List<ValueItem> jaipurStationList = [
+  ValueItem(label: "Metro", value: "Metro"),
+  ValueItem(label: "Adarsh Nagar", value: "Adarsh Nagar"),
+  ValueItem(label: "Bajaj Nagar", value: "Bajaj Nagar"),
+  ValueItem(label: "Bassi", value: "Bassi"),
+  ValueItem(label: "Gandhi Nagar", value: "Gandhi Nagar"),
+  ValueItem(label: "Jaipur Airport", value: "Jaipur Airport"),
+  ValueItem(label: "Jawahar Circle", value: "Jawahar Circle"),
+  ValueItem(label: "Jawahar Nagar", value: "Jawahar Nagar"),
+  ValueItem(label: "Kanota", value: "Kanota"),
+  ValueItem(label: "Khoh-Nagoriyan", value: "Khoh-Nagoriyan"),
+  ValueItem(label: "Lal Kothi", value: "Lal Kothi"),
+  ValueItem(label: "Mahila Thana East", value: "Mahila Thana East"),
+  ValueItem(label: "Malpura Gate", value: "Malpura Gate"),
+  ValueItem(label: "Malviya Nagar", value: "Malviya Nagar"),
+  ValueItem(label: "Moti Doongari", value: "Moti Doongari"),
+  ValueItem(label: "Pratapnagar", value: "Pratapnagar"),
+  ValueItem(label: "Ramnagariya", value: "Ramnagariya"),
+  ValueItem(label: "Sanganer", value: "Sanganer"),
+  ValueItem(label: "Sms Hospital", value: "Sms Hospital"),
+  ValueItem(label: "Toonga", value: "Toonga"),
+  ValueItem(label: "Transport Nagar", value: "Transport Nagar"),
+  ValueItem(label: "Amer", value: "Amer"),
+  ValueItem(label: "Bhatta Basti", value: "Bhatta Basti"),
+  ValueItem(label: "Brahmpuri", value: "Brahmpuri"),
+  ValueItem(label: "Galtagate", value: "Galtagate"),
+  ValueItem(label: "Jaisinghpura Khor", value: "Jaisinghpura Khor"),
+  ValueItem(label: "Jalupura", value: "Jalupura"),
+  ValueItem(label: "Kotwali Jaipur", value: "Kotwali Jaipur"),
+  ValueItem(label: "Mahila Thana North", value: "Mahila Thana North"),
+  ValueItem(label: "Manak Chowk", value: "Manak Chowk"),
+  ValueItem(label: "Nahargarh", value: "Nahargarh"),
+  ValueItem(label: "Ramganj", value: "Ramganj"),
+  ValueItem(label: "Sanjay Circle", value: "Sanjay Circle"),
+  ValueItem(label: "Shastri Nagar", value: "Shastri Nagar"),
+  ValueItem(label: "Subhash Chowk", value: "Subhash Chowk"),
+  ValueItem(label: "Tourist Thana, North", value: "Tourist Thana, North"),
+  ValueItem(label: "Vidyadhar Nagar", value: "Vidyadhar Nagar"),
+  ValueItem(label: "Amer", value: "Amer"),
+  ValueItem(label: "Bhatta Basti", value: "Bhatta Basti"),
+  ValueItem(label: "Brahmpuri", value: "Brahmpuri"),
+  ValueItem(label: "Galtagate", value: "Galtagate"),
+  ValueItem(label: "Jaisinghpura Khor", value: "Jaisinghpura Khor"),
+  ValueItem(label: "Jalupura", value: "Jalupura"),
+  ValueItem(label: "Kotwali Jaipur", value: "Kotwali Jaipur"),
+  ValueItem(label: "Mahila Thana North", value: "Mahila Thana North"),
+  ValueItem(label: "Manak Chowk", value: "Manak Chowk"),
+  ValueItem(label: "Nahargarh", value: "Nahargarh"),
+  ValueItem(label: "Ramganj", value: "Ramganj"),
+  ValueItem(label: "Sanjay Circle", value: "Sanjay Circle"),
+  ValueItem(label: "Shastri Nagar", value: "Shastri Nagar"),
+  ValueItem(label: "Subhash Chowk", value: "Subhash Chowk"),
+  ValueItem(label: "Tourist Thana, North", value: "Tourist Thana, North"),
+  ValueItem(label: "Vidyadhar Nagar", value: "Vidyadhar Nagar"),
+  ValueItem(label: "Amarsar", value: "Amarsar"),
+  ValueItem(label: "Andhi", value: "Andhi"),
+  ValueItem(label: "Chandwaji", value: "Chandwaji"),
+  ValueItem(label: "Govindgarh", value: "Govindgarh"),
+  ValueItem(label: "Jamwaramgarh", value: "Jamwaramgarh"),
+  ValueItem(label: "Jobner", value: "Jobner"),
+  ValueItem(label: "Kaladera", value: "Kaladera"),
+  ValueItem(label: "Madhorajpura", value: "Madhorajpura"),
+  ValueItem(label: "Mahila Thana", value: "Mahila Thana"),
+  ValueItem(label: "Manoharpur", value: "Manoharpur"),
+  ValueItem(label: "Narena", value: "Narena"),
+  ValueItem(label: "Phulera", value: "Phulera"),
+  ValueItem(label: "Raisar", value: "Raisar"),
+  ValueItem(label: "Renwal", value: "Renwal"),
+  ValueItem(label: "Renwal Manji", value: "Renwal Manji"),
+  ValueItem(label: "Sambhar", value: "Sambhar"),
+  ValueItem(label: "Samod", value: "Samod"),
+  ValueItem(label: "Shahpura", value: "Shahpura"),
+  ValueItem(label: "Ashok Nagar", value: "Ashok Nagar"),
+  ValueItem(label: "Chaksu", value: "Chaksu"),
+  ValueItem(label: "Jyoti Nagar", value: "Jyoti Nagar"),
+  ValueItem(label: "Kotkhawda", value: "Kotkhawda"),
+  ValueItem(label: "Mahesh Nagar", value: "Mahesh Nagar"),
+  ValueItem(label: "Mahila Thana  South", value: "Mahila Thana  South"),
+  ValueItem(label: "Mansarovar", value: "Mansarovar"),
+  ValueItem(label: "Muhana", value: "Muhana"),
+  ValueItem(label: "Sanganer Sadar", value: "Sanganer Sadar"),
+  ValueItem(label: "Shipra Path", value: "Shipra Path"),
+  ValueItem(label: "Shivdaspura", value: "Shivdaspura"),
+  ValueItem(label: "Shyam Nagar", value: "Shyam Nagar"),
+  ValueItem(label: "Sodala", value: "Sodala"),
+  ValueItem(label: "Vidhayak Puri", value: "Vidhayak Puri"),
+  ValueItem(label: "Bagru", value: "Bagru"),
+  ValueItem(label: "Banipark", value: "Banipark"),
+  ValueItem(label: "Bhankrota", value: "Bhankrota"),
+  ValueItem(label: "Bindayka", value: "Bindayka"),
+  ValueItem(label: "Chitrakoot", value: "Chitrakoot"),
+  ValueItem(label: "Chomu", value: "Chomu"),
+  ValueItem(label: "Daulatpura", value: "Daulatpura"),
+  ValueItem(label: "Harmara", value: "Harmara"),
+  ValueItem(label: "Jhotwara", value: "Jhotwara"),
+  ValueItem(label: "Kalwar", value: "Kalwar"),
+  ValueItem(label: "Kardhani", value: "Kardhani"),
+  ValueItem(label: "Karnivihar", value: "Karnivihar"),
+  ValueItem(label: "Mahila Thana", value: "Mahila Thana"),
+  ValueItem(label: "Muralipura", value: "Muralipura"),
+  ValueItem(label: "Sadar Jaipur", value: "Sadar Jaipur"),
+  ValueItem(label: "Sez", value: "Sez"),
+  ValueItem(label: "Sindhicamp", value: "Sindhicamp"),
+  ValueItem(label: "Vaishali Nagar", value: "Vaishali Nagar"),
+  ValueItem(label: "Vishwakarma  ", value: "Vishwakarma  "),
+];
 List<ValueItem> jaisalmerStationList = [];
 List<ValueItem> jaloreStationList = [];
 List<ValueItem> jhalawarStationList = [];

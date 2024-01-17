@@ -1,5 +1,6 @@
 final Map<String, String> enUs = {
   "lbl_staff": "Staff",
+  "lbl_cctv_surveillance": "CCTV Surveillance",
   "lbl_citizen": "Citizen",
   'msg_network_err': 'Network Error',
   'msg_something_went_wrong': 'Something Went Wrong!',

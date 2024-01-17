@@ -31,15 +31,15 @@ class MapPolicePage extends StatelessWidget {
               children: [
                 GoogleMap(
                   initialCameraPosition: CameraPosition(
-                    target: LatLng(26.921040, 75.794357),
-                    zoom: 14.4746,
+                    target: LatLng(26.866866, 75.819099),
+                    zoom: 13,
                   ),
                   myLocationButtonEnabled: true,
                   myLocationEnabled: true,
                   markers: {
                     Marker(
                         markerId: MarkerId("police"),
-                        position: LatLng(26.921040, 75.794357),
+                        position: LatLng(26.866866, 75.819099),
                         icon: BitmapDescriptor.defaultMarkerWithHue(
                             BitmapDescriptor.hueBlue),
                         infoWindow: InfoWindow(
@@ -52,9 +52,9 @@ class MapPolicePage extends StatelessWidget {
                               icon: BitmapDescriptor.defaultMarkerWithHue(
                                   BitmapDescriptor.hueRed),
                               infoWindow: InfoWindow(
-                                title: cctv.title,
-                                snippet: cctv.address,
-                              ),
+                                  title: cctv.title,
+                                  snippet: cctv.address,
+                                  onTap: () => onTapCctvWindow(context, cctv)),
                             ))
                         : state.incidentsList
                             .sublist(0, 6)
@@ -172,6 +172,12 @@ class MapPolicePage extends StatelessWidget {
   onTapIncidentWindow(BuildContext context, Incident incident) {
     NavigatorService.pushNamed(AppRoutes.incidentDetailsScreen, arguments: {
       "incident": incident,
+    });
+  }
+
+  onTapCctvWindow(BuildContext context, Cctv cctv) {
+    NavigatorService.pushNamed(AppRoutes.cctvDetailsScreen, arguments: {
+      "cctv": cctv,
     });
   }
 }
