@@ -1,3 +1,5 @@
+from geopy.geocoders import Nominatim
+
 def delete_na_fields(map):
     for key in list(map.keys()):
         if map[key] == "":
@@ -7,3 +9,122 @@ def delete_na_fields(map):
         elif map[key] == None:
             del map[key]
     return map
+
+def get_lat_long(address):
+    geolocator = Nominatim(user_agent="myGeocoder")
+    location = geolocator.geocode(address)
+    return (location.latitude, location.longitude)
+
+cctv_json = {
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "cctv_c00",
+        "cctv_type": "prison",
+        "title": "Cell #1",
+        "description": "Amboli Prison, Andheri",
+        "kind": "default",
+        "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1704612681/samples/prison_escape.mp4"
+      },
+      "geometry": { "coordinates": [72.829, 19.138], "type": "Point" }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "cctv_c01",
+        "cctv_type": "prison",
+        "title": "Cell #2",
+        "description": "Amboli Prison, Andheri",
+        "kind": "default",
+        "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1704612681/samples/prison_escape.mp4"
+      },
+      "geometry": { "coordinates": [72.829, 19.138], "type": "Point" }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "cctv_p00",
+        "cctv_type": "station_premises",
+        "title": "Backyard",
+        "description": "Amboli prison, Andheri",
+        "kind": "default",
+        "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1704612681/samples/prison_escape.mp4"
+      },
+      "geometry": { "coordinates": [72.829, 19.138], "type": "Point" }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "cctv_p01",
+        "cctv_type": "station_premises",
+        "title": "Gate #1",
+        "description": "Amboli prison, Andheri",
+        "kind": "default",
+        "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1704612681/samples/prison_escape.mp4"
+      },
+      "geometry": { "coordinates": [72.829, 19.138], "type": "Point" }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "cctv_p03",
+        "cctv_type": "public",
+        "title": "Lokhandwala Market, Andheri West",
+        "description": "Local market",
+        "kind": "default",
+        "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1705171052/samples/fire_sample.mp4"
+      },
+      "geometry": { "coordinates": [72.829, 19.138], "type": "Point" }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "cctv_p04",
+        "cctv_type": "public",
+        "title": "Chota Kashmir, Goregaon East",
+        "description": "Feel Kashmir in your city",
+        "kind": "boat",
+        "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1704890971/samples/public_cam.mp4"
+      },
+      "geometry": { "coordinates": [72.857, 19.155], "type": "Point" }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "cctv_p05",
+        "cctv_type": "public",
+        "title": "Versova Beach",
+        "description": "Bustling Beach in suburbs",
+        "kind": "beach",
+        "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1704614357/samples/gun_video.mp4"
+      },
+      "geometry": { "coordinates": [72.814, 19.125], "type": "Point" }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "cctv_p06",
+        "cctv_type": "public",
+        "title": "Mahakali Caves, Andheri East",
+        "description": "Rock-cut monuments",
+        "kind": "default",
+        "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1703605915/samples/market.mp4"
+      },
+      "geometry": { "coordinates": [72.867, 19.13], "type": "Point" }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "cctv_p07",
+        "cctv_type": "public",
+        "title": "Juhu Beach, Andheri West",
+        "description": "Longest beach in Mumbai",
+        "kind": "beach",
+        "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1703605906/samples/beach.mp4"
+      },
+      "geometry": { "coordinates": [72.826, 19.107], "type": "Point" }
+    }
+  ],
+  "type": "FeatureCollection"
+}

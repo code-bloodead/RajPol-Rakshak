@@ -17,3 +17,5 @@ class Incidents(BaseModel):
     status: str = Form(default="Pending")
     #status are: Pending, Resolved, Closed
     created_at: str = Form(default=datetime.datetime.now())
+    lat: str = Form(default="0")
+    long: str = Form(default="0")

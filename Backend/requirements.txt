@@ -12,6 +12,7 @@ pydantic==1.10.11
 dnspython==2.2.1
 python-multipart==0.0.5
 ultralytics
+geopy
 numpy
 opencv-python
 # pandas
