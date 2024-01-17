@@ -13,6 +13,7 @@ class ProfilePolicePage extends StatelessWidget {
     return BlocProvider<ProfilePoliceBloc>(
         create: (context) => ProfilePoliceBloc(ProfilePoliceState(
             profilePoliceModelObj: ProfilePoliceModel(),
+            language: PrefUtils().getLanguage(),
             isSelectedNotification: PrefUtils().getNotificationStatus()))
           ..add(ProfilePoliceInitialEvent()),
         child: ProfilePolicePage());
@@ -208,20 +209,35 @@ class ProfilePolicePage extends StatelessWidget {
                                               style: AppStyle
                                                   .txtManropeSemiBold14Gray900)),
                                       Spacer(),
-                                      Padding(
-                                          padding:
-                                              getPadding(top: 2, bottom: 1),
-                                          child: Text("lbl_english".tr,
-                                              overflow: TextOverflow.ellipsis,
-                                              textAlign: TextAlign.left,
-                                              style: AppStyle
-                                                  .txtManropeSemiBold14)),
-                                      CustomImageView(
-                                          svgPath: ImageConstant
-                                              .imgArrowrightBlueGray500,
-                                          height: getSize(20),
-                                          width: getSize(20),
-                                          margin: getMargin(left: 4, bottom: 3))
+                                      GestureDetector(
+                                        onTap: () => NavigatorService.pushNamed(
+                                          AppRoutes.changeLanguageScreen,
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            Padding(
+                                                padding: getPadding(
+                                                    top: 2, bottom: 1),
+                                                child: Text(
+                                                    PrefUtils().getLanguage() ==
+                                                            "hi"
+                                                        ? "lbl_hindi".tr
+                                                        : "lbl_english".tr,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    textAlign: TextAlign.left,
+                                                    style: AppStyle
+                                                        .txtManropeSemiBold14)),
+                                            CustomImageView(
+                                                svgPath: ImageConstant
+                                                    .imgArrowrightBlueGray500,
+                                                height: getSize(20),
+                                                width: getSize(20),
+                                                margin: getMargin(
+                                                    left: 4, bottom: 3))
+                                          ],
+                                        ),
+                                      ),
                                     ])),
                             Align(
                                 alignment: Alignment.centerLeft,
