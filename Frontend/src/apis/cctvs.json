@@ -8,21 +8,9 @@
         "title": "Cell #1",
         "description": "Amboli Prison, Andheri",
         "kind": "default",
-        "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1704612681/samples/prison_escape.mp4"
+        "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1705470821/samples/prison_cell_fight_crack.mp4"
       },
-      "geometry": { "coordinates": [72.829, 19.138], "type": "Point" }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "id": "cctv_c01",
-        "cctv_type": "prison",
-        "title": "Cell #2",
-        "description": "Amboli Prison, Andheri",
-        "kind": "default",
-        "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1704612681/samples/prison_escape.mp4"
-      },
-      "geometry": { "coordinates": [72.829, 19.138], "type": "Point" }
+      "geometry": { "coordinates": [26.920830, 75.793044], "type": "Point" }
     },
     {
       "type": "Feature",
@@ -32,21 +20,9 @@
         "title": "Backyard",
         "description": "Amboli prison, Andheri",
         "kind": "default",
-        "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1704612681/samples/prison_escape.mp4"
+        "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1705472325/samples/prison_wall_climbing.mp4"
       },
-      "geometry": { "coordinates": [72.829, 19.138], "type": "Point" }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "id": "cctv_p01",
-        "cctv_type": "station_premises",
-        "title": "Gate #1",
-        "description": "Amboli prison, Andheri",
-        "kind": "default",
-        "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1704612681/samples/prison_escape.mp4"
-      },
-      "geometry": { "coordinates": [72.829, 19.138], "type": "Point" }
+      "geometry": { "coordinates": [26.919835, 75.793968], "type": "Point" }
     },
     {
       "type": "Feature",
@@ -56,9 +32,9 @@
         "title": "Lokhandwala Market, Andheri West",
         "description": "Local market",
         "kind": "default",
-        "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1705171052/samples/fire_sample.mp4"
+        "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1705471181/samples/public_accident_fire.mp4"
       },
-      "geometry": { "coordinates": [72.829, 19.138], "type": "Point" }
+      "geometry": { "coordinates": [26.917601, 75.795642], "type": "Point" }
     },
     {
       "type": "Feature",
@@ -70,7 +46,7 @@
         "kind": "boat",
         "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1704890971/samples/public_cam.mp4"
       },
-      "geometry": { "coordinates": [72.857, 19.155], "type": "Point" }
+      "geometry": { "coordinates": [26.918374, 75.800766], "type": "Point" }
     },
     {
       "type": "Feature",
@@ -82,7 +58,7 @@
         "kind": "beach",
         "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1704614357/samples/gun_video.mp4"
       },
-      "geometry": { "coordinates": [72.814, 19.125], "type": "Point" }
+      "geometry": { "coordinates": [26.923884, 75.801752], "type": "Point" }
     },
     {
       "type": "Feature",
@@ -94,7 +70,7 @@
         "kind": "default",
         "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1703605915/samples/market.mp4"
       },
-      "geometry": { "coordinates": [72.867, 19.13], "type": "Point" }
+      "geometry": { "coordinates": [26.931843, 75.785003], "type": "Point" }
     },
     {
       "type": "Feature",
@@ -106,7 +82,7 @@
         "kind": "beach",
         "streamUrl": "https://res.cloudinary.com/dp0ayty6p/video/upload/v1703605906/samples/beach.mp4"
       },
-      "geometry": { "coordinates": [72.826, 19.107], "type": "Point" }
+      "geometry": { "coordinates": [26.921063, 75.784501], "type": "Point" }
     }
   ],
   "type": "FeatureCollection"

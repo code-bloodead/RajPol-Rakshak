@@ -11,7 +11,7 @@ from ultralytics import YOLO
 import cv2
 import numpy as np
 import io
-from src.utility import get_lat_long, cctv_json
+from src.utility import get_lat_long, cctv_json, get_lat_long_by_cctv
 
 s3 = boto3.resource(
     service_name='s3',
@@ -50,9 +50,8 @@ def new_incident(incident: Incidents):
         if incident.title == "" or incident.type == "" or incident.station_name == "" or incident.source == "" or incident.image == "" or incident.location == "":
             return {"ERROR": "MISSING PARAMETERS"}
 
-        if findcctvtype(incident.source) == "public":
-            incident.lat, incident.long = get_lat_long(incident.location)
-
+        incident.lat, incident.long = get_lat_long_by_cctv(incident.source)
+    
         result = create_incident(incident)
         notification = Notifications(station_name=incident.station_name, title="New Incident: " + incident.title, description=incident.description, type="incident", image=incident.image)
         create_notification(notification)

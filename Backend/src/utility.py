@@ -1,4 +1,9 @@
-from geopy.geocoders import Nominatim
+
+import googlemaps
+from src.config import GOOGLE_MAPS_API_KEY
+
+
+gmaps = googlemaps.Client(key=GOOGLE_MAPS_API_KEY)
 
 def delete_na_fields(map):
     for key in list(map.keys()):
@@ -10,10 +15,21 @@ def delete_na_fields(map):
             del map[key]
     return map
 
-def get_lat_long(address):
-    geolocator = Nominatim(user_agent="myGeocoder")
-    location = geolocator.geocode(address)
-    return (location.latitude, location.longitude)
+def get_lat_long(address): 
+  try: 
+    geocode_result = gmaps.geocode(address)
+    lat = geocode_result[0]["geometry"]["location"]["lat"]
+    lon = geocode_result[0]["geometry"]["location"]["lng"]
+    return (str(lat), str(lon))
+  except Exception as e:
+    return ("26.8668664","75.8190989")
+
+
+def get_lat_long_by_cctv(id):
+    for feature in cctv_json["features"]:
+        if feature["properties"]["id"] == id:
+            return feature["geometry"]["coordinates"]
+    return ("26.8668664","75.8190989")
 
 cctv_json = {
   "features": [
