@@ -110,3 +110,12 @@ def fetch_incidents_by_id(id):
     except Exception as e:
         print(e)
         return {"ERROR":"SOME ERROR OCCURRED"}
+    
+
+def update_incident_station_name(id, station_name):
+    try:
+        incidents.update_one({"id":id},{"$set":{"station_name":station_name}})
+        return {"SUCCESS":"STATION NAME UPDATED"}
+    except Exception as e:
+        print(e)
+        return {"ERROR":"SOME ERROR OCCURRED"}
