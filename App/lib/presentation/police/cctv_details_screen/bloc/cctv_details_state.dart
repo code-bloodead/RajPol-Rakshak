@@ -3,33 +3,18 @@
 part of 'cctv_details_bloc.dart';
 
 class CctvDetailsState extends Equatable {
-  CctvDetailsState({
-    this.silderIndex = 0,
-    this.radioGroup = "",
-    this.cctv,
-  });
+  CctvDetailsState({this.cctv, this.videoPlayerController});
 
   Cctv? cctv;
-
-  int silderIndex;
-
-  String radioGroup;
+  CustomVideoPlayerController? videoPlayerController;
 
   @override
-  List<Object?> get props => [
-        silderIndex,
-        radioGroup,
-        cctv,
-      ];
-  CctvDetailsState copyWith({
-    int? silderIndex,
-    String? radioGroup,
-    Cctv? cctv,
-  }) {
+  List<Object?> get props => [cctv, videoPlayerController];
+  CctvDetailsState copyWith(
+      {Cctv? cctv, CustomVideoPlayerController? videoPlayerController}) {
     return CctvDetailsState(
-      silderIndex: silderIndex ?? this.silderIndex,
-      radioGroup: radioGroup ?? this.radioGroup,
-      cctv: cctv ?? this.cctv,
-    );
+        cctv: cctv ?? this.cctv,
+        videoPlayerController:
+            videoPlayerController ?? this.videoPlayerController);
   }
 }

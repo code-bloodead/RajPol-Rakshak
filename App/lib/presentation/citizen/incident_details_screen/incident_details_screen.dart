@@ -382,8 +382,8 @@ class IncidentDetailsScreen extends StatelessWidget {
                                       CustomImageView(
                                           url: state.incident?.image ??
                                               ImageConstant.noImageUrl,
-                                          height: getVerticalSize(150),
-                                          width: getHorizontalSize(150)),
+                                          height: getVerticalSize(250),
+                                          width: getHorizontalSize(250)),
                                     ])),
                                 Padding(
                                     padding: getPadding(left: 8, top: 32),

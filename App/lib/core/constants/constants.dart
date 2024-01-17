@@ -38,9 +38,11 @@ List<Incident> userReports = [
       long: "75.793044"),
   Incident(
       id: "ABCB1234",
-      image: "https://i0.wp.com/www.rvcj.com/wp-content/uploads/2015/03/maxresdefault1.jpg",
+      image:
+          "https://i0.wp.com/www.rvcj.com/wp-content/uploads/2015/03/maxresdefault1.jpg",
       title: "Fighting in Public",
-      description: "People fighting with each other, trying to hurt random people",
+      description:
+          "People fighting with each other, trying to hurt random people",
       type: "Crime",
       station_name: "Jaipur",
       location: "Jhalana Gram, Malviya Nagar, Jaipur, Rajasthan 302017, India",
@@ -51,7 +53,8 @@ List<Incident> userReports = [
       long: "75.820325"),
   Incident(
     id: "BBCB1234",
-    image: "https://static.toiimg.com/thumb/msid-65765549,width-400,resizemode-4/65765549.jpg",
+    image:
+        "https://static.toiimg.com/thumb/msid-65765549,width-400,resizemode-4/65765549.jpg",
     title: "Car & Truck Accident",
     description: "A Car collided with a truck, 2 people injured",
     type: "Accident",
@@ -65,7 +68,8 @@ List<Incident> userReports = [
   ),
   Incident(
       id: "DBCB1234",
-      image: "https://c8.alamy.com/comp/HWGJWR/road-traffic-accident-between-two-cars-in-retail-park-in-spain-HWGJWR.jpg",
+      image:
+          "https://c8.alamy.com/comp/HWGJWR/road-traffic-accident-between-two-cars-in-retail-park-in-spain-HWGJWR.jpg",
       title: "Two Cars Collided",
       description: "Accident Between Two cars, driver in both cars injured",
       type: "Accident",
@@ -78,7 +82,8 @@ List<Incident> userReports = [
       long: "75.800766"),
   Incident(
       id: "EFGH5678",
-      image: "https://i0.wp.com/english.publictv.in/wp-content/uploads/2023/12/Nelamangala-car-catches-fire.jpg",
+      image:
+          "https://i0.wp.com/english.publictv.in/wp-content/uploads/2023/12/Nelamangala-car-catches-fire.jpg",
       title: "Car on Fire",
       description: "A car caught fire suddenly, everyone is safe",
       type: "Accident",
@@ -92,7 +97,8 @@ List<Incident> userReports = [
       long: "75.801752"),
   Incident(
       id: "IJKL9012",
-      image: "https://as2.ftcdn.net/v2/jpg/02/15/94/73/500_F_215947395_pqKBrx39ML0S1LUmKxQZYdCbb1SVRXj7.jpg",
+      image:
+          "https://as2.ftcdn.net/v2/jpg/02/15/94/73/500_F_215947395_pqKBrx39ML0S1LUmKxQZYdCbb1SVRXj7.jpg",
       title: "Person stole bag",
       description: "A theif threatened a person and stole his bag",
       type: "Assault",
@@ -103,8 +109,172 @@ List<Incident> userReports = [
       status: "Resolved",
       created_at: "2024-01-12T14:10:05.721+00:00",
       lat: "26.931843",
-      long: "75.785003")
-  ];
+      long: "75.785003"),
+  Incident(
+      id: "MNOP3456",
+      image:
+          "https://blog.ipleaders.in/wp-content/uploads/2018/06/BV-Acharya-19.jpg",
+      title: "Beating single person",
+      description: "Four Persons fighting with one person very badly in public",
+      type: "Crime",
+      station_name: "Jaipur",
+      location:
+          "23A, Nahar Garh Rasta, Purani Basti, Jaipur, Rajasthan 302001, India",
+      source: "CCTV",
+      status: "Pending",
+      created_at: "2024-01-13T18:30:40.901+00:00",
+      lat: "26.932389",
+      long: "75.811464"),
+  Incident(
+      id: "QRST7890",
+      image:
+          "https://i0.wp.com/www.rvcj.com/wp-content/uploads/2015/03/maxresdefault1.jpg",
+      title: "Fighting in Public",
+      description:
+          "People fighting with each other, trying to hurt random people",
+      type: "Crime",
+      station_name: "Jaipur",
+      location:
+          "C-64 A, Sarojini Marg, Panch Batti, C Scheme, Ashok Nagar, Jaipur, Rajasthan 302001, India",
+      source: "9324326404",
+      status: "Pending",
+      created_at: "2024-01-14T09:15:22.623+00:00",
+      lat: "26.909933",
+      long: "75.804533"),
+  Incident(
+      id: "UVWX1234",
+      image:
+          "https://static.toiimg.com/thumb/msid-65765549,width-400,resizemode-4/65765549.jpg",
+      title: "Car & Truck Accident",
+      description: "A Car collided with a truck, 2 people injured",
+      type: "Accident",
+      station_name: "Jaipur",
+      location:
+          "Hatwara Rd, Adarsh Nawal Colony, Lakshmi Nagar, Jaipur, Rajasthan 302007, India",
+      source: "CCTV",
+      status: "Closed",
+      created_at: "2024-01-16T12:45:55.321+00:00",
+      lat: "26.915980",
+      long: "75.772926"),
+  Incident(
+      id: "YZAB5678",
+      image:
+          "https://c8.alamy.com/comp/HWGJWR/road-traffic-accident-between-two-cars-in-retail-park-in-spain-HWGJWR.jpg",
+      title: "Two Cars Collided",
+      description: "Accident Between Two cars, driver in both cars injured",
+      type: "Accident",
+      station_name: "Jaipur",
+      location: "Hasanpura, Jaipur, Rajasthan 302006, India",
+      source: "9324326404",
+      status: "Resolved",
+      created_at: "2024-01-04T16:20:30.430+00:00",
+      lat: "26.921063",
+      long: "75.784501"),
+  Incident(
+      id: "CDEF9012",
+      image:
+          "https://i0.wp.com/english.publictv.in/wp-content/uploads/2023/12/Nelamangala-car-catches-fire.jpg",
+      title: "Car on Fire",
+      description: "A car caught fire suddenly, everyone is safe",
+      type: "Accident",
+      station_name: "Jaipur",
+      location:
+          "S-5/B, Keshav Nagar, Civil Lines, Jaipur, Rajasthan 302006, India",
+      source: "9324326404",
+      status: "Pending",
+      created_at: "2024-01-15T21:05:15.812+00:00",
+      lat: "26.902848",
+      long: "75.785016"),
+  Incident(
+      id: "CDEF9013",
+      image:
+          "https://as2.ftcdn.net/v2/jpg/02/15/94/73/500_F_215947395_pqKBrx39ML0S1LUmKxQZYdCbb1SVRXj7.jpg",
+      title: "Person stole bag",
+      description: "A theif threatened a person and stole his bag",
+      type: "Assault",
+      station_name: "Jaipur",
+      location: "4-9, Sector 4, Jawahar Nagar, Jaipur, Rajasthan 302004, India",
+      source: "9324326404",
+      status: "Pending",
+      created_at: "2024-01-17T21:05:15.812+00:00",
+      lat: "26.885766",
+      long: "75.831701"),
+  Incident(
+      id: "CDEF9000",
+       image:
+          "https://blog.ipleaders.in/wp-content/uploads/2018/06/BV-Acharya-19.jpg",
+      title: "Beating single person",
+      description: "Four Persons fighting with one person very badly in public",
+      type: "Crime",
+      station_name: "Jaipur",
+      location: "Jamdoli, Jaipur, Rajasthan 302031, India",
+      source: "9324326404",
+      status: "Pending",
+      created_at: "2024-01-17T21:05:15.812+00:00",
+      lat: "26.906409",
+      long: "75.890008"),
+  Incident(
+      id: "CDEF7000",
+       image:
+          "https://i0.wp.com/www.rvcj.com/wp-content/uploads/2015/03/maxresdefault1.jpg",
+      title: "Fighting in Public",
+      description:
+          "People fighting with each other, trying to hurt random people",
+      type: "Crime",
+      station_name: "Jaipur",
+      location:
+          "256, Nirman Nagar, Sushilpura, Jaipur, Rajasthan 302019, India",
+      source: "User Report",
+      status: "Pending",
+      created_at: "2024-01-16T21:05:15.812+00:00",
+      lat: "26.889263",
+      long: "75.748453"),
+  Incident(
+      id: "CDEF6000",
+      image:
+          "https://static.toiimg.com/thumb/msid-65765549,width-400,resizemode-4/65765549.jpg",
+      title: "Car & Truck Accident",
+      description: "A Car collided with a truck, 2 people injured",
+      type: "Accident",
+      station_name: "Jaipur",
+      location:
+          "Galta Rd, near Ramganj choupad, Hida Ki Mori, Laxmi Narayan Puri, Jaipur, Rajasthan 302002, India",
+      source: "9324326404",
+      status: "Pending",
+      created_at: "2024-01-17T21:05:15.812+00:00",
+      lat: "26.921369",
+      long: "75.835651"),
+  Incident(
+      id: "CDEF5000",
+       image:
+          "https://c8.alamy.com/comp/HWGJWR/road-traffic-accident-between-two-cars-in-retail-park-in-spain-HWGJWR.jpg",
+      title: "Two Cars Collided",
+      description: "Accident Between Two cars, driver in both cars injured",
+      type: "Accident",
+      station_name: "Jaipur",
+      location:
+          "68, Talkatora Colony, J.D.A. Market, Kanwar Nagar, Jaipur, Rajasthan 302002, India",
+      source: "9324326404",
+      status: "Pending",
+      created_at: "2024-01-16T21:05:15.812+00:00",
+      lat: "26.932083",
+      long: "75.826032"),
+  Incident(
+      id: "CAEF5000",
+      image:
+          "https://i0.wp.com/english.publictv.in/wp-content/uploads/2023/12/Nelamangala-car-catches-fire.jpg",
+      title: "Car on Fire",
+      description: "A car caught fire suddenly, everyone is safe",
+      type: "Accident",
+      station_name: "Jaipur",
+      location:
+          "137, Galta Rd, Goverdhan Puri, Lal Dungri, Jaipur, Rajasthan 302003, India",
+      source: "CCTV",
+      status: "Pending",
+      created_at: "2024-01-17T21:05:15.812+00:00",
+      lat: "26.917390",
+      long: "75.849222"),
+];
 
 List<BarData> dataListConstants = [
   BarData(ColorConstant.blue500, 18, 18),
@@ -125,7 +295,7 @@ List<Cctv> cctvConstants = [
       address:
           "6, Vivek Nagar, Kanti Nagar, Sindhi Camp, Jaipur, Rajasthan 302016, India",
       streamUrl:
-          "https://res.cloudinary.com/dp0ayty6p/video/upload/v1705171052/samples/fire_sample.mp4"),
+          "https://res.cloudinary.com/dp0ayty6p/video/upload/v1705471181/samples/public_accident_fire.mp4"),
   Cctv(
       id: "cctv_222",
       lat: "26.920830",
@@ -134,7 +304,7 @@ List<Cctv> cctvConstants = [
       address:
           "Station Road, Metro Pillor No. 167 Hanumant Kunj, Barodia Scheme, Gopalbari, Jaipur, Rajasthan 302001, India",
       streamUrl:
-          "https://res.cloudinary.com/dp0ayty6p/video/upload/v1704890971/samples/public_cam.mp4"),
+          "https://res.cloudinary.com/dp0ayty6p/video/upload/v1705485743/samples/fire_sample.mp4"),
   Cctv(
       id: "cctv_333",
       lat: "26.917390",
@@ -143,7 +313,7 @@ List<Cctv> cctvConstants = [
       address:
           "137, Galta Rd, Goverdhan Puri, Lal Dungri, Jaipur, Rajasthan 302003, India",
       streamUrl:
-          "https://res.cloudinary.com/dp0ayty6p/video/upload/v1705415782/samples/prison_fight.mp4"),
+          "https://res.cloudinary.com/dp0ayty6p/video/upload/v1704614357/samples/gun_video.mp4"),
   Cctv(
       id: "cctv_444",
       lat: "26.885766",
