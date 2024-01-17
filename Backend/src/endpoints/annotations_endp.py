@@ -22,14 +22,11 @@ router = APIRouter(
 )
 
 
-def getNumberOfObjectsInBucket(bucketName, prefix):
-    count = 0
-    response = boto3.client('s3').list_objects_v2(Bucket=bucketName,Prefix=prefix)
-    for object in response['Contents']:
-        if object['Size'] != 0:
-            #print(object['Key'])
-            count+=1
-    return count
+def getNumberOfObjectsInBucket(prefix):
+    files_in_s3 = [f.key.split(prefix)[1] for f in bucket.objects.filter(Prefix=prefix).all()]
+    print("Files:",len(files_in_s3))
+    return len(files_in_s3)
+
 
 # function that generates random id of length 8
 def generateID():
@@ -49,54 +46,54 @@ async def create_incident_by_user(image: UploadFile, json_data: str = Form(...))
             
         if img_extension not in ["png", "jpg","jpeg"]:
             return {"ERROR":"INVALID IMAGE FORMAT"}
-
-        # Create a BytesIO object from the uploaded file
         byte_im = await image.read()
-
-        byte_im_io = io.BytesIO(byte_im)
-
         data = json.loads(json_data)
-
-        selected_options = [option['value'] for option in data['annotations']['selected_options']]
+        # pprint.pprint(data)
         name =  str(filename.split(".")[0] + generateID())
-        counter = 0
-        yaml = """
-        train: ../train/images
-        val: ../valid/images
-        test: ../test/images
+        for i in range(len(data['annotations'])):
 
-        nc: 1
+            if 'selectedOptions' not in data['annotations'][i]:
+                continue
+            selected_options = [option['value'] for option in data['annotations'][i]['selectedOptions']]
+            
+            yaml = """
+            train: ../train/images
+            val: ../valid/images
+            test: ../test/images
 
-        names: ['0']
-        """
-        for option in selected_options:
-            ### Get the number of files in option/train
-            ### Get the number of files in option/valid
-            ### Get the number of files in option/test
-            ntrain = getNumberOfObjectsInBucket(S3_BUCKET_NAME, f"{option}/train/")
-            nvalid = getNumberOfObjectsInBucket(S3_BUCKET_NAME, f"{option}/valid/")
-            ntest = getNumberOfObjectsInBucket(S3_BUCKET_NAME, f"{option}/test/")
-            total = ntrain + nvalid + ntest
+            nc: 1
 
-            w = float(data['annotations'][counter]['width'])
-            h = float(data['annotations'][counter]['height'])
-            x = float(data['annotations'][counter]['x']) + w/2
-            y = float(data['annotations'][counter]['y']) + h/2
-            label = f"0 {x} {y} {w} {h}\n"
+            names: ['0']
+            """
+        
+            for option in selected_options:
+                ### Get the number of files in option/train
+                ### Get the number of files in option/valid
+                ### Get the number of files in option/test
+                ntrain = getNumberOfObjectsInBucket(f"{option}/train/images/")
+                nvalid = getNumberOfObjectsInBucket(f"{option}/valid/images/")
+                ntest = getNumberOfObjectsInBucket(f"{option}/test/images/")
+                total = ntrain + nvalid + ntest
 
-            if ntrain == 0:
-                bucket.upload_fileobj(byte_im_io, f"{option}/train/images/{name}.jpg")
-                s3.Object(S3_BUCKET_NAME, f"{option}/train/labels/{name}.txt").put(Body=label)
-                s3.Object(S3_BUCKET_NAME, f"{option}/data.yaml").put(Body=yaml)
-            if (ntrain)/total*100 < 60:
-                bucket.upload_fileobj(byte_im_io, f"{option}/train/images/{name}.jpg")
-                s3.Object(S3_BUCKET_NAME, f"{option}/train/labels/{name}.txt").put(Body=label)
-            elif (nvalid)/total*100 < 20:
-                bucket.upload_fileobj(byte_im_io, f"{option}/valid/images/{name}.jpg")
-                s3.Object(S3_BUCKET_NAME, f"{option}/valid/labels/{name}.txt").put(Body=label)
-            else:
-                bucket.upload_fileobj(byte_im_io, f"{option}/test/images/{name}.jpg")
-                s3.Object(S3_BUCKET_NAME, f"{option}/test/labels/{name}.txt").put(Body=label)
+                byte_im_io = io.BytesIO(byte_im)
+                w = float(data['annotations'][i]['width'])
+                h = float(data['annotations'][i]['height'])
+                x = float(data['annotations'][i]['x']) + w/2
+                y = float(data['annotations'][i]['y']) + h/2
+                label = f"0 {x} {y} {w} {h}\n"
+                if ntrain == 0:
+                    bucket.upload_fileobj(byte_im_io, f"{option}/train/images/{name}.jpg")
+                    s3.Object(S3_BUCKET_NAME, f"{option}/train/labels/{name}.txt").put(Body=label)
+                    s3.Object(S3_BUCKET_NAME, f"{option}/data.yaml").put(Body=yaml)
+                elif (ntrain)/total*100 < 60:
+                    bucket.upload_fileobj(byte_im_io, f"{option}/train/images/{name}.jpg")
+                    s3.Object(S3_BUCKET_NAME, f"{option}/train/labels/{name}.txt").put(Body=label)
+                elif (nvalid)/total*100 < 20:
+                    bucket.upload_fileobj(byte_im_io, f"{option}/valid/images/{name}.jpg")
+                    s3.Object(S3_BUCKET_NAME, f"{option}/valid/labels/{name}.txt").put(Body=label)
+                else:
+                    bucket.upload_fileobj(byte_im_io, f"{option}/test/images/{name}.jpg")
+                    s3.Object(S3_BUCKET_NAME, f"{option}/test/labels/{name}.txt").put(Body=label)
 
 
         # pprint.pprint(data)
