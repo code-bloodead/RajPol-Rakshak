@@ -1,8 +1,6 @@
 class ImageConstant {
   static String imgDarkMode = 'assets/images/img_dark_mode.svg';
 
-  static String imgLock20x20 = 'assets/images/img_lock_20x20.svg';
-
   static String imgAddReport = 'assets/images/img_add_report.svg';
 
   static String imgLanguage = 'assets/images/img_language.svg';
@@ -17,11 +15,6 @@ class ImageConstant {
 
   static String noImageUrl =
       "https://st3.depositphotos.com/23594922/31822/v/450/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg";
-
-  static String imgVuesaxboldvideocircle =
-      'assets/images/img_vuesaxboldvideocircle.svg';
-
-  static String imgImg418x3272 = 'assets/images/img_img_418x327_2.png';
 
   static String imgCall40x40 = 'assets/images/img_call_40x40.svg';
 
