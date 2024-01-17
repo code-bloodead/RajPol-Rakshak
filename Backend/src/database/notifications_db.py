@@ -84,9 +84,9 @@ def get_notifications_for_user(user_id):
         print(e)
         return {"ERROR":"SOME ERROR OCCURRED"}
 
-def mark_as_read_for_user(user_id, notification):
+def mark_as_read_for_user(user_id, id):
     try:
-        notifications.delete_one({"id": notification.id, "user_id": user_id})
+        notifications.delete_one({"id": id, "user_id": user_id})
         return {"SUCCESS":"MARKED AS READ"}
     except Exception as e:
         print(e)
