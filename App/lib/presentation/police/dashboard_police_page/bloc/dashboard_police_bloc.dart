@@ -81,7 +81,7 @@ class DashboardPoliceBloc
     //   print(error);
     // }
 
-    await Future.delayed(Duration(milliseconds: 50), () {
+    await Future.delayed(Duration(milliseconds: 200), () {
       dataList = [];
       weekDays = [];
       int reports = 0;
@@ -89,12 +89,13 @@ class DashboardPoliceBloc
       incidentsByDate.forEach((date, incidents) {
         reports = incidents.where((element) => element.source != "CCTV").length;
         detects = incidents.length - reports;
+        print("$date - $reports - $detects");
         dataList.add(BarData(
             ColorConstant.blue500, reports.toDouble(), detects.toDouble()));
         weekDays.add(date);
       });
     });
-
+    print(dataList);
     emit(state.copyWith(
       dashboardPoliceModelObj: DashboardPoliceModel(),
       barChartConstants: BarChartConstants(-1, dataList, weekDays),
