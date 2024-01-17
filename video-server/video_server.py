@@ -34,6 +34,7 @@ def process_video_stream(url, cctv_id: str, cctv_type: str, output_queue: Queue,
     from models.anomaly_lstm import detect_anomaly, detect_anomaly_dummy
     from models.fire import detect_fire, detect_fire_dummy
     from models.crack import detect_crack, detect_crack_dummy
+    from models.tamper import detect_tamper, detect_temper_dummy
     from incident_manager import IncidentManager, IncidentType
     from config import MIN_ACCIDENT_REPORT_CONF, MIN_VIOLENCE_REPORT_CONF, MIN_WEAPON_REPORT_CONF, MIN_FIRE_REPORT_CONF, MIN_CRACK_REPORT_CONF
 
@@ -51,6 +52,7 @@ def process_video_stream(url, cctv_id: str, cctv_type: str, output_queue: Queue,
         'accidents': None,
         'fire': None,
         'crack': None,
+        'tamper': None,
     }
 
     try:
@@ -76,6 +78,7 @@ def process_video_stream(url, cctv_id: str, cctv_type: str, output_queue: Queue,
                     fire_future = None
                     crack_future = None
                     accidents_future = None
+                    tamper_future = None
 
                     # LSTM models
                     # Some Model need continuous frames (@TODO - control it using time.time())
@@ -95,6 +98,8 @@ def process_video_stream(url, cctv_id: str, cctv_type: str, output_queue: Queue,
                         # Use threads to parallelize detection tasks
                         objects_future = executor.submit(detect_objects, frame)
                         # objects_future = executor.submit(detect_objects_dummy, frame)
+
+                        tamper_future = executor.submit(detect_tamper, frame)
 
                         if accidents:
                             accidents_future = executor.submit(
@@ -119,6 +124,14 @@ def process_video_stream(url, cctv_id: str, cctv_type: str, output_queue: Queue,
                         # # climber_future = executor.submit(detect_climber_dummy, frame)
 
                     # Wait for all frame-independent threads to complete
+                    if tamper_future is not None:
+                        detections['tamper'] = tamper_future.result()
+
+                        # Report incident for fire if applicable
+                        if detections['tamper'] is not None and 'tamper' in detections['tamper'] and detections['tamper']['tamper']:
+                            incident_manager.registerDetections(
+                                frame, cctv_id, cctv_type, IncidentType.fire, detections['fire'])
+
                     if objects_future is not None:
                         detections['objects'] = objects_future.result()
 

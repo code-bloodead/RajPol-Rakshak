@@ -3,7 +3,7 @@ from ultralytics import YOLO
 
 from models.utils.yolo import parse_yolo_predictions
 from models.device import current_device
-from config import MIN_FIRE_CONF
+from config import MIN_CRACK_CONF
 
 crackYoloModel = YOLO(
     "models/weights/crack/crack.pt").to(torch.device(current_device))
@@ -19,7 +19,7 @@ def detect_crack_dummy(frame):
 
 def detect_crack(frame):
     outputs = crackYoloModel.predict(source=frame, verbose=False)
-    parsed_yolo_preds = parse_yolo_predictions(outputs, MIN_FIRE_CONF)
+    parsed_yolo_preds = parse_yolo_predictions(outputs, MIN_CRACK_CONF)
     for parsed_yolo_pred in parsed_yolo_preds:
         parsed_yolo_pred['label'] = 'crack'
     return parsed_yolo_preds
