@@ -68,7 +68,13 @@ const Footages = () => {
             weaponsMode={cctv.cctv_type === CCTV_TYPES.PRISON}
             accidentMode={false}
             fireMode={false}
-            crackMode={cctv.cctv_type === CCTV_TYPES.PRISON}
+            crackMode={
+              cctv.cctv_type === CCTV_TYPES.PRISON && cctv.id === "cctv_c00"
+            }
+            tamperMode={false}
+            // tamperMode={
+            //   cctv.cctv_type === CCTV_TYPES.PRISON && cctv.id === "cctv_c01"
+            // }
           />
         ))}
       </div>

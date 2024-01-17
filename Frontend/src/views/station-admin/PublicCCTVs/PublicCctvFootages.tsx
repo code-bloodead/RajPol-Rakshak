@@ -108,10 +108,11 @@ const PublicCctvFootages = (props: PublicCctvFootagesProps) => {
               climbingMode={false}
               suspiciousMode={false}
               violenceMode={false}
-              weaponsMode={false}
+              weaponsMode={true}
               fireMode
               accidentMode
               crackMode={false}
+              tamperMode={false}
             />
           ))}
         </div>
