@@ -1,6 +1,7 @@
-export function beep() {
-  // const audio = new Audio(
-  //   "./beeplong.mp3"
-  // );
-  // audio.play()
+export function playBeepSound() {
+  const audio = new Audio(
+    "./beep.mp3"
+    // "./beeplong.mp3"
+  );
+  audio.play()
 }

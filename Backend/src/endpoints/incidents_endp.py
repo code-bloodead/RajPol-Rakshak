@@ -20,7 +20,7 @@ s3 = boto3.resource(
 )
 bucket = s3.Bucket(S3_BUCKET_NAME)
 
-model = YOLO("./assets/last.pt")
+model = YOLO("./assets/fire_optimal.pt")
 
 router = APIRouter(
     prefix="/incidents",
