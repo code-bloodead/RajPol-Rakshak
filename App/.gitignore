@@ -9,8 +9,3 @@
 /android/app/src/main/AndroidManifest.xml
 
 *.env
-
-
-/lib/presentation/random
-/lib/routes
-/assets

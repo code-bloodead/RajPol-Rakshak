@@ -30,6 +30,7 @@ class IncidentType():
     fire = 'fire'
     crack = 'crack'
     tamper = 'tamper'
+    face = 'face'
 
 
 incident_meta_data = {
@@ -59,6 +60,9 @@ incident_meta_data = {
     },
     IncidentType.tamper: {
         'title': "Tampering detected with CCTV",
+    },
+    IncidentType.face: {
+        'title': "Wanted criminal spotted",
     },
 }
 
@@ -97,6 +101,8 @@ class IncidentManager:
                     data[IncidentType.crack] = {}
                 if IncidentType.tamper not in data:
                     data[IncidentType.tamper] = {}
+                if IncidentType.face not in data:
+                    data[IncidentType.face] = {}
                 return data
         except FileNotFoundError:
             return {
@@ -109,6 +115,7 @@ class IncidentManager:
                 IncidentType.fire: {},
                 IncidentType.crack: {},
                 IncidentType.tamper: {},
+                IncidentType.face: {},
             }
 
     def save_data(self):
@@ -161,8 +168,8 @@ class IncidentManager:
             'title': incident_meta_data[detection_type]['title'],
             'description': incident_meta_data[detection_type]['title'],
             'type': detection_type,
-            'station_name': "Andheri",
-            'location': "Chakala street",
+            'station_name': "Jaipur",
+            'location': "Shree Ram road, Lalkothi Jaipur, Rajasthan 302015",
             'source': cctvId,
             'status': "Pending",
             # 'cctv_type': cctv_type,

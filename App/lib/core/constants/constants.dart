@@ -201,7 +201,7 @@ List<Incident> userReports = [
       long: "75.831701"),
   Incident(
       id: "CDEF9000",
-       image:
+      image:
           "https://blog.ipleaders.in/wp-content/uploads/2018/06/BV-Acharya-19.jpg",
       title: "Beating single person",
       description: "Four Persons fighting with one person very badly in public",
@@ -215,7 +215,7 @@ List<Incident> userReports = [
       long: "75.890008"),
   Incident(
       id: "CDEF7000",
-       image:
+      image:
           "https://i0.wp.com/www.rvcj.com/wp-content/uploads/2015/03/maxresdefault1.jpg",
       title: "Fighting in Public",
       description:
@@ -246,7 +246,7 @@ List<Incident> userReports = [
       long: "75.835651"),
   Incident(
       id: "CDEF5000",
-       image:
+      image:
           "https://c8.alamy.com/comp/HWGJWR/road-traffic-accident-between-two-cars-in-retail-park-in-spain-HWGJWR.jpg",
       title: "Two Cars Collided",
       description: "Accident Between Two cars, driver in both cars injured",
@@ -352,9 +352,9 @@ List<ValueItem> incidentCategoryConst = [
   ValueItem(
       label: "lbl_information_about_wanted_criminals".tr,
       value: "lbl_information_about_wanted_criminals".tr),
-  ValueItem(
-      label: "lbl_other_unlawful_activity".tr,
-      value: "lbl_other_unlawful_activity".tr),
+  ValueItem(label: "lbl_accident".tr, value: "lbl_accident".tr),
+  ValueItem(label: "lbl_theft".tr, value: "lbl_theft".tr),
+  ValueItem(label: "lbl_others".tr, value: "lbl_others".tr),
 ];
 
 List<ValueItem> incidentDistrictConst = [

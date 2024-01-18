@@ -8,7 +8,7 @@ requests
 boto3
 dnspython
 python-decouple
-
+face-recognition
 python-multipart
 
-tensorflow[and-cuda]
+# tensorflow[and-cuda]

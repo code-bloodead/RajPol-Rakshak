@@ -35,7 +35,7 @@ class AppbarDropdown extends StatelessWidget {
             svgPath: ImageConstant.imgArrowdown,
           ),
         ),
-        hintText: "msg_st_celina_del".tr,
+        hintText: "lbl_description".tr,
         variant: DropDownVariant.None,
         fontStyle: DropDownFontStyle.ManropeSemiBold14Gray900,
         items: items,

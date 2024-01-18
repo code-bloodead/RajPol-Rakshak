@@ -115,4 +115,16 @@ class PrefUtils {
       return '';
     }
   }
+
+  Future<void> setLanguage(String value) {
+    return _sharedPreferences!.setString('language', value);
+  }
+
+  String getLanguage() {
+    try {
+      return _sharedPreferences!.getString('language') ?? 'en';
+    } catch (e) {
+      return '';
+    }
+  }
 }
