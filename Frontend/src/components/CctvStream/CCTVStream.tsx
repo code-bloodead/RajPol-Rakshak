@@ -32,7 +32,7 @@ import { VIDEO_STREAM_SERVER } from "@/constants/config";
 import DangerTag from "./DangerTag";
 import { useNavigate } from "react-router-dom";
 import { BsExclamationCircle } from "react-icons/bs";
-import { beep } from "./beep";
+import { playBeepSound } from "./beep";
 
 interface CCTVStreamProps {
   cctv: CctvDetails;
@@ -64,7 +64,9 @@ const CCTVStream: React.FC<CCTVStreamProps> = (props) => {
   } = props;
 
   const navigate = useNavigate();
+  const [lastBeepTime, setLastBeepTime] = useState(0);
 
+  
   const [currentFaceDetections, setCurrentFaceDetections] = useState<
     FaceDetection[]
   >([]);
@@ -85,7 +87,6 @@ const CCTVStream: React.FC<CCTVStreamProps> = (props) => {
   const [currentAnomalyClassification, setCurrentAnomalyClassification] =
     useState<AnomalyClassification | null>(null);
   const isBeeped = useRef<boolean>(false);
-  // const [lastBeeped, setLastBeeped] = useState(new Date());
 
   const reportInaccuracy = () =>
     navigate("/station-admin/annotate", {
@@ -376,9 +377,14 @@ const CCTVStream: React.FC<CCTVStreamProps> = (props) => {
         // console.log(`Ready to display ${cctv.id}`);
       });
 
-      if (toBeep && !isBeeped.current) {
-        beep();
-        isBeeped.current = true;
+      if (toBeep) {
+        const currentTime = Date.now();
+
+        // Check if enough time has passed since the last beep
+        if (currentTime - lastBeepTime >= 2000) {
+          playBeepSound();
+          setLastBeepTime(currentTime); // Update the last beep time
+        }
       }
     }
   }, [lastJsonMessage, cctv.cctv_type]);
