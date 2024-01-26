@@ -96,5 +96,10 @@ final Map<String, String> hiIn = {
   "lbl_hindi": "हिंदी",
   "lbl_citizen": "नागरिक",
   "lbl_police": "पुलिस",
-  "lbl_select_language": "भाषा चुने"
+  "lbl_select_language": "भाषा चुने",
+  "lbl_city_name": "शहर का नाम",
+  "lbl_image_evidence": "सबूत",
+  "lbl_location": "स्थान",
+  "lbl_home": "होम",
+  "lbl_your_voice": "आपकी आवाज़, हमारा कर्तव्य",
 };

@@ -46,13 +46,20 @@ class ChangeLanguageBloc
             ? "lbl_english".tr
             : "lbl_hindi".tr));
     Future.delayed(Duration(milliseconds: 1000), () {
-      NavigatorService.pushNamedAndRemoveUntil(
-          AppRoutes.homeContainerPoliceScreen,
-          arguments: {
-            NavigationArgs.id: PrefUtils().getId(),
-            NavigationArgs.fullname: PrefUtils().getName(),
-            NavigationArgs.station: PrefUtils().getStation()
-          });
+      if (PrefUtils().getStation() == "")
+        NavigatorService.pushNamedAndRemoveUntil(AppRoutes.homeContainerScreen,
+            arguments: {
+              NavigationArgs.mobile: PrefUtils().getMobile(),
+              NavigationArgs.fullname: PrefUtils().getName(),
+            });
+      else
+        NavigatorService.pushNamedAndRemoveUntil(
+            AppRoutes.homeContainerPoliceScreen,
+            arguments: {
+              NavigationArgs.id: PrefUtils().getId(),
+              NavigationArgs.fullname: PrefUtils().getName(),
+              NavigationArgs.station: PrefUtils().getStation()
+            });
     });
   }
 }

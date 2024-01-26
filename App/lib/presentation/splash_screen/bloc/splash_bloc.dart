@@ -14,6 +14,8 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
     SplashInitialEvent event,
     Emitter<SplashState> emit,
   ) async {
+    AppLocalization.of().locale =
+        PrefUtils().getLanguage() == 'hi' ? Locale("hi", "") : Locale("en", "");
     Future.delayed(const Duration(milliseconds: 3000), () {
       // PrefUtils().clearPreferencesData();
       // print(PrefUtils().getId() +

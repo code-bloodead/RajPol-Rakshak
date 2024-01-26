@@ -40,8 +40,9 @@ class MapPolicePage extends StatelessWidget {
                     Marker(
                         markerId: MarkerId("police"),
                         position: LatLng(26.866866, 75.819099),
-                        icon: BitmapDescriptor.defaultMarkerWithHue(
-                            BitmapDescriptor.hueBlue),
+                        icon: state.policeMarkerIcon ??
+                            BitmapDescriptor.defaultMarkerWithHue(
+                                BitmapDescriptor.hueBlue),
                         infoWindow: InfoWindow(
                             title: PrefUtils().getName(), snippet: "Police")),
                     ...(state.plotType == "Surveillance"
@@ -49,8 +50,9 @@ class MapPolicePage extends StatelessWidget {
                               markerId: MarkerId(cctv.id.toString()),
                               position: LatLng(double.parse(cctv.lat),
                                   double.parse(cctv.long)),
-                              icon: BitmapDescriptor.defaultMarkerWithHue(
-                                  BitmapDescriptor.hueRed),
+                              icon: state.objIcon ??
+                                  BitmapDescriptor.defaultMarkerWithHue(
+                                      BitmapDescriptor.hueRed),
                               infoWindow: InfoWindow(
                                   title: cctv.title,
                                   snippet: cctv.address,

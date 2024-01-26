@@ -33,17 +33,13 @@ class SplashScreen extends StatelessWidget {
                         Align(
                             alignment: Alignment.bottomCenter,
                             child: Padding(
-                              padding: const EdgeInsets.only(bottom: 20),
-                              child: Text(
-                                "Your Voice, Our Duty",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: ColorConstant.black900,
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: getSize(30),
-                                ),
-                              ),
-                            )),
+                                padding: const EdgeInsets.only(bottom: 20),
+                                child: Text("lbl_your_voice".tr,
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.center,
+                                    style: AppStyle.txtManropeBold32.copyWith(
+                                        letterSpacing:
+                                            getHorizontalSize(0.3))))),
                       ]))));
     });
   }

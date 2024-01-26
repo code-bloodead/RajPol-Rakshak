@@ -97,4 +97,8 @@ final Map<String, String> enUs = {
   "lbl_citizen": "Citizen",
   "lbl_police": "Police",
   "lbl_select_language": "Select Language",
+  "lbl_city_name": "City Name",
+  "lbl_image_evidence": "Image Evidence",
+  "lbl_location": "Location",
+  "lbl_your_voice": "Your Voice, Our Duty",
 };
